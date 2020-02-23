@@ -1,7 +1,7 @@
 import HttpService from './httpService';
 import Dictionary from 'dictionary/dictionary';
 
-interface Patient {
+export interface Patient {
   firstName: string;
   lastName: string;
   momName?: string;
@@ -19,6 +19,9 @@ interface Patient {
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const PatientService = {
+  getPatients() {
+    return HttpService.get(baseEndPoint + '/patient');
+  },
   addPatient(patient: Patient) {
     return HttpService.post(baseEndPoint + '/patient', patient);
   },

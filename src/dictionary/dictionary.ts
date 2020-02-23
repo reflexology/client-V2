@@ -11,7 +11,7 @@ const Dictionary = {
     reminders: 'תזכורות',
     patients: 'לקוחות'
   },
-  addPatient: {
+  patient: {
     firstName: 'שם פרטי',
     lastName: 'שם משפחה',
     monName: 'שם האמא',

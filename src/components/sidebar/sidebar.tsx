@@ -8,6 +8,8 @@ import {
   MenuFoldOutlined
 } from '@ant-design/icons';
 import Dictionary from 'dictionary/dictionary';
+import { useHistory } from 'react-router-dom';
+import { routes } from 'components/router/routes';
 
 const { Header, Content, Sider } = Layout;
 
@@ -15,7 +17,7 @@ interface Props {}
 
 const Sidebar: React.FC<Props> = props => {
   const [collapsed, setCollapsed] = useState(false);
-
+  const history = useHistory();
   const toggle = () => setCollapsed(!collapsed);
 
   return (
@@ -23,7 +25,7 @@ const Sidebar: React.FC<Props> = props => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className='logo' />
         <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline' style={{ borderLeft: 'none' }}>
-          <Menu.Item key='1'>
+          <Menu.Item key='1' onClick={() => history.push(routes.patients)}>
             <TeamOutlined />
             <span>{Dictionary.sidebar.patients}</span>
           </Menu.Item>

@@ -4,8 +4,9 @@ import ReactInputMask from 'react-input-mask';
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
 import PatientService from 'services/patientService';
+import { RouteComponentProps } from 'react-router-dom';
 
-interface Props {}
+interface Props extends RouteComponentProps {}
 
 const AddPatient: React.FC<Props> = props => {
   const [isFetching, setIsFetching] = useState(false);
@@ -21,9 +22,7 @@ const AddPatient: React.FC<Props> = props => {
     setError('');
 
     PatientService.addPatient(values)
-      .then(res => {
-        console.log(res);
-      })
+      .then(res => props.history.push('/patients'))
       .catch(err => setError(CommonService.getErrorMessage(err)))
       .finally(() => setIsFetching(false));
   };
@@ -33,25 +32,25 @@ const AddPatient: React.FC<Props> = props => {
       <Col span={12} offset={6}>
         <Form form={form} initialValues={{ username: '', password: '' }} onFinish={onFinish}>
           <Form.Item
-            label={Dictionary.addPatient.lastName}
+            label={Dictionary.patient.lastName}
             name='lastName'
             hasFeedback
-            rules={[{ required: true, message: Dictionary.addPatient.lastNameRequired }]}
+            rules={[{ required: true, message: Dictionary.patient.lastNameRequired }]}
           >
             <Input autoFocus autoComplete='off' />
           </Form.Item>
           <Form.Item
-            label={Dictionary.addPatient.firstName}
+            label={Dictionary.patient.firstName}
             name='firstName'
             hasFeedback
-            rules={[{ required: true, message: Dictionary.addPatient.firstNameRequired }]}
+            rules={[{ required: true, message: Dictionary.patient.firstNameRequired }]}
           >
             <Input autoComplete='off' />
           </Form.Item>
-          <Form.Item label={Dictionary.addPatient.monName} name='monName' hasFeedback>
+          <Form.Item label={Dictionary.patient.monName} name='monName' hasFeedback>
             <Input autoComplete='off' />
           </Form.Item>
-          <Form.Item label={Dictionary.addPatient.birthday} name='birthday' hasFeedback>
+          <Form.Item label={Dictionary.patient.birthday} name='birthday' hasFeedback>
             <ReactInputMask
               onBlur={e => {
                 const age = CommonService.convertDateToAge(e.target.value);
@@ -63,21 +62,21 @@ const AddPatient: React.FC<Props> = props => {
               {(inputProps: any) => <Input {...inputProps} />}
             </ReactInputMask>
           </Form.Item>
-          <Form.Item label={Dictionary.addPatient.age} name='age' hasFeedback>
+          <Form.Item label={Dictionary.patient.age} name='age' hasFeedback>
             <Input value={30} autoComplete='off' />
           </Form.Item>
-          <Form.Item label={Dictionary.addPatient.phone} name='phone' hasFeedback>
+          <Form.Item label={Dictionary.patient.phone} name='phone' hasFeedback>
             <Input autoComplete='off' />
           </Form.Item>
           <Form.Item
-            label={Dictionary.addPatient.email}
+            label={Dictionary.patient.email}
             name='email'
             hasFeedback
-            rules={[{ pattern: emailRegex, message: Dictionary.addPatient.wrongEmail }]}
+            rules={[{ pattern: emailRegex, message: Dictionary.patient.wrongEmail }]}
           >
             <Input autoComplete='off' />
           </Form.Item>
-          <Form.Item name='gender' label={Dictionary.addPatient.gender}>
+          <Form.Item name='gender' label={Dictionary.patient.gender}>
             <Radio.Group>
               {PatientService.getGenderOptions().map(genderType => (
                 <Radio key={genderType.value} value={genderType.value}>
@@ -88,7 +87,7 @@ const AddPatient: React.FC<Props> = props => {
           </Form.Item>
           <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}>
             {() => (
-              <Form.Item label={Dictionary.addPatient.maritalStatus} name='maritalStatus' hasFeedback>
+              <Form.Item label={Dictionary.patient.maritalStatus} name='maritalStatus' hasFeedback>
                 <Select>
                   {PatientService.getMaritalStatusOptions(form.getFieldValue('gender') === 'Male').map(
                     maritalStatus => (
