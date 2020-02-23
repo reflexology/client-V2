@@ -1,5 +1,8 @@
 {
   "editor.codeActionsOnSave": { "source.fixAll": true },
   "eslint.alwaysShowStatus": true,
-  "cSpell.words": ["Formik", "berakhah", "toastify"]
+  "cSpell.words": [
+    "Formik",
+    "antd"
+  ]
 }
