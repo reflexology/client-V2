@@ -7,6 +7,7 @@ import { ConfigProvider } from 'antd';
 import heIL from 'antd/es/locale/he_IL';
 import moment from 'moment';
 import 'moment/locale/he';
+import Sidebar from 'components/sidebar/sidebar';
 
 moment.locale('he');
 
@@ -16,7 +17,9 @@ const App: React.FC = () => {
     <ConfigProvider direction='rtl' locale={locale}>
       <ErrorBoundary>
         <Router history={history}>
-          <Routes></Routes>
+          <Sidebar>
+            <Routes></Routes>
+          </Sidebar>
         </Router>
       </ErrorBoundary>
     </ConfigProvider>

@@ -34,6 +34,7 @@ const Login: React.FC<Props> = props => {
       })
       .catch((err: AxiosError) => setError(CommonService.getErrorMessage(err)));
   };
+  console.log('render');
 
   return (
     <Row>
@@ -57,7 +58,7 @@ const Login: React.FC<Props> = props => {
           {error && <Alert message={error} type='error' showIcon />}
           <Form.Item>
             <Button loading={isFetching} type='primary' htmlType='submit'>
-              התחבר
+              {Dictionary.login.submitButton}
             </Button>
           </Form.Item>
         </Form>
