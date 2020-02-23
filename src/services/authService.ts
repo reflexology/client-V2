@@ -1,4 +1,5 @@
 import HttpService from './httpService';
+import axios from 'axios';
 
 export interface Tokens {
   accessToken: string;
@@ -37,5 +38,11 @@ const AuthService = {
     localStorage.removeItem(refreshToken);
   }
 };
+
+axios.interceptors.request.use(config => {
+  config.headers.Authorization = 'Bearer ' + AuthService.getAccessToken();
+
+  return config;
+});
 
 export default AuthService;

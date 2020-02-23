@@ -1,6 +1,8 @@
 import React from 'react';
 import { ErrorInfo } from 'react';
 
+import { Result, Button } from 'antd';
+
 export interface ErrorBoundaryState {
   hasError: boolean;
 }
@@ -23,7 +25,18 @@ class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <h1>Something went wrong.</h1>;
+      return (
+        <Result
+          status='error'
+          title='משהו נכשל'
+          subTitle='נסה לרענן את הדף'
+          extra={[
+            <Button onClick={() => window.location.reload()} type='primary' key='reload'>
+              רענן את הדף
+            </Button>
+          ]}
+        ></Result>
+      );
     }
 
     return this.props.children;

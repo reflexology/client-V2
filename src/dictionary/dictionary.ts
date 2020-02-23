@@ -11,10 +11,30 @@ const Dictionary = {
     reminders: 'תזכורות',
     patients: 'לקוחות'
   },
+  addPatient: {
+    firstName: 'שם פרטי',
+    lastName: 'שם משפחה',
+    monName: 'שם האמא',
+    birthday: 'תאריך לידה',
+    age: 'גיל',
+    phone: 'טלפון',
+    email: 'אימיל',
+    gender: 'מין',
+
+    maritalStatus: 'סטטוס',
+    wrongEmail: 'כתובת האימיל שגוייה',
+    firstNameRequired: 'חובה למלא שם פרטי',
+    lastNameRequired: 'חובה למלא שם משפחה'
+  },
   serverErrors: {
     UserNameRequired: 'שם משתמש חסר'
   },
-  generalError: 'בעיה בלתי צפויה התרחשה בשרת'
+  generalError: 'בעיה בלתי צפויה התרחשה בשרת',
+  male: 'זכר',
+  female: 'נקבה',
+
+  MaritalStatusForMale: { Married: 'נשוי', Single: 'רווק', Divorced: 'גרוש', Widowed: 'אלמן' },
+  MaritalStatusForFemale: { Married: 'נשואה', Single: 'רווקה', Divorced: 'גרושה', Widowed: 'אלמנה' }
 };
 
 export default Dictionary;
