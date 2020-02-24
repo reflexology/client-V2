@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
 import ErrorBoundary, { ErrorBoundaryState } from '../errorBoundary';
+import { Result } from 'antd';
 
 describe('<ErrorBoundary />', () => {
   const tree = (children?: React.ReactNode) =>
@@ -38,6 +39,6 @@ describe('<ErrorBoundary />', () => {
       hasError: true
     });
 
-    expect(wrapper.text() === 'Something went wrong.').toBeTruthy();
+    expect(wrapper.text().includes('רענן את הדף')).toBeTruthy();
   });
 });
