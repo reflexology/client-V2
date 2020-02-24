@@ -19,7 +19,7 @@ jobs:
             - run:
                 name: 'Build'
                 command: yarn run build
-  build:
+  deploy:
     steps:
       - run:
         name: 'Deploy'
