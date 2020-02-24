@@ -20,9 +20,11 @@ const Dictionary = {
     phone: 'טלפון',
     email: 'אימיל',
     gender: 'מין',
+    childrenCount: 'מספר ילדים',
 
     maritalStatus: 'סטטוס',
     wrongEmail: 'כתובת האימיל שגוייה',
+    minChildrenCount: 'ערך שגוי',
     firstNameRequired: 'חובה למלא שם פרטי',
     lastNameRequired: 'חובה למלא שם משפחה'
   },

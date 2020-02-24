@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Tag, Input, Button } from 'antd';
-import { CheckOutlined, SearchOutlined } from '@ant-design/icons';
+import { Table, Tag, Button } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
 import PatientService, { Patient } from 'services/patientService';
 import { ColumnsType, ColumnType } from 'antd/lib/table';
-import Highlighter from 'react-highlight-words';
+// import Highlighter from 'react-highlight-words';
 import Dictionary from 'dictionary/dictionary';
 
 // const getColumnSearchProps = (dataIndex: string): ColumnType<any> => ({
@@ -124,8 +124,8 @@ const columns: ColumnsType<Patient> = [
     key: 'action',
     render: (text: string, record: any) => (
       <span>
-        <a>הוסף טיפול</a>
-        <a>ערוך</a>
+        <Button type='link'>הוסף טיפול</Button>
+        <Button type='link'>ערוך</Button>
       </span>
     )
   }

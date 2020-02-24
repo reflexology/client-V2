@@ -17,14 +17,6 @@ const Login: React.FC<Props> = props => {
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState('');
 
-  const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 }
-  };
-  const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 }
-  };
-
   const onFinish = (values: any) => {
     setIsFetching(true);
     AuthService.login(values)

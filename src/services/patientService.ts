@@ -12,6 +12,7 @@ export interface Patient {
   createdAt?: Date;
   createdBy: string;
   lastTreatment?: Date;
+  childrenCount: number;
   gender: 'Male' | 'Female';
   maritalStatus: 'Married' | 'Single' | 'Divorced' | 'Widowed';
 }

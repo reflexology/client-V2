@@ -4,7 +4,6 @@ import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
 import ErrorBoundary, { ErrorBoundaryState } from '../errorBoundary';
-import { Result } from 'antd';
 
 describe('<ErrorBoundary />', () => {
   const tree = (children?: React.ReactNode) =>

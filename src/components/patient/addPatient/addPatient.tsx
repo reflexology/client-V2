@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Row, Col, Alert, Select, Radio } from 'antd';
+import { Form, Input, Button, Row, Col, Alert, Select, Radio, InputNumber } from 'antd';
 import ReactInputMask from 'react-input-mask';
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
@@ -22,7 +22,7 @@ const AddPatient: React.FC<Props> = props => {
     setError('');
 
     PatientService.addPatient(values)
-      .then(res => props.history.push('/patients'))
+      .then(() => props.history.push('/patients'))
       .catch(err => setError(CommonService.getErrorMessage(err)))
       .finally(() => setIsFetching(false));
   };
@@ -30,7 +30,7 @@ const AddPatient: React.FC<Props> = props => {
   return (
     <Row>
       <Col span={12} offset={6}>
-        <Form form={form} initialValues={{ username: '', password: '' }} onFinish={onFinish}>
+        <Form form={form} initialValues={{ childrenCount: 2 }} onFinish={onFinish}>
           <Form.Item
             label={Dictionary.patient.lastName}
             name='lastName'
@@ -75,6 +75,15 @@ const AddPatient: React.FC<Props> = props => {
             rules={[{ pattern: emailRegex, message: Dictionary.patient.wrongEmail }]}
           >
             <Input autoComplete='off' />
+          </Form.Item>
+
+          <Form.Item
+            label={Dictionary.patient.childrenCount}
+            name='childrenCount'
+            hasFeedback
+            rules={[{ len: -2, message: Dictionary.patient.minChildrenCount }]}
+          >
+            <InputNumber autoComplete='off' />
           </Form.Item>
           <Form.Item name='gender' label={Dictionary.patient.gender}>
             <Radio.Group>
