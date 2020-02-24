@@ -19,7 +19,18 @@ jobs:
             - run:
                 name: 'Build'
                 command: yarn run build
-workflows:
   build:
+    steps:
+      - run:
+        name: 'Deploy'
+        command: yarn run deploy
+workflows:
+  build_deploy:
     jobs:
       - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
