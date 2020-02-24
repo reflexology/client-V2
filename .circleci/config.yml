@@ -20,10 +20,19 @@ jobs:
                 name: 'Build'
                 command: yarn run build
   deploy:
+    executor:
+      name: node/default
     steps:
-      - run:
-        name: 'Deploy'
-        command: yarn run deploy
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: yarn install
+            - run:
+                name: 'Build'
+                command: yarn run build
+            - run:
+                name: 'Deploy'
+                command: yarn run deploy
 workflows:
   build_deploy:
     jobs:
