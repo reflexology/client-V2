@@ -30,7 +30,7 @@ const AddPatient: React.FC<Props> = props => {
   return (
     <Row>
       <Col span={12} offset={6}>
-        <Form form={form} initialValues={{ childrenCount: 2 }} onFinish={onFinish}>
+        <Form form={form} onFinish={onFinish}>
           <Form.Item
             label={Dictionary.patient.lastName}
             name='lastName'
