@@ -21,10 +21,10 @@ jobs:
                 command: yarn run build
   deploy:
     machine:
-      macos:
-        xcode: '9.0'
+      image: ubuntu-1604:201903-01
     steps:
       - run:
+          name: 'Send deploy request to netlify'
           command: curl -X POST -d {} ${NETLIFY_BUILD_URL}
 
 workflows:
