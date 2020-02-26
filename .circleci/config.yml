@@ -20,19 +20,13 @@ jobs:
                 name: 'Build'
                 command: yarn run build
   deploy:
-    executor:
-      name: node/default
+    machine:
+      macos:
+        xcode: '9.0'
     steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn install
-            - run:
-                name: 'Build'
-                command: yarn run build
-            - run:
-                name: 'Deploy'
-                command: yarn run deploy
+      - run:
+          command: curl -X POST -d {} ${NETLIFY_BUILD_URL}
+
 workflows:
   build_deploy:
     jobs:
