@@ -13,6 +13,7 @@ moment.locale('he');
 
 const App: React.FC = () => {
   const [locale] = useState(heIL);
+
   return (
     <ConfigProvider direction='rtl' locale={locale}>
       <ErrorBoundary>
