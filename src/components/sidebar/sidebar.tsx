@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import {
   TeamOutlined,
@@ -13,13 +13,14 @@ import { routes } from 'components/router/routes';
 import './sidebar.scss';
 
 const { Header, Content, Sider } = Layout;
+const collapsedKey = 'sidePanel';
 
-interface Props {}
-
-const Sidebar: React.FC<Props> = props => {
-  const [collapsed, setCollapsed] = useState(false);
+const Sidebar: React.FC = () => {
+  const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
   const history = useHistory();
   const toggle = () => setCollapsed(!collapsed);
+
+  useEffect(() => localStorage.setItem(collapsedKey, collapsed ? 'collapsed' : 'expanded'), [collapsed]);
 
   return (
     <Layout dir='rtl' className='layout-container'>
