@@ -9,7 +9,8 @@ const Dictionary = {
   sidebar: {
     incomeAndExpense: 'הכנסות הוצאות',
     reminders: 'תזכורות',
-    patients: 'לקוחות'
+    patients: 'לקוחות',
+    logout: 'התנתק/י'
   },
   patient: {
     firstName: 'שם פרטי',

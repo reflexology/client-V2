@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Avatar, Popover } from 'antd';
 import {
   TeamOutlined,
   BellOutlined,
@@ -11,6 +11,7 @@ import Dictionary from 'dictionary/dictionary';
 import { useHistory } from 'react-router-dom';
 import { routes } from 'components/router/routes';
 import './sidebar.scss';
+import UserPopoverContent from './userPopoverContent';
 
 const { Header, Content, Sider } = Layout;
 const collapsedKey = 'sidePanel';
@@ -43,10 +44,19 @@ const Sidebar: React.FC = props => {
       </Sider>
       <Layout>
         <Header className='header'>
-          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-            className: 'trigger',
-            onClick: toggle
-          })}
+          <div className='right'>
+            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+              className: 'trigger',
+              onClick: toggle
+            })}
+          </div>
+          <div className='left'>
+            <Popover placement='bottomLeft' content={<UserPopoverContent />} trigger='click'>
+              <Avatar size='large' className='header-user-avatar'>
+                U
+              </Avatar>
+            </Popover>
+          </div>
         </Header>
         <Content className='content'>{props.children}</Content>
       </Layout>
