@@ -1,12 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import JwtService from './authService';
-import history from 'utils/history';
 import AuthService from './authService';
+import history from 'utils/history';
 import { routes } from 'components/router/routes';
 
 const getAuthorizationHeader = (jwt: boolean) =>
-  jwt ? { authorization: 'Bearer ' + JwtService.getAccessToken() } : null;
+  jwt ? { authorization: 'Bearer ' + AuthService.getAccessToken() } : null;
 
 const HttpService = {
   async get<T = any>(url: string, config?: AxiosRequestConfig, jwt = false) {
@@ -51,14 +50,14 @@ const getHeaders = (config: AxiosRequestConfig | undefined, headers: any) => {
 
 // Function that will be called to refresh authorization
 const refreshAuthLogic = (failedRequest: any) =>
-  AuthService.refreshToken(JwtService.getRefreshToken()!)
+  AuthService.refreshToken(AuthService.getRefreshToken()!)
     .then(data => {
-      JwtService.storeTokens(data);
+      AuthService.storeTokens(data);
       failedRequest.response.config.headers['authorization'] = 'Bearer ' + data.accessToken;
       return Promise.resolve();
     })
     .catch(() => {
-      JwtService.removeTokens();
+      AuthService.removeTokens();
       history.push(routes.login);
     });
 
