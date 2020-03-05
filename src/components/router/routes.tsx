@@ -4,6 +4,7 @@ import Login from '../login/login';
 import NotFound from '../notFound/notFound';
 import AddPatient from 'components/patient/addPatient/addPatient';
 import PatientContainer from 'components/patient/patients/patientContainer';
+import ProtectedRoute from './protectedRoute';
 
 export enum routes {
   login = '/login',
@@ -14,11 +15,11 @@ export enum routes {
 const Routes: React.FC = () => {
   return (
     <Switch>
-      <Route exact path={routes.addPatient} component={AddPatient}></Route>
-      <Route exact path={routes.patients} component={PatientContainer}></Route>
-      <Route path={routes.login} component={Login}></Route>
-      <Route exact path='/' component={PatientContainer}></Route>
-      <Route component={NotFound}></Route>
+      <ProtectedRoute exact path={routes.addPatient} component={AddPatient} />
+      <ProtectedRoute exact path={routes.patients} component={PatientContainer} />
+      <Route path={routes.login} component={Login} />
+      <Route exact path='/' component={PatientContainer} />
+      <Route component={NotFound} />
     </Switch>
   );
 };

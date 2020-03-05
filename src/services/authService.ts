@@ -6,13 +6,18 @@ export interface Tokens {
   refreshToken: string;
 }
 
+export interface Credentials {
+  username: string;
+  password: string;
+}
+
 const refreshToken = 'refreshToken';
 const accessToken = 'accessToken';
 
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const AuthService = {
-  login(credentials: { username: string; password: string }) {
+  login(credentials: Credentials) {
     return HttpService.post<Tokens>(baseEndPoint + '/user/login', credentials);
   },
 
@@ -36,6 +41,9 @@ const AuthService = {
   removeTokens() {
     localStorage.removeItem(accessToken);
     localStorage.removeItem(refreshToken);
+  },
+  isAuthorized() {
+    return !!this.getAccessToken();
   }
 };
 
