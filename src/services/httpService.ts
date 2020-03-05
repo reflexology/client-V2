@@ -3,14 +3,10 @@ import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import JwtService from './authService';
 import history from 'utils/history';
 import AuthService from './authService';
+import { routes } from 'components/router/routes';
 
-const getAuthorizationHeader = (jwt: boolean) => {
-  return jwt
-    ? {
-        authorization: 'Bearer ' + JwtService.getAccessToken()
-      }
-    : null;
-};
+const getAuthorizationHeader = (jwt: boolean) =>
+  jwt ? { authorization: 'Bearer ' + JwtService.getAccessToken() } : null;
 
 const HttpService = {
   async get<T = any>(url: string, config?: AxiosRequestConfig, jwt = false) {
@@ -63,10 +59,9 @@ const refreshAuthLogic = (failedRequest: any) =>
     })
     .catch(() => {
       JwtService.removeTokens();
-      history.push('/');
+      history.push(routes.login);
     });
 
-// Instantiate the interceptor (you can chain it as it returns the axios instance)
-createAuthRefreshInterceptor(axios as any, refreshAuthLogic);
+createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
 export default HttpService;

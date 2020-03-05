@@ -36,6 +36,9 @@ const AuthService = {
   removeTokens() {
     localStorage.removeItem(accessToken);
     localStorage.removeItem(refreshToken);
+  },
+  isAuthorized() {
+    return !!this.getAccessToken();
   }
 };
 
