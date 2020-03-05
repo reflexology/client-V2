@@ -15,7 +15,7 @@ import './sidebar.scss';
 const { Header, Content, Sider } = Layout;
 const collapsedKey = 'sidePanel';
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC = props => {
   const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
   const history = useHistory();
   const toggle = () => setCollapsed(!collapsed);
