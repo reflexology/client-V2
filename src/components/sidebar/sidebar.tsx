@@ -12,18 +12,19 @@ import { useHistory } from 'react-router-dom';
 import { routes } from 'components/router/routes';
 import './sidebar.scss';
 import UserPopoverContent from './userPopoverContent';
+import AuthService from 'services/authService';
 
 const { Header, Content, Sider } = Layout;
 const collapsedKey = 'sidePanel';
 
-const Sidebar: React.FC = props => {
+const Sidebar: React.FC<any> = props => {
   const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
   const history = useHistory();
   const toggle = () => setCollapsed(!collapsed);
 
   useEffect(() => localStorage.setItem(collapsedKey, collapsed ? 'collapsed' : 'expanded'), [collapsed]);
 
-  return (
+  return AuthService.isAuthorized() ? (
     <Layout dir='rtl' className='layout-container'>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className='logo' />
@@ -53,7 +54,9 @@ const Sidebar: React.FC = props => {
           <div className='left'>
             <Popover placement='bottomLeft' content={<UserPopoverContent />} trigger='click'>
               <Avatar size='large' className='header-user-avatar'>
-                U
+                {AuthService.getAccessTokenData()
+                  ?.username.charAt(0)
+                  .toUpperCase()}
               </Avatar>
             </Popover>
           </div>
@@ -61,7 +64,9 @@ const Sidebar: React.FC = props => {
         <Content className='content'>{props.children}</Content>
       </Layout>
     </Layout>
+  ) : (
+    (props.children as any)
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

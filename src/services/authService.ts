@@ -6,6 +6,11 @@ export interface Tokens {
   refreshToken: string;
 }
 
+export interface AccessToken {
+  _id: string;
+  username: string;
+}
+
 export interface Credentials {
   username: string;
   password: string;
@@ -42,8 +47,17 @@ const AuthService = {
     localStorage.removeItem(accessToken);
     localStorage.removeItem(refreshToken);
   },
+
   isAuthorized() {
     return !!this.getAccessToken();
+  },
+
+  getAccessTokenData() {
+    try {
+      return JSON.parse(atob(this.getAccessToken()!?.split('.')[1])) as AccessToken;
+    } catch (e) {
+      return null;
+    }
   }
 };
 
