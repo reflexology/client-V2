@@ -21,10 +21,10 @@ const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const PatientService = {
   getPatients() {
-    return HttpService.get(baseEndPoint + '/patient');
+    return HttpService.get<Patient[]>(baseEndPoint + '/patient');
   },
   addPatient(patient: Patient) {
-    return HttpService.post(baseEndPoint + '/patient', patient);
+    return HttpService.post<Patient>(baseEndPoint + '/patient', patient);
   },
   getMaritalStatusOptions(isMale: boolean) {
     const maritalStatuses = isMale ? Dictionary.MaritalStatusForMale : Dictionary.MaritalStatusForFemale;
