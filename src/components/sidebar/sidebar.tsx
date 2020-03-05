@@ -10,6 +10,7 @@ import {
 import Dictionary from 'dictionary/dictionary';
 import { useHistory } from 'react-router-dom';
 import { routes } from 'components/router/routes';
+import './sidebar.scss';
 
 const { Header, Content, Sider } = Layout;
 
@@ -21,7 +22,7 @@ const Sidebar: React.FC<Props> = props => {
   const toggle = () => setCollapsed(!collapsed);
 
   return (
-    <Layout dir='rtl' style={{ minHeight: '100vh' }}>
+    <Layout dir='rtl' className='layout-container'>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className='logo' />
         <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline' style={{ borderLeft: 'none' }}>
@@ -39,23 +40,14 @@ const Sidebar: React.FC<Props> = props => {
           </Menu.Item>
         </Menu>
       </Sider>
-      <Layout className='site-layout'>
-        <Header className='site-layout-background' style={{ padding: 0, backgroundColor: '#f0f2f' }}>
+      <Layout>
+        <Header className='header'>
           {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
             className: 'trigger',
             onClick: toggle
           })}
         </Header>
-        <Content
-          className='site-layout-background'
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280
-          }}
-        >
-          {props.children}
-        </Content>
+        <Content className='content'>{props.children}</Content>
       </Layout>
     </Layout>
   );

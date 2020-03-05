@@ -1,0 +1,32 @@
+.layout-container {
+  height: 100vh;
+
+  .header {
+    padding: 0;
+  }
+
+  .content {
+    margin: 24px 16px;
+    padding: 24;
+    min-height: 280;
+  }
+
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+    color: #fff;
+  }
+
+  .trigger:hover {
+    color: #1890ff;
+  }
+
+  .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+  }
+}
