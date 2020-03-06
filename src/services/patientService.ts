@@ -15,6 +15,7 @@ export interface Patient {
   childrenCount: number;
   gender: 'Male' | 'Female';
   maritalStatus: 'Married' | 'Single' | 'Divorced' | 'Widowed';
+  calculatedAge: Readonly<string>;
 }
 
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';

@@ -93,7 +93,7 @@ const columns: ColumnsType<Patient> = [
 
   getStringColumn(Dictionary.patient.firstName, 'firstName'),
   getStringColumn(Dictionary.patient.monName, 'monName'),
-  getNumberColumn(Dictionary.patient.age, 'age'),
+  getNumberColumn(Dictionary.patient.age, 'calculatedAge'),
   getStringColumn(Dictionary.patient.phone, 'phone'),
 
   {
