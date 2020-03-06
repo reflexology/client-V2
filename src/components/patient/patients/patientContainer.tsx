@@ -3,6 +3,7 @@ import { Table, Tag, Button } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import PatientService, { Patient } from 'services/patientService';
 import { ColumnsType, ColumnType } from 'antd/lib/table';
+import moment from 'moment';
 // import Highlighter from 'react-highlight-words';
 import Dictionary from 'dictionary/dictionary';
 
@@ -98,6 +99,20 @@ const columns: ColumnsType<Patient> = [
   {
     ...getBooleanColumn(Dictionary.patient.email, 'email'),
     render: email => (email ? <CheckOutlined /> : null)
+  },
+  {
+    title: 'טיפול אחרון',
+    dataIndex: 'lastTreatment',
+    key: 'lastTreatment',
+    render: lastTreatment => (lastTreatment ? moment(lastTreatment).format('DD/MM/YYYY') : null),
+    sorter: (a, b) => {
+      if (!a.lastTreatment) return -1;
+      if (!b.lastTreatment) return 1;
+      if (new Date(a.lastTreatment!) > new Date(b.lastTreatment!)) return 1;
+      else if (new Date(a.lastTreatment!) < new Date(b.lastTreatment!)) return -1;
+      else return 0;
+    },
+    sortDirections: ['descend', 'ascend']
   },
   {
     title: 'Tags',
