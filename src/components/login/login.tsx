@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import CommonService from 'services/commonService';
 
-interface Props extends RouteComponentProps {}
+interface Props extends RouteComponentProps<any, any, { from: string }> {}
 
 interface LoginForm {
   username: string;
@@ -22,11 +22,10 @@ const Login: React.FC<Props> = props => {
     AuthService.login(values)
       .then(tokens => {
         AuthService.storeTokens(tokens);
-        props.history.push('/');
+        props.history.push(props.location.state.from || '/');
       })
       .catch((err: AxiosError) => setError(CommonService.getErrorMessage(err)));
   };
-  console.log('render');
 
   return (
     <Row>
