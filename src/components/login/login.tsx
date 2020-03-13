@@ -22,7 +22,7 @@ const Login: React.FC<Props> = props => {
     AuthService.login(values)
       .then(tokens => {
         AuthService.storeTokens(tokens);
-        props.history.push(props.location.state.from || '/');
+        props.history.push(props.location.state?.from || '/');
       })
       .catch((err: AxiosError) => setError(CommonService.getErrorMessage(err)));
   };
