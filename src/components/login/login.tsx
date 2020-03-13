@@ -5,6 +5,7 @@ import AuthService from 'services/authService';
 import { RouteComponentProps } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import CommonService from 'services/commonService';
+import './login.scss';
 
 interface Props extends RouteComponentProps<any, any, { from: string }> {}
 
@@ -28,31 +29,29 @@ const Login: React.FC<Props> = props => {
   };
 
   return (
-    <Row>
-      <Col span={12} offset={6}>
-        <Form initialValues={{ username: '', password: '' }} onFinish={onFinish}>
-          <Form.Item
-            label={Dictionary.login.username}
-            name='username'
-            rules={[{ required: true, message: Dictionary.login.usernameRequiredMessage }]}
-          >
-            <Input autoFocus />
-          </Form.Item>
+    <Row align='middle' justify='center' className='login-container'>
+      <Col span={10}>
+        <img src='' alt='' />
+        <div className='login-card'>
+          <div className='login-h2-wrapper'>
+            <h2>{Dictionary.login.header}</h2>
+          </div>
+          <Form onFinish={onFinish} size='large'>
+            <Form.Item name='username' rules={[{ required: true, message: Dictionary.login.usernameRequiredMessage }]}>
+              <Input autoFocus placeholder={Dictionary.login.username} />
+            </Form.Item>
 
-          <Form.Item
-            label={Dictionary.login.password}
-            name='password'
-            rules={[{ required: true, message: Dictionary.login.passwordRequiredMessage }]}
-          >
-            <Input.Password />
-          </Form.Item>
-          {error && <Alert message={error} type='error' showIcon />}
-          <Form.Item>
-            <Button loading={isFetching} type='primary' htmlType='submit'>
-              {Dictionary.login.submitButton}
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item name='password' rules={[{ required: true, message: Dictionary.login.passwordRequiredMessage }]}>
+              <Input.Password placeholder={Dictionary.login.password} />
+            </Form.Item>
+            {error && <Alert message={error} type='error' showIcon />}
+            <Form.Item>
+              <Button block loading={isFetching} type='primary' htmlType='submit'>
+                {Dictionary.login.submitButton}
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </Col>
     </Row>
   );

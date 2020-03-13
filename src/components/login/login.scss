@@ -1,0 +1,23 @@
+.login-container {
+  min-height: 100vh;
+  background-color: #eff1f5;
+
+  .login-card {
+    background-color: #ffffff;
+    padding: 30px 50px 40px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+
+    .login-h2-wrapper {
+      display: flex;
+      margin-bottom: 20px;
+      justify-content: center;
+
+      h2 {
+        color: #979797;
+        font-size: 20px;
+        font-weight: 400;
+      }
+    }
+  }
+}

@@ -4,7 +4,8 @@ const Dictionary = {
     password: 'סיסמא',
     submitButton: 'התחבר',
     usernameRequiredMessage: 'חובה למלא שם משתמש',
-    passwordRequiredMessage: 'חובה למלא סיסמא'
+    passwordRequiredMessage: 'חובה למלא סיסמא',
+    header: 'כניסה לחשבון שלך'
   },
   sidebar: {
     incomeAndExpense: 'הכנסות הוצאות',
