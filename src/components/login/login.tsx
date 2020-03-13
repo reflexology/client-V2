@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Row, Col, Alert } from 'antd';
-import Dictionary from 'dictionary/dictionary';
-import AuthService from 'services/authService';
 import { RouteComponentProps } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import Dictionary from 'dictionary/dictionary';
+import AuthService from 'services/authService';
 import CommonService from 'services/commonService';
 import './login.scss';
 
@@ -20,6 +20,7 @@ const Login: React.FC<Props> = props => {
 
   const onFinish = (values: any) => {
     setIsFetching(true);
+
     AuthService.login(values)
       .then(tokens => {
         AuthService.storeTokens(tokens);
@@ -39,6 +40,7 @@ const Login: React.FC<Props> = props => {
           <div className='login-h2-wrapper'>
             <h2>{Dictionary.login.header}</h2>
           </div>
+
           <Form onFinish={onFinish} size='large'>
             <Form.Item name='username' rules={[{ required: true, message: Dictionary.login.usernameRequiredMessage }]}>
               <Input autoFocus placeholder={Dictionary.login.username} />
@@ -47,7 +49,9 @@ const Login: React.FC<Props> = props => {
             <Form.Item name='password' rules={[{ required: true, message: Dictionary.login.passwordRequiredMessage }]}>
               <Input.Password placeholder={Dictionary.login.password} />
             </Form.Item>
+
             {error && <Alert className='login-error' message={error} type='error' showIcon />}
+
             <Form.Item>
               <Button block loading={isFetching} type='primary' htmlType='submit'>
                 {Dictionary.login.submitButton}
