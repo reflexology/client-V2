@@ -31,7 +31,9 @@ const Dictionary = {
     lastNameRequired: 'חובה למלא שם משפחה'
   },
   serverErrors: {
-    UserNameRequired: 'שם משתמש חסר'
+    err_username_required: 'שם משתמש חסר',
+    err_user_does_not_exist: 'משתמש לא קיים',
+    err_invalid_password: 'סיסמא שגוייה'
   },
   generalError: 'בעיה בלתי צפויה התרחשה בשרת',
   male: 'זכר',

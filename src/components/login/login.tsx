@@ -25,7 +25,10 @@ const Login: React.FC<Props> = props => {
         AuthService.storeTokens(tokens);
         props.history.push(props.location.state?.from || '/');
       })
-      .catch((err: AxiosError) => setError(CommonService.getErrorMessage(err)));
+      .catch((err: AxiosError) => {
+        setError(CommonService.getErrorMessage(err));
+        setIsFetching(false);
+      });
   };
 
   return (
@@ -44,7 +47,7 @@ const Login: React.FC<Props> = props => {
             <Form.Item name='password' rules={[{ required: true, message: Dictionary.login.passwordRequiredMessage }]}>
               <Input.Password placeholder={Dictionary.login.password} />
             </Form.Item>
-            {error && <Alert message={error} type='error' showIcon />}
+            {error && <Alert className='login-error' message={error} type='error' showIcon />}
             <Form.Item>
               <Button block loading={isFetching} type='primary' htmlType='submit'>
                 {Dictionary.login.submitButton}
