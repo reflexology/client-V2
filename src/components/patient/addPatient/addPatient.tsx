@@ -23,14 +23,16 @@ const AddPatient: React.FC<Props> = props => {
 
     PatientService.addPatient(values)
       .then(() => props.history.push('/patients'))
-      .catch(err => setError(CommonService.getErrorMessage(err)))
-      .finally(() => setIsFetching(false));
+      .catch(err => {
+        setError(CommonService.getErrorMessage(err));
+        setIsFetching(false);
+      });
   };
 
   return (
     <Row>
       <Col span={12} offset={6}>
-        <Form form={form} onFinish={onFinish}>
+        <Form form={form} onFinish={onFinish} size='large'>
           <Form.Item
             label={Dictionary.patient.lastName}
             name='lastName'
