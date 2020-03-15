@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Tag, Button } from 'antd';
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, UserAddOutlined } from '@ant-design/icons';
 import PatientService, { Patient } from 'services/patientService';
-import { ColumnsType, ColumnType } from 'antd/lib/table';
+import { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
 // import Highlighter from 'react-highlight-words';
 import Dictionary from 'dictionary/dictionary';
+import { RouteComponentProps } from 'react-router-dom';
+import { routes } from 'components/router/routes';
+import TableUtils from 'utils/tableUtils';
 
 // const getColumnSearchProps = (dataIndex: string): ColumnType<any> => ({
 //   filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -57,77 +60,35 @@ import Dictionary from 'dictionary/dictionary';
 //       text
 //     )
 // });
-
-const getStringColumn = (title: string, dataIndex: string): ColumnType<Patient> => ({
-  title,
-  dataIndex,
-  key: dataIndex,
-  sorter: (a: any, b: any) => a[dataIndex]?.localeCompare(b[dataIndex], 'he'),
-  sortDirections: ['descend', 'ascend']
-});
-
-const getBooleanColumn = (title: string, dataIndex: string): ColumnType<Patient> => ({
-  title,
-  dataIndex,
-  key: dataIndex,
-  sorter: (a: any, b: any) => (!!a[dataIndex] ? 1 : -1),
-  sortDirections: ['descend', 'ascend']
-});
-
-const getNumberColumn = (title: string, dataIndex: string): ColumnType<Patient> => ({
-  title,
-  dataIndex,
-  key: dataIndex,
-  sorter: (a: any, b: any) => (!a[dataIndex] ? -1 : a[dataIndex] - b[dataIndex]),
-  sortDirections: ['descend', 'ascend']
-});
+const tableUtils = new TableUtils<Patient>();
 const columns: ColumnsType<Patient> = [
+  tableUtils.getStringColumn(Dictionary.patient.lastName, 'lastName'),
+  tableUtils.getStringColumn(Dictionary.patient.firstName, 'firstName'),
+  tableUtils.getStringColumn(Dictionary.patient.monName, 'momName'),
+  tableUtils.getNumberColumn(Dictionary.patient.age, 'calculatedAge'),
+  tableUtils.getStringColumn(Dictionary.patient.phone, 'phone'),
   {
-    title: 'שם משפחה',
-    dataIndex: 'lastName',
-    key: 'lastName',
-    onFilter: (value, record) => record.lastName.includes(value),
-    sorter: (a, b) => a.lastName?.localeCompare(b.lastName, 'he'),
-    sortDirections: ['descend', 'ascend']
-  },
-
-  getStringColumn(Dictionary.patient.firstName, 'firstName'),
-  getStringColumn(Dictionary.patient.monName, 'monName'),
-  getNumberColumn(Dictionary.patient.age, 'calculatedAge'),
-  getStringColumn(Dictionary.patient.phone, 'phone'),
-
-  {
-    ...getBooleanColumn(Dictionary.patient.email, 'email'),
+    ...tableUtils.getBooleanColumn(Dictionary.patient.email, 'email'),
     render: email => (email ? <CheckOutlined /> : null)
   },
   {
-    title: 'טיפול אחרון',
-    dataIndex: 'lastTreatment',
-    key: 'lastTreatment',
-    render: lastTreatment => (lastTreatment ? moment(lastTreatment).format('DD/MM/YYYY') : null),
-    sorter: (a, b) => {
-      if (!a.lastTreatment) return -1;
-      if (!b.lastTreatment) return 1;
-      if (new Date(a.lastTreatment!) > new Date(b.lastTreatment!)) return 1;
-      else if (new Date(a.lastTreatment!) < new Date(b.lastTreatment!)) return -1;
-      else return 0;
-    },
-    sortDirections: ['descend', 'ascend']
+    ...tableUtils.getDateColumn(Dictionary.patient.lastTreatment, 'lastTreatment'),
+    render: lastTreatment => (lastTreatment ? moment(lastTreatment).format('DD/MM/YYYY') : null)
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (tags: string[]) => (
+    title: 'אבחנות',
+    key: 'diagnoses',
+    dataIndex: 'diagnoses',
+    render: (diagnoses: string[]) => (
       <span>
-        {tags?.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
+        {diagnoses?.map(diagnosis => {
+          let color = diagnosis.length > 5 ? 'geekblue' : 'green';
+          if (diagnosis === 'loser') {
             color = 'volcano';
           }
           return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
+            <Tag color={color} key={diagnosis}>
+              {diagnosis.toUpperCase()}
             </Tag>
           );
         })}
@@ -146,7 +107,7 @@ const columns: ColumnsType<Patient> = [
   }
 ];
 
-interface IPatientContainerProps {}
+interface IPatientContainerProps extends RouteComponentProps {}
 
 const PatientContainer: React.FC<IPatientContainerProps> = props => {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -158,6 +119,13 @@ const PatientContainer: React.FC<IPatientContainerProps> = props => {
       .finally(() => setIsFetching(false));
   }, []);
 
-  return <Table<Patient> pagination={{ pageSize: 8 }} loading={isFetching} columns={columns} dataSource={patients} />;
+  return (
+    <div>
+      <Button icon={<UserAddOutlined />} onClick={() => props.history.push(routes.addPatient)}>
+        הוסף לקוח
+      </Button>
+      <Table<Patient> pagination={{ pageSize: 8 }} loading={isFetching} columns={columns} dataSource={patients} />
+    </div>
+  );
 };
 export default PatientContainer;

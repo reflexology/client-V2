@@ -23,6 +23,7 @@ const Dictionary = {
     email: 'אימיל',
     gender: 'מין',
     childrenCount: 'מספר ילדים',
+    lastTreatment: 'טיפול אחרון',
 
     maritalStatus: 'סטטוס',
     wrongEmail: 'כתובת האימיל שגוייה',
