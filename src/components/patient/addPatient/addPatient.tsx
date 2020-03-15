@@ -81,7 +81,7 @@ const AddPatient: React.FC<Props> = props => {
             label={Dictionary.patient.childrenCount}
             name='childrenCount'
             hasFeedback
-            rules={[{ len: -2, message: Dictionary.patient.minChildrenCount }]}
+            rules={[{ type: 'number', min: 0, message: Dictionary.patient.minChildrenCount }]}
           >
             <InputNumber autoComplete='off' />
           </Form.Item>
