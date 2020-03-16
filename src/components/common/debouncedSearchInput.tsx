@@ -17,6 +17,7 @@ const DebouncedSearchInput: React.FC<DebouncedSearchInputProps> = ({ onDebounced
 
   return (
     <Input.Search
+      allowClear
       value={searchQuery}
       onChange={e => setSearchQuery(e.target.value)}
       placeholder={Dictionary.search}
