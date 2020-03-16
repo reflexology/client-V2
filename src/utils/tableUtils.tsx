@@ -1,31 +1,31 @@
 import { ColumnType } from 'antd/lib/table';
-
-class TableUtils<T> {
+class TableUtils<T extends { [key: string]: any }> {
   getColumn = (title: string, dataIndex: string): ColumnType<T> => ({
     title,
     dataIndex,
     key: dataIndex
   });
 
-  getStringColumn = (title: string, dataIndex: keyof T): ColumnType<T> => ({
+  getStringColumn = (title: string, dataIndex: keyof T, rest?: ColumnType<T>): ColumnType<T> => ({
     ...this.getColumn(title, dataIndex as string),
     sorter: (a: any, b: any) => a[dataIndex]?.localeCompare(b[dataIndex], 'he'),
-    sortDirections: ['descend', 'ascend']
+    sortDirections: ['descend', 'ascend'],
+    ...rest
   });
 
-  getBooleanColumn = (title: string, dataIndex: keyof T): ColumnType<T> => ({
+  getBooleanColumn = (title: string, dataIndex: keyof T, rest?: ColumnType<T>): ColumnType<T> => ({
     ...this.getColumn(title, dataIndex as string),
     sorter: (a: any, b: any) => (!!a[dataIndex] ? 1 : -1),
     sortDirections: ['descend', 'ascend']
   });
 
-  getNumberColumn = (title: string, dataIndex: keyof T): ColumnType<T> => ({
+  getNumberColumn = (title: string, dataIndex: keyof T, rest?: ColumnType<T>): ColumnType<T> => ({
     ...this.getColumn(title, dataIndex as string),
     sorter: (a: any, b: any) => (!a[dataIndex] ? -1 : a[dataIndex] - b[dataIndex]),
     sortDirections: ['descend', 'ascend']
   });
 
-  getDateColumn = (title: string, dataIndex: keyof T): ColumnType<T> => ({
+  getDateColumn = (title: string, dataIndex: keyof T, rest?: ColumnType<T>): ColumnType<T> => ({
     ...this.getColumn(title, dataIndex as string),
     sorter: (a, b) => {
       if (!a[dataIndex]) return -1;
@@ -36,6 +36,32 @@ class TableUtils<T> {
     },
     sortDirections: ['descend', 'ascend']
   });
+
+  filter = (obj: T, searchQuery: string, excludedFields: (keyof T)[]): boolean => {
+    for (const name in obj) {
+      if (excludedFields.includes(name)) continue;
+
+      if (Array.isArray(obj[name])) {
+        return this.filter(obj[name][0], searchQuery, excludedFields);
+      }
+
+      // const date = moment(obj[name], formats, true);
+      // if (date.isValid()) {
+      //   const formattedDate = date.format('DD/MM/YYYY');
+
+      //   if (formattedDate.toString().includes(searchQuery)) return true;
+      //   else continue;
+      // } else
+      if (
+        obj[name]
+          ?.toString()
+          .toLowerCase()
+          .includes(searchQuery)
+      )
+        return true;
+    }
+    return false;
+  };
 }
 
 export default TableUtils;

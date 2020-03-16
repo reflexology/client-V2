@@ -2,6 +2,7 @@ import HttpService from './httpService';
 import Dictionary from 'dictionary/dictionary';
 
 export interface Patient {
+  _id: string;
   firstName: string;
   lastName: string;
   momName?: string;
