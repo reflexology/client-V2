@@ -39,6 +39,7 @@ const Dictionary = {
   generalError: 'בעיה בלתי צפויה התרחשה בשרת',
   male: 'זכר',
   female: 'נקבה',
+  search: 'חפש..',
 
   MaritalStatusForMale: { Married: 'נשוי', Single: 'רווק', Divorced: 'גרוש', Widowed: 'אלמן' },
   MaritalStatusForFemale: { Married: 'נשואה', Single: 'רווקה', Divorced: 'גרושה', Widowed: 'אלמנה' }
