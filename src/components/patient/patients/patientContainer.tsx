@@ -7,6 +7,7 @@ import { routes } from 'components/router/routes';
 import TableUtils from 'utils/tableUtils';
 import PatientsTable from './patientsTable';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
+import './patient.scss';
 
 const tableUtils = new TableUtils<Patient>();
 

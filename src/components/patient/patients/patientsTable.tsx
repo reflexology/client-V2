@@ -37,7 +37,8 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
     tableUtils.getStringColumn(Dictionary.patient.phone, 'phone', getHighlighter()),
     {
       ...tableUtils.getBooleanColumn(Dictionary.patient.email, 'email'),
-      render: email => (email ? <CheckOutlined /> : null)
+      render: email =>
+        email ? <CheckOutlined className='email-check' onClick={() => navigator.clipboard.writeText(email)} /> : null
     },
     {
       ...tableUtils.getDateColumn(Dictionary.patient.lastTreatment, 'lastTreatment'),
