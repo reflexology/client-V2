@@ -37,7 +37,7 @@ const Login: React.FC<Props> = props => {
       <Col span={9}>
         <img src='' alt='' />
         <div className='login-card'>
-          <div className='login-h2-wrapper'>
+          <div className='header-wrapper'>
             <h2>{Dictionary.login.header}</h2>
           </div>
 

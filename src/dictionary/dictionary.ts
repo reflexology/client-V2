@@ -11,9 +11,10 @@ const Dictionary = {
     incomeAndExpense: 'הכנסות הוצאות',
     reminders: 'תזכורות',
     patients: 'לקוחות',
-    logout: 'התנתק/י'
+    logout: 'התנתק'
   },
   patient: {
+    header: 'הוסף לקוח',
     firstName: 'שם פרטי',
     lastName: 'שם משפחה',
     monName: 'שם האמא',
@@ -29,7 +30,8 @@ const Dictionary = {
     wrongEmail: 'כתובת האימיל שגוייה',
     minChildrenCount: 'ערך שגוי',
     firstNameRequired: 'חובה למלא שם פרטי',
-    lastNameRequired: 'חובה למלא שם משפחה'
+    lastNameRequired: 'חובה למלא שם משפחה',
+    save: 'שמור'
   },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',

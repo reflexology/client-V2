@@ -15,3 +15,21 @@
 .text-right {
   text-align: right;
 }
+
+.card {
+  background-color: #ffffff;
+  padding: 20px 50px 30px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+}
+
+.header-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: center;
+  h2 {
+    color: #979797;
+    font-size: 20px;
+    font-weight: 400;
+  }
+}
