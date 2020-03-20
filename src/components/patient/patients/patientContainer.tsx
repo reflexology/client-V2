@@ -33,7 +33,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
     );
 
   return (
-    <div>
+    <div className='patients-container'>
       <Row>
         <Col>
           <Button icon={<UserAddOutlined />} onClick={() => props.history.push(routes.addPatient)}>

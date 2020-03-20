@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .layout-container {
   height: 100vh;
 
@@ -31,15 +33,19 @@
   }
 
   .content {
-    margin: 24px 16px;
-    padding: 24;
-    min-height: 280;
+    // margin: 24px 16px;
+    padding: 24px;
+    max-height: calc(100% - #{$header-height});
   }
 
   .logo {
     height: 32px;
     background: rgba(255, 255, 255, 0.2);
     margin: 16px;
+  }
+
+  .ant-menu-item:first-child {
+    margin-top: 0;
   }
 }
 
