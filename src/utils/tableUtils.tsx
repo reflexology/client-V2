@@ -1,5 +1,10 @@
 import { ColumnType } from 'antd/lib/table';
+import moment from 'moment';
+import { DATE_FORMAT } from './constants';
+
 class TableUtils<T extends { [key: string]: any }> {
+  formats = [moment.ISO_8601, DATE_FORMAT];
+
   getColumn = (title: string, dataIndex: string): ColumnType<T> => ({
     title,
     dataIndex,
@@ -45,14 +50,13 @@ class TableUtils<T extends { [key: string]: any }> {
         return this.filter(obj[name][0], searchQuery, excludedFields);
       }
 
-      // const date = moment(obj[name], formats, true);
-      // if (date.isValid()) {
-      //   const formattedDate = date.format('DD/MM/YYYY');
+      const date = moment(obj[name], this.formats, true);
+      if (date.isValid()) {
+        const formattedDate = date.format(DATE_FORMAT);
 
-      //   if (formattedDate.toString().includes(searchQuery)) return true;
-      //   else continue;
-      // } else
-      if (
+        if (formattedDate.toString().includes(searchQuery)) return true;
+        else continue;
+      } else if (
         obj[name]
           ?.toString()
           .toLowerCase()

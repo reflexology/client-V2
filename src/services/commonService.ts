@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import moment from 'moment';
 import Dictionary from 'dictionary/dictionary';
+import { DATE_FORMAT } from 'utils/constants';
 
 const CommonService = {
   getErrorMessage(err: AxiosError): string {
@@ -13,7 +14,7 @@ const CommonService = {
   },
 
   convertDateToAge(date: string) {
-    const utcDate = moment.utc(date, 'DD/MM/YYYY');
+    const utcDate = moment.utc(date, DATE_FORMAT);
     const diff = this.getDurationFromNow(utcDate);
 
     return diff.isValid() && !utcDate.isAfter(moment()) ? diff.years() + '.' + diff.months() : '';

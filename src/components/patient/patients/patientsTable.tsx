@@ -7,6 +7,7 @@ import Highlighter from 'react-highlight-words';
 import { Patient } from 'services/patientService';
 import Dictionary from 'dictionary/dictionary';
 import TableUtils from 'utils/tableUtils';
+import { DATE_FORMAT } from 'utils/constants';
 
 interface PatientsTableProps {
   isFetching: boolean;
@@ -37,12 +38,21 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
     tableUtils.getStringColumn(Dictionary.patient.phone, 'phone', getHighlighter()),
     {
       ...tableUtils.getBooleanColumn(Dictionary.patient.email, 'email'),
+
       render: email =>
         email ? <CheckOutlined className='email-check' onClick={() => navigator.clipboard.writeText(email)} /> : null
     },
     {
       ...tableUtils.getDateColumn(Dictionary.patient.lastTreatment, 'lastTreatment'),
-      render: lastTreatment => (lastTreatment ? moment(lastTreatment).format('DD/MM/YYYY') : null)
+      render: lastTreatment =>
+        lastTreatment ? (
+          <Highlighter
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            searchWords={[props.searchText]}
+            autoEscape
+            textToHighlight={moment(lastTreatment).format(DATE_FORMAT) || ''}
+          />
+        ) : null
     },
     {
       title: 'אבחנות',
