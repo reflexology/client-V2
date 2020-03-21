@@ -21,4 +21,13 @@ const CommonService = {
   }
 };
 
+String.prototype.format = function(...values) {
+  let str = this.toString();
+  console.log(values);
+
+  if (values?.length > 0)
+    for (const key in values) str = str.replace(new RegExp('\\{' + key + '\\}', 'gi'), values[key]);
+
+  return str;
+};
 export default CommonService;
