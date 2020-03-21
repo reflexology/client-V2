@@ -13,11 +13,16 @@ const Dictionary = {
     patients: 'לקוחות',
     logout: 'התנתק'
   },
-  patient: {
-    header: 'הוסף לקוח',
+  addPatient: {
+    header: 'הוסף לקוח'
+  },
+  editPatient: {
+    header: 'ערוך לקוח'
+  },
+  patientForm: {
     firstName: 'שם פרטי',
     lastName: 'שם משפחה',
-    monName: 'שם האמא',
+    momName: 'שם האמא',
     birthday: 'תאריך לידה',
     age: 'גיל',
     phone: 'טלפון',
@@ -25,7 +30,6 @@ const Dictionary = {
     gender: 'מין',
     childrenCount: 'מספר ילדים',
     lastTreatment: 'טיפול אחרון',
-
     maritalStatus: 'סטטוס',
     wrongEmail: 'כתובת האימיל שגוייה',
     minChildrenCount: 'ערך שגוי',
@@ -39,6 +43,7 @@ const Dictionary = {
     err_invalid_password: 'סיסמא שגוייה'
   },
   generalError: 'בעיה בלתי צפויה התרחשה בשרת',
+  generalErrorAndRefresh: 'בעיה בלתי צפויה התרחשה בשרת, נסה לרענן את הדף',
   male: 'זכר',
   female: 'נקבה',
   search: 'חפש..',

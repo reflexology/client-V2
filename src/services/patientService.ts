@@ -25,8 +25,14 @@ const PatientService = {
   getPatients() {
     return HttpService.get<Patient[]>(baseEndPoint + '/patient');
   },
+  getPatient(patientId: string) {
+    return HttpService.get<Patient>(baseEndPoint + '/patient/' + patientId);
+  },
   addPatient(patient: Patient) {
     return HttpService.post<Patient>(baseEndPoint + '/patient', patient);
+  },
+  editPatient(patientId: string, patient: Patient) {
+    return HttpService.patch<Patient>(baseEndPoint + '/patient/' + patientId, patient);
   },
   getMaritalStatusOptions(isMale: boolean) {
     const maritalStatuses = isMale ? Dictionary.MaritalStatusForMale : Dictionary.MaritalStatusForFemale;

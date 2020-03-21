@@ -8,6 +8,8 @@ import { Patient } from 'services/patientService';
 import Dictionary from 'dictionary/dictionary';
 import TableUtils from 'utils/tableUtils';
 import { DATE_FORMAT } from 'utils/constants';
+import { useHistory } from 'react-router-dom';
+import { routes } from 'components/router/routes';
 
 interface PatientsTableProps {
   isFetching: boolean;
@@ -16,6 +18,8 @@ interface PatientsTableProps {
 }
 
 const PatientsTable: React.FC<PatientsTableProps> = props => {
+  const history = useHistory<Patient>();
+
   const getHighlighter = () => ({
     render: (text: string) => (
       <Highlighter
@@ -30,20 +34,20 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
   const tableUtils = new TableUtils<Patient>();
   const columns: ColumnsType<Patient> = [
     {
-      ...tableUtils.getStringColumn(Dictionary.patient.lastName, 'lastName', getHighlighter())
+      ...tableUtils.getStringColumn(Dictionary.patientForm.lastName, 'lastName', getHighlighter())
     },
-    tableUtils.getStringColumn(Dictionary.patient.firstName, 'firstName', getHighlighter()),
-    tableUtils.getStringColumn(Dictionary.patient.monName, 'momName', getHighlighter()),
-    tableUtils.getNumberColumn(Dictionary.patient.age, 'calculatedAge', getHighlighter()),
-    tableUtils.getStringColumn(Dictionary.patient.phone, 'phone', getHighlighter()),
+    tableUtils.getStringColumn(Dictionary.patientForm.firstName, 'firstName', getHighlighter()),
+    tableUtils.getStringColumn(Dictionary.patientForm.momName, 'momName', getHighlighter()),
+    tableUtils.getNumberColumn(Dictionary.patientForm.age, 'calculatedAge', getHighlighter()),
+    tableUtils.getStringColumn(Dictionary.patientForm.phone, 'phone', getHighlighter()),
     {
-      ...tableUtils.getBooleanColumn(Dictionary.patient.email, 'email'),
+      ...tableUtils.getBooleanColumn(Dictionary.patientForm.email, 'email'),
 
       render: email =>
         email ? <CheckOutlined className='email-check' onClick={() => navigator.clipboard.writeText(email)} /> : null
     },
     {
-      ...tableUtils.getDateColumn(Dictionary.patient.lastTreatment, 'lastTreatment'),
+      ...tableUtils.getDateColumn(Dictionary.patientForm.lastTreatment, 'lastTreatment'),
       render: lastTreatment =>
         lastTreatment ? (
           <Highlighter
@@ -77,10 +81,12 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
     {
       title: 'פעולות',
       key: 'action',
-      render: (text: string, record: any) => (
+      render: (text: string, record: Patient) => (
         <span>
           <Button type='link'>הוסף טיפול</Button>
-          <Button type='link'>ערוך</Button>
+          <Button onClick={() => history.push(routes.editPatient.format(record._id), record)} type='link'>
+            ערוך
+          </Button>
         </span>
       )
     }

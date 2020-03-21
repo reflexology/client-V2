@@ -34,6 +34,16 @@ const HttpService = {
     return res.data;
   },
 
+  async patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig, jwt = false) {
+    const headers = getHeaders(config, {
+      'Content-Type': 'application/json;charset=utf-8',
+      ...getAuthorizationHeader(jwt)
+    });
+
+    const res = await axios.patch<T>(url, data, { ...config, headers });
+    return res.data;
+  },
+
   async delete<T = any>(url: string, config?: AxiosRequestConfig, jwt = false) {
     const headers = getHeaders(config, getAuthorizationHeader(jwt));
 
