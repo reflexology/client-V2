@@ -12,10 +12,19 @@ export function withBack<T extends WithBackProps = WithBackProps>(WrappedCompone
   return class ComponentWithBack extends React.Component<WithBackProps> {
     public static displayName = `withBack(${displayName})`;
 
+    handleBackClicked = () => this.props.history.goBack();
     render() {
       return (
         <>
-          <PageHeader className='page-header' onBack={this.props.history.goBack} title={Dictionary.back} />
+          <PageHeader
+            className='page-header'
+            onBack={this.handleBackClicked}
+            title={
+              <div className='back-text' onClick={this.handleBackClicked}>
+                {Dictionary.back}
+              </div>
+            }
+          />
           <WrappedComponent {...this.props} {...(this.props as T)} />
         </>
       );
