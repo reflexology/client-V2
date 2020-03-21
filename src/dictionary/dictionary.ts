@@ -42,6 +42,7 @@ const Dictionary = {
   male: 'זכר',
   female: 'נקבה',
   search: 'חפש..',
+  back: 'חזור',
 
   MaritalStatusForMale: { Married: 'נשוי', Single: 'רווק', Divorced: 'גרוש', Widowed: 'אלמן' },
   MaritalStatusForFemale: { Married: 'נשואה', Single: 'רווקה', Divorced: 'גרושה', Widowed: 'אלמנה' }
