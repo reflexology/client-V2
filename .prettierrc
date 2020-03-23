@@ -3,5 +3,8 @@
     "semi": true,
     "printWidth": 120,
     "tabWidth": 2,
-    "jsxSingleQuote": true
+    "jsxSingleQuote": true,
+    "arrowParens": "avoid",
+    "trailingComma": "none",
+    "endOfLine": "auto"
 }
