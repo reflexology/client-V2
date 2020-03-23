@@ -54,9 +54,7 @@ const Sidebar: React.FC<any> = props => {
           <div className='left'>
             <Popover placement='bottomLeft' content={<UserPopoverContent />} trigger='click'>
               <Avatar size='large' className='header-user-avatar'>
-                {AuthService.getAccessTokenData()
-                  ?.username.charAt(0)
-                  .toUpperCase()}
+                {AuthService.getAccessTokenData()?.username.charAt(0).toUpperCase()}
               </Avatar>
             </Popover>
           </div>

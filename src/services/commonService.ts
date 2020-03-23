@@ -21,7 +21,7 @@ const CommonService = {
   }
 };
 
-String.prototype.format = function(...values) {
+String.prototype.format = function (...values) {
   let str = this.toString();
 
   if (values?.length > 0)
