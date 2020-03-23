@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Avatar, Popover } from 'antd';
+import './sidebar.scss';
+
 import {
-  TeamOutlined,
   BellOutlined,
   DollarCircleOutlined,
+  MenuFoldOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  TeamOutlined
 } from '@ant-design/icons';
-import Dictionary from 'dictionary/dictionary';
-import { useHistory } from 'react-router-dom';
+import { Avatar, Layout, Menu, Popover } from 'antd';
 import { routes } from 'components/router/routes';
-import './sidebar.scss';
-import UserPopoverContent from './userPopoverContent';
+import Dictionary from 'dictionary/dictionary';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AuthService from 'services/authService';
 
+import UserPopoverContent from './userPopoverContent';
+
 const { Header, Content, Sider } = Layout;
+
 const collapsedKey = 'sidePanel';
 
 const Sidebar: React.FC<any> = props => {

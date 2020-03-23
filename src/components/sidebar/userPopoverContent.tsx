@@ -1,9 +1,9 @@
-import React from 'react';
-import Dictionary from 'dictionary/dictionary';
 import { LogoutOutlined } from '@ant-design/icons';
-import AuthService from 'services/authService';
-import { useHistory } from 'react-router-dom';
 import { routes } from 'components/router/routes';
+import Dictionary from 'dictionary/dictionary';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import AuthService from 'services/authService';
 
 interface Props {}
 

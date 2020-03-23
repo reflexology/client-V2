@@ -1,5 +1,6 @@
-import HttpService from './httpService';
 import axios from 'axios';
+
+import HttpService from './httpService';
 
 export interface Tokens {
   accessToken: string;

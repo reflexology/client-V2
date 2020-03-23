@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import PatientService, { Patient } from 'services/patientService';
-import CommonService from 'services/commonService';
-import { RouteComponentProps } from 'react-router-dom';
-import { Col, Row, message, Spin } from 'antd';
-import PatientForm from '../patientForm/patientForm';
+import { Col, message, Row, Spin } from 'antd';
+import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
-import { routes } from 'components/router/routes';
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import CommonService from 'services/commonService';
+import PatientService, { Patient } from 'services/patientService';
+
+import PatientForm from '../patientForm/patientForm';
 
 interface EditPatientProps extends RouteComponentProps<{ patientId: string }, any, Patient> {}
 

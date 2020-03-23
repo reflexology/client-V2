@@ -1,8 +1,9 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import AuthService from './authService';
-import history from 'utils/history';
 import { routes } from 'components/router/routes';
+import history from 'utils/history';
+
+import AuthService from './authService';
 
 const getAuthorizationHeader = (jwt: boolean) =>
   jwt ? { authorization: 'Bearer ' + AuthService.getAccessToken() } : null;

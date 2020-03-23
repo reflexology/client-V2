@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Row, Col, Alert } from 'antd';
-import { RouteComponentProps } from 'react-router-dom';
+import './login.scss';
+
+import { Alert, Button, Col, Form, Input, Row } from 'antd';
 import { AxiosError } from 'axios';
 import Dictionary from 'dictionary/dictionary';
+import React, { useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import AuthService from 'services/authService';
 import CommonService from 'services/commonService';
-import './login.scss';
 
 interface Props extends RouteComponentProps<any, any, { from: string }> {}
 

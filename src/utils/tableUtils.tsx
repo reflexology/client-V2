@@ -1,5 +1,6 @@
 import { ColumnType } from 'antd/lib/table';
 import moment from 'moment';
+
 import { DATE_FORMAT } from './constants';
 
 class TableUtils<T extends { [key: string]: any }> {

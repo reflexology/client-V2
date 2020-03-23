@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Row, Col } from 'antd';
-import { UserAddOutlined } from '@ant-design/icons';
-import PatientService, { Patient } from 'services/patientService';
-import { RouteComponentProps } from 'react-router-dom';
-import { routes } from 'components/router/routes';
-import TableUtils from 'utils/tableUtils';
-import PatientsTable from './patientsTable';
-import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import './patient.scss';
+
+import { UserAddOutlined } from '@ant-design/icons';
+import { Button, Col, Row } from 'antd';
+import DebouncedSearchInput from 'components/common/debouncedSearchInput';
+import { routes } from 'components/router/routes';
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import PatientService, { Patient } from 'services/patientService';
+import TableUtils from 'utils/tableUtils';
+
+import PatientsTable from './patientsTable';
 
 const tableUtils = new TableUtils<Patient>();
 

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { Row, Col } from 'antd';
+import './addPatient.scss';
+
+import { Col, Row } from 'antd';
+import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import { withBack } from 'hoc/withBack/withBack';
+import React, { useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import CommonService from 'services/commonService';
 import PatientService from 'services/patientService';
-import { RouteComponentProps } from 'react-router-dom';
+
 import PatientForm from '../patientForm/patientForm';
-import { withBack } from 'hoc/withBack/withBack';
-import { routes } from 'components/router/routes';
-import './addPatient.scss';
 
 interface Props extends RouteComponentProps {}
 

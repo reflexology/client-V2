@@ -1,7 +1,5 @@
-import React from 'react';
-import { ErrorInfo } from 'react';
-
-import { Result, Button } from 'antd';
+import { Button, Result } from 'antd';
+import React, { ErrorInfo } from 'react';
 
 export interface ErrorBoundaryState {
   hasError: boolean;

@@ -1,15 +1,15 @@
-import React from 'react';
-import moment from 'moment';
-import { Table, Tag, Button } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
 import { CheckOutlined } from '@ant-design/icons';
-import Highlighter from 'react-highlight-words';
-import { Patient } from 'services/patientService';
-import Dictionary from 'dictionary/dictionary';
-import TableUtils from 'utils/tableUtils';
-import { DATE_FORMAT } from 'utils/constants';
-import { useHistory } from 'react-router-dom';
+import { Button, Table, Tag } from 'antd';
+import { ColumnsType } from 'antd/lib/table';
 import { routes } from 'components/router/routes';
+import Dictionary from 'dictionary/dictionary';
+import moment from 'moment';
+import React from 'react';
+import Highlighter from 'react-highlight-words';
+import { useHistory } from 'react-router-dom';
+import { Patient } from 'services/patientService';
+import { DATE_FORMAT } from 'utils/constants';
+import TableUtils from 'utils/tableUtils';
 
 interface PatientsTableProps {
   isFetching: boolean;

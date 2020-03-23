@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Button, Row, Alert, Select, Radio, InputNumber } from 'antd';
-import ReactInputMask from 'react-input-mask';
+import { Alert, Button, Form, Input, InputNumber, Radio, Row, Select } from 'antd';
 import Dictionary from 'dictionary/dictionary';
+import React, { useEffect } from 'react';
+import ReactInputMask from 'react-input-mask';
 import CommonService from 'services/commonService';
 import PatientService, { Patient } from 'services/patientService';
 

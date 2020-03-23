@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import Routes from './components/router/routes';
-import { Router } from 'react-router-dom';
-import history from './utils/history';
-import ErrorBoundary from 'components/errorBoundaries/errorBoundary';
+import 'moment/locale/he';
+
 import { ConfigProvider } from 'antd';
 import heIL from 'antd/es/locale/he_IL';
-import moment from 'moment';
-import 'moment/locale/he';
+import ErrorBoundary from 'components/errorBoundaries/errorBoundary';
 import Sidebar from 'components/sidebar/sidebar';
+import moment from 'moment';
+import React, { useState } from 'react';
+import { Router } from 'react-router-dom';
+
+import Routes from './components/router/routes';
+import history from './utils/history';
 
 moment.locale('he');
 

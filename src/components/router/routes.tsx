@@ -1,10 +1,11 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Login from '../login/login';
-import NotFound from '../notFound/notFound';
 import AddPatient from 'components/patient/addPatient/addPatient';
 import EditPatient from 'components/patient/editPatient/editPatient';
 import PatientContainer from 'components/patient/patients/patientContainer';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+
+import Login from '../login/login';
+import NotFound from '../notFound/notFound';
 import ProtectedRoute from './protectedRoute';
 
 export enum routes {
