@@ -1,12 +1,13 @@
-@import '../../styles/common.scss';
-@import '../../styles/variables.scss';
+@import '../../styles/common';
+@import '../../styles/variables';
 
 .login-container {
-  height: 100vh;
   background-color: #eff1f5;
+  height: 100vh;
 
   .login-card {
     @extend .card;
+
     padding: 30px 50px 40px;
 
     .login-error {

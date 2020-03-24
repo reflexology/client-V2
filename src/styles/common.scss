@@ -1,7 +1,7 @@
 .flex-center {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .rtl {
@@ -17,16 +17,17 @@
 }
 
 .card {
-  background-color: #ffffff;
-  padding: 20px 50px 30px;
-  border: 1px solid #dddddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
   border-radius: 5px;
+  padding: 20px 50px 30px;
 }
 
 .header-wrapper {
   display: flex;
-  margin-bottom: 20px;
   justify-content: center;
+  margin-bottom: 20px;
+
   h2 {
     color: #979797;
     font-size: 20px;
