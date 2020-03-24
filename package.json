@@ -18,7 +18,12 @@
     "yup": "^0.28.3"
   },
   "scripts": {
-    "lint": "eslint --ext js,ts,tsx src",
+    "lint": "yarn lint:script && yarn lint:style",
+    "lint-fix": "yarn lint-fix:script && yarn lint-fix:style",
+    "lint:script": "eslint --ext js,ts,tsx src",
+    "lint:style": "stylelint src/**/*.scss --syntax scss",
+    "lint-fix:script": "yarn lint:script --fix",
+    "lint-fix:style": "yarn lint:style --fix",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -75,6 +80,8 @@
     "pretty-quick": "^2.0.1",
     "react-test-renderer": "^16.13.1",
     "source-map-explorer": "^2.4.1",
+    "stylelint": "^13.2.1",
+    "stylelint-config-sass-guidelines": "^7.0.0",
     "typescript": "3.8.3"
   }
 }
