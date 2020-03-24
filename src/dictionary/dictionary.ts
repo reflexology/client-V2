@@ -42,6 +42,12 @@ const Dictionary = {
     err_user_does_not_exist: 'משתמש לא קיים',
     err_invalid_password: 'סיסמא שגוייה'
   },
+  errorBoundary: {
+    title: 'משהו נכשל',
+    subTitle: 'נסה לרענן את הדף',
+    refreshThePage: 'רענן את הדף'
+  },
+
   generalError: 'בעיה בלתי צפויה התרחשה בשרת',
   generalErrorAndRefresh: 'בעיה בלתי צפויה התרחשה בשרת, נסה לרענן את הדף',
   male: 'זכר',
