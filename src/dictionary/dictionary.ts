@@ -47,7 +47,11 @@ const Dictionary = {
     subTitle: 'נסה לרענן את הדף',
     refreshThePage: 'רענן את הדף'
   },
-
+  notFound: {
+    title: '404',
+    subTitle: 'כנראה הגעת לעמוד הזה בטעות',
+    backButton: 'חזרה לדף הבית'
+  },
   generalError: 'בעיה בלתי צפויה התרחשה בשרת',
   generalErrorAndRefresh: 'בעיה בלתי צפויה התרחשה בשרת, נסה לרענן את הדף',
   male: 'זכר',
