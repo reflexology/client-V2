@@ -33,7 +33,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy": "netlify deploy --prod",
-    "d": "prettier --write src/**/*"
+    "prettier:fix": "prettier --write src/**/*",
+    "bundlesize": "bundlesize"
   },
   "browserslist": {
     "production": [
@@ -68,6 +69,7 @@
     "@types/storybook__react": "^5.2.1",
     "@types/yup": "^0.26.33",
     "babel-loader": "^8.1.0",
+    "bundlesize": "^0.18.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint-config-prettier": "^6.10.1",
@@ -83,5 +85,23 @@
     "stylelint": "^13.2.1",
     "stylelint-config-sass-guidelines": "^7.0.0",
     "typescript": "3.8.3"
-  }
+  },
+  "bundlesize": [
+    {
+      "path": "build/**/main*.js",
+      "maxSize": "10 kB"
+    },
+    {
+      "path": "build/**/*.chunk.js",
+      "maxSize": "500 kB"
+    },
+    {
+      "path": "build/**/main*.css",
+      "maxSize": "5 kB"
+    },
+    {
+      "path": "build/**/*.chunk.css",
+      "maxSize": "150 kB"
+    }
+  ]
 }
