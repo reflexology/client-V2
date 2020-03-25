@@ -19,6 +19,9 @@ jobs:
             - run:
                 name: 'Build'
                 command: yarn run build
+            - run:
+                name: 'Bundlesize'
+                command: yarn run bundlesize
   deploy:
     machine:
       image: ubuntu-1604:201903-01
