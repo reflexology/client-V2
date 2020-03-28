@@ -6,5 +6,8 @@
         "max-nesting-depth": null,
         "selector-max-compound-selectors": null,
         "scss/at-extend-no-missing-placeholder": null
-    }
+    },
+    "ignoreFiles": [
+        "**/*.tsx"
+    ]
 }
