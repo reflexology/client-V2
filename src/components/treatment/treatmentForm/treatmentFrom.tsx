@@ -1,6 +1,7 @@
 import { Alert, Button, DatePicker, Form, Input, InputNumber, Row, Select, Tag } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import Dictionary from 'dictionary/dictionary';
+import moment from 'moment';
 import React, { useEffect } from 'react';
 import { Treatment } from 'services/treatmentService';
 
@@ -74,7 +75,17 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
         <TextArea autoSize autoComplete='off' placeholder={Dictionary.treatmentForm.reminders} />
       </Form.Item>
       <Form.Item name='reminderDate' label={Dictionary.treatmentForm.reminderDate}>
-        <DatePicker format='YYYY-MM-DD' />
+        <DatePicker
+          format='YYYY-MM-DD'
+          showToday={false}
+          renderExtraFooter={() => (
+            <Row justify='center'>
+              <Button type='link' onClick={() => form.setFieldsValue({ reminderDate: moment().add(7, 'days') })}>
+                {Dictionary.treatmentForm.inAWeek}
+              </Button>
+            </Row>
+          )}
+        />
       </Form.Item>
       <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}>
         {() => (

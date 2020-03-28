@@ -52,7 +52,8 @@ const Dictionary = {
     paidPrice: 'סכום ששולם',
     remarks: 'הערות',
     reminders: 'תזכורות',
-    reminderDate: 'תאריך תזכורת'
+    reminderDate: 'תאריך תזכורת',
+    inAWeek: 'עוד שבוע'
   },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',
