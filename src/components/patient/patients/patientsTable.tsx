@@ -83,7 +83,9 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       key: 'action',
       render: (text: string, record: Patient) => (
         <span>
-          <Button type='link'>הוסף טיפול</Button>
+          <Button onClick={() => history.push(routes.addTreatment.format(record._id))} type='link'>
+            הוסף טיפול
+          </Button>
           <Button onClick={() => history.push(routes.editPatient.format(record._id), record)} type='link'>
             ערוך
           </Button>

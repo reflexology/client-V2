@@ -37,6 +37,23 @@ const Dictionary = {
     lastNameRequired: 'חובה למלא שם משפחה',
     save: 'שמור'
   },
+  addTreatment: {
+    header: 'הוסף טיפול'
+  },
+  treatmentForm: {
+    treatmentDate: 'תאריך טיפול',
+    referredBy: 'הופנה ע"י',
+    visitReason: 'סיבת ביקור',
+    treatmentNumber: 'מספר טיפול',
+    diagnoses: 'אבחנות',
+    findings: 'ממצאים',
+    recommendations: 'המלצות',
+    treatmentPrice: 'מחיר הטיפול',
+    paidPrice: 'סכום ששולם',
+    remarks: 'הערות',
+    reminders: 'תזכורות',
+    reminderDate: 'תאריך תזכורת'
+  },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',
     err_user_does_not_exist: 'משתמש לא קיים',
