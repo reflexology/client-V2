@@ -38,7 +38,12 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
   return (
     <Form form={form} initialValues={props.initialValues} onFinish={props.onSubmit}>
       <Form.Item name='treatmentDate'>
-        <DatePicker showTime format='YYYY/MM/DD HH:mm:ss' placeholder={Dictionary.treatmentForm.treatmentDate} />
+        <DatePicker
+          showTime
+          format='DD/MM/YYYY HH:mm'
+          placeholder={Dictionary.treatmentForm.treatmentDate}
+          defaultValue={moment()}
+        />
       </Form.Item>
       <Form.Item name='referredBy' hasFeedback>
         <Input autoComplete='off' placeholder={Dictionary.treatmentForm.referredBy} />
