@@ -1,0 +1,13 @@
+@import '../../../styles/common';
+
+.add-transaction-container {
+  .add-transaction-card {
+    @extend .card;
+
+    .add-transaction-h2-wrapper {
+      @extend .header-wrapper;
+
+      margin-bottom: 15px;
+    }
+  }
+}
