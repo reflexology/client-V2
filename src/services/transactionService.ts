@@ -9,7 +9,7 @@ export interface Transaction {
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const TransactionService = {
-  getPatients() {
+  getTransactions() {
     return 'Transaction';
   },
   getGenderOptions() {

@@ -46,7 +46,11 @@ const Dictionary = {
     amount: 'כמות',
     createdAt: 'תאריך',
     descriptionRequired: 'חובה למלא תיאור',
-    amountRequired: 'חובה למלא כמות'
+    amountRequired: 'חובה למלא כמות',
+    minAmountCount: 'ערך שגוי',
+    transactionType: 'פעולה',
+    income: 'הכנסה',
+    expenditure: 'הוצאה'
   },
   addTreatment: {
     header: 'הוסף טיפול'
