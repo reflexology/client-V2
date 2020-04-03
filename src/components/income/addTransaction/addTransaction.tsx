@@ -1,9 +1,11 @@
 import './addTransaction.scss';
 
 import { Col, Row } from 'antd';
+import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import CommonService from 'services/commonService';
 import TransactionService from 'services/transactionService';
 
 import TransactionForm from '../transactionForm/transactionForm';
@@ -19,7 +21,14 @@ const AddTransaction: React.FC<Props> = props => {
 
     setIsSubmitting(true);
     setError('');
-    console.log('Transaction addded');
+
+    console.log('Adding Transaction', values);
+    TransactionService.addTransaction(values)
+      .then(() => props.history.push(routes.patients))
+      .catch(err => {
+        setError(CommonService.getErrorMessage(err));
+        setIsSubmitting(false);
+      });
   };
   return (
     <Row justify='center' className='add-transaction-container'>

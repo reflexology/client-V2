@@ -47,6 +47,7 @@ const Dictionary = {
     createdAt: 'תאריך',
     descriptionRequired: 'חובה למלא תיאור',
     amountRequired: 'חובה למלא כמות',
+    typeRequired: 'חובה למלא פעולה',
     minAmountCount: 'ערך שגוי',
     transactionType: 'פעולה',
     income: 'הכנסה',
