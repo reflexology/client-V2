@@ -15,10 +15,13 @@ const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const TransactionService = {
   getTransactions() {
-    return 'Transaction';
+    return HttpService.get<Transaction[]>(baseEndPoint + '/incomeAndExpenditure');
+  },
+  getTransaction(transactionId: string) {
+    return HttpService.get<Transaction>(baseEndPoint + '/incomeAndExpenditure' + transactionId);
   },
   addTransaction(transaction: Transaction) {
-    if (transaction.transactionType === Dictionary.transactionForm.expenditure) {
+    if (transaction.transactionType === 'Expenditure') {
       transaction.amount = -1 * transaction.amount;
     }
     return HttpService.post<Transaction>(baseEndPoint + '/incomeAndExpenditure', transaction);
