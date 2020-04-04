@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd';
+import { Col, Row, Spin } from 'antd';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
@@ -13,16 +13,19 @@ interface AddTreatmentProps extends RouteComponentProps<{ patientId: string }> {
 const AddTreatment: React.FC<AddTreatmentProps> = props => {
   const [initialValues, setInitialValues] = useState<Partial<Treatment>>();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    TreatmentService.getLastTreatment(props.match.params.patientId).then(treatment =>
-      setInitialValues({
-        treatmentNumber: (treatment.treatmentNumber || 0) + 1,
-        referredBy: treatment.referredBy,
-        treatmentPrice: treatment.treatmentPrice
-      })
-    );
+    TreatmentService.getLastTreatment(props.match.params.patientId)
+      .then(treatment =>
+        setInitialValues({
+          treatmentNumber: (treatment.treatmentNumber || 0) + 1,
+          referredBy: treatment.referredBy,
+          treatmentPrice: treatment.treatmentPrice
+        })
+      )
+      .finally(() => setIsFetching(false));
   }, []);
 
   const handleSubmit = (values: any) => {
@@ -38,16 +41,23 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
   };
 
   return (
-    <Row justify='center' className='add-patient-container'>
-      <Col span={10}>
-        <div className='add-patient-card'>
-          <div className='add-patient-h2-wrapper'>
-            <h2>{Dictionary.addTreatment.header}</h2>
+    <Spin spinning={isFetching}>
+      <Row justify='center' className='add-patient-container'>
+        <Col span={10}>
+          <div className='add-patient-card'>
+            <div className='add-patient-h2-wrapper'>
+              <h2>{Dictionary.addTreatment.header}</h2>
+            </div>
+            <TreatmentFrom
+              initialValues={initialValues}
+              isLoading={isSubmitting}
+              onSubmit={handleSubmit}
+              error={error}
+            />
           </div>
-          <TreatmentFrom initialValues={initialValues} isLoading={isSubmitting} onSubmit={handleSubmit} error={error} />
-        </div>
-      </Col>
-    </Row>
+        </Col>
+      </Row>
+    </Spin>
   );
 };
 
