@@ -34,7 +34,7 @@ const TransactionForm: React.SFC<TransactionFormProps> = props => {
           style={{ display: 'inline-block' }}
           rules={[{ required: true, type: 'number', min: 0, message: Dictionary.transactionForm.minAmountCount }]}
         >
-          <InputNumber style={{ width: '50%' }} autoComplete='off' placeholder={Dictionary.transactionForm.amount} />
+          <InputNumber style={{ width: '100%' }} autoComplete='off' placeholder={Dictionary.transactionForm.amount} />
         </Form.Item>
 
         <Form.Item
