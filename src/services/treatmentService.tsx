@@ -19,11 +19,11 @@ export interface Treatment {
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const TreatmentService = {
-  getTreatments() {
-    return HttpService.get<Treatment[]>(baseEndPoint + '/treatment');
+  getTreatmentsByPatientId(patientId: string) {
+    return HttpService.get<Treatment[]>(baseEndPoint + '/treatment/byPatientId/' + patientId);
   },
-  getTreatment(treatmentId: string) {
-    return HttpService.get<Treatment>(baseEndPoint + '/treatment/' + treatmentId);
+  getLastTreatment(patientId: string) {
+    return HttpService.get<Treatment>(baseEndPoint + '/treatment/lastTreatment/byPatientId/' + patientId);
   },
   addTreatment(patientId: string, treatment: Treatment) {
     return HttpService.post<Treatment>(baseEndPoint + '/treatment/patient/' + patientId, treatment);

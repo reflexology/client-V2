@@ -9,7 +9,7 @@ interface TreatmentFromProps {
   onSubmit: (values: any) => void;
   error: string;
   isLoading: boolean;
-  initialValues?: Treatment;
+  initialValues?: Partial<Treatment>;
 }
 
 const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
