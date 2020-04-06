@@ -3,7 +3,6 @@ import TextArea from 'antd/lib/input/TextArea';
 import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
 import React, { useEffect } from 'react';
-import ReactInputMask from 'react-input-mask';
 import TransactionService, { Transaction } from 'services/transactionService';
 
 export interface TransactionFormProps {
