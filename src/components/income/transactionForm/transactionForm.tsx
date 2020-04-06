@@ -1,5 +1,7 @@
-import { Alert, Button, Form, Input, InputNumber, Radio, Row } from 'antd';
+import { Alert, Button, DatePicker, Form, Input, InputNumber, Radio, Row } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
 import Dictionary from 'dictionary/dictionary';
+import moment from 'moment';
 import React, { useEffect } from 'react';
 import ReactInputMask from 'react-input-mask';
 import TransactionService, { Transaction } from 'services/transactionService';
@@ -8,7 +10,7 @@ export interface TransactionFormProps {
   onSubmit: (values: any) => void;
   error: string;
   isLoading: boolean;
-  initialValues?: Transaction;
+  initialValues?: Partial<Transaction>;
 }
 
 const TransactionForm: React.SFC<TransactionFormProps> = props => {
@@ -25,14 +27,17 @@ const TransactionForm: React.SFC<TransactionFormProps> = props => {
         <Input autoFocus autoComplete='off' placeholder={Dictionary.transactionForm.description} />
       </Form.Item>
       <Form.Item name='note' hasFeedback>
-        <Input autoFocus autoComplete='off' placeholder={Dictionary.transactionForm.note} />
+        <TextArea autoSize autoComplete='off' placeholder={Dictionary.transactionForm.note} />
       </Form.Item>
       <Row justify='space-between'>
         <Form.Item
           name='amount'
           hasFeedback
           style={{ display: 'inline-block' }}
-          rules={[{ required: true, type: 'number', min: 0, message: Dictionary.transactionForm.minAmountCount }]}
+          rules={[
+            { type: 'number', min: 0, message: Dictionary.transactionForm.minAmountCount },
+            { required: true, message: Dictionary.transactionForm.amountRequired }
+          ]}
         >
           <InputNumber style={{ width: '100%' }} autoComplete='off' placeholder={Dictionary.transactionForm.amount} />
         </Form.Item>
@@ -52,9 +57,12 @@ const TransactionForm: React.SFC<TransactionFormProps> = props => {
         </Form.Item>
       </Row>
       <Form.Item name='createdAt' hasFeedback>
-        <ReactInputMask className='ltr text-right' mask='99/99/9999' placeholder={Dictionary.transactionForm.createdAt}>
-          {(inputProps: any) => <Input {...inputProps} />}
-        </ReactInputMask>
+        <DatePicker
+          showTime
+          defaultValue={moment()}
+          format='DD/MM/YYYY'
+          placeholder={Dictionary.transactionForm.createdAt}
+        />
       </Form.Item>
 
       {props.error && <Alert message={props.error} type='error' showIcon />}

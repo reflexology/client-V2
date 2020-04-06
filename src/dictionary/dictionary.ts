@@ -43,10 +43,10 @@ const Dictionary = {
   transactionForm: {
     description: 'תיאור',
     note: 'הערה',
-    amount: 'כמות',
+    amount: 'סכום',
     createdAt: 'תאריך',
     descriptionRequired: 'חובה למלא תיאור',
-    amountRequired: 'חובה למלא כמות',
+    amountRequired: 'חובה למלא סכום',
     typeRequired: 'חובה למלא פעולה',
     minAmountCount: 'ערך שגוי',
     transactionType: 'פעולה',

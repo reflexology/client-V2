@@ -3,6 +3,7 @@ import './addTransaction.scss';
 import { Col, Row } from 'antd';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import { withBack } from 'hoc/withBack/withBack';
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import CommonService from 'services/commonService';
@@ -37,11 +38,16 @@ const AddTransaction: React.FC<Props> = props => {
           <div className='add-transaction-h2-wrapper'>
             <h2>{Dictionary.addTransaction.header}</h2>
           </div>
-          <TransactionForm isLoading={isSubmitting} onSubmit={handleSubmit} error={error} />
+          <TransactionForm
+            initialValues={{ transactionType: 'Income' }}
+            isLoading={isSubmitting}
+            onSubmit={handleSubmit}
+            error={error}
+          />
         </div>
       </Col>
     </Row>
   );
 };
 
-export default AddTransaction;
+export default withBack(AddTransaction);
