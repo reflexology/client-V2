@@ -37,6 +37,21 @@ const Dictionary = {
     lastNameRequired: 'חובה למלא שם משפחה',
     save: 'שמור'
   },
+  addTransaction: {
+    header: 'הוסף הכנסה/הוצאה'
+  },
+  transactionForm: {
+    description: 'תיאור',
+    note: 'הערה',
+    amount: 'סכום',
+    createdAt: 'תאריך',
+    descriptionRequired: 'חובה למלא תיאור',
+    amountRequired: 'חובה למלא סכום',
+    minAmountCount: 'ערך שגוי',
+    transactionType: 'פעולה',
+    income: 'הכנסה',
+    expenditure: 'הוצאה'
+  },
   addTreatment: {
     header: 'הוסף טיפול'
   },
