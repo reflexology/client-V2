@@ -21,9 +21,8 @@ const TransactionService = {
     return HttpService.get<Transaction>(baseEndPoint + '/incomeAndExpenditure' + transactionId);
   },
   addTransaction(transaction: Transaction) {
-    if (transaction.transactionType === 'Expenditure') {
-      transaction.amount = -1 * transaction.amount;
-    }
+    if (transaction.transactionType === 'Expenditure') transaction.amount = -1 * transaction.amount;
+
     return HttpService.post<Transaction>(baseEndPoint + '/incomeAndExpenditure', transaction);
   },
   getTransactionOptions() {

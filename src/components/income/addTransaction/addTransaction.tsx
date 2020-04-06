@@ -23,7 +23,6 @@ const AddTransaction: React.FC<Props> = props => {
     setIsSubmitting(true);
     setError('');
 
-    console.log('Adding Transaction', values);
     TransactionService.addTransaction(values)
       .then(() => props.history.push(routes.patients))
       .catch(err => {
