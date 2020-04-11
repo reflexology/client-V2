@@ -8,6 +8,8 @@ export interface Transaction {
   note?: string;
   amount: number;
   createdAt?: Date;
+  isFromTreatment: boolean;
+  treatmentId: string;
   transactionType: 'Income' | 'Expenditure';
 }
 

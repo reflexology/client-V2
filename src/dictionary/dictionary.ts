@@ -50,8 +50,7 @@ const Dictionary = {
     minAmountCount: 'ערך שגוי',
     transactionType: 'פעולה',
     income: 'הכנסה',
-    expenditure: 'הוצאה',
-    incomeOrExpenditure: 'הכנסה/הוצאה'
+    expenditure: 'הוצאה'
   },
   addTreatment: {
     header: 'הוסף טיפול'

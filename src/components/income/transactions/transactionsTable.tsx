@@ -1,10 +1,12 @@
+import './transaction.scss';
+
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import Dictionary from 'dictionary/dictionary';
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 import { useHistory } from 'react-router-dom';
-import { Transaction } from 'services/transactionService';
+import TransactionService, { Transaction } from 'services/transactionService';
 import TableUtils from 'utils/tableUtils';
 
 interface TransactionsTableProps {
@@ -32,12 +34,22 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
   const columns: ColumnsType<Transaction> = [
     tableUtils.getStringColumn(Dictionary.transactionForm.description, 'description', getHighlighter()),
     tableUtils.getStringColumn(Dictionary.transactionForm.note, 'note', getHighlighter()),
-    tableUtils.getStringColumn(Dictionary.transactionForm.incomeOrExpenditure, 'transactionType', getHighlighter()),
     tableUtils.getNumberColumn(Dictionary.transactionForm.amount, 'amount', getHighlighter()),
     tableUtils.getDateColumn(Dictionary.transactionForm.createdAt, 'createdAt', getHighlighter())
   ];
   return (
-    <Table<Transaction> pagination={{ pageSize: 8 }} loading={isFetching} columns={columns} dataSource={transactions} />
+    <Table<Transaction>
+      pagination={{ pageSize: 8 }}
+      rowClassName={(record, index) => {
+        if (record.isFromTreatment) {
+          return 'table-row-from-treatment';
+        } else if (record.transactionType === 'Income') return 'table-row-income';
+        return 'table-row-expenditure';
+      }}
+      loading={isFetching}
+      columns={columns}
+      dataSource={transactions}
+    />
   );
 };
 
