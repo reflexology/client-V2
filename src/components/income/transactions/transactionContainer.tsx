@@ -1,3 +1,4 @@
+import { DollarOutlined } from '@ant-design/icons';
 import { Button, Col, Row } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
@@ -42,7 +43,9 @@ const TransactionContainer: React.FC<TransactionContainerProps> = props => {
     <div>
       <Row>
         <Col>
-          <Button onClick={() => props.history.push(routes.addTransaction)}>הוסף הכנסה/הוצאה</Button>
+          <Button icon={<DollarOutlined />} onClick={() => props.history.push(routes.addTransaction)}>
+            הוסף הכנסה/הוצאה
+          </Button>
         </Col>
         <Col>
           <DebouncedSearchInput
