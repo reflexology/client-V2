@@ -1,11 +1,11 @@
-import './transaction.scss';
-
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
 import React from 'react';
 import Highlighter from 'react-highlight-words';
+import { useHistory } from 'react-router-dom';
 import { Transaction } from 'services/transactionService';
 import { DATE_FORMAT } from 'utils/constants';
 import TableUtils from 'utils/tableUtils';
@@ -17,17 +17,31 @@ interface TransactionsTableProps {
 }
 
 const TransactionsTable: React.FC<TransactionsTableProps> = props => {
+  const history = useHistory<Transaction>();
   const { isFetching, transactions } = props;
 
   const getHighlighter = () => ({
-    render: (text: string) => (
-      <Highlighter
-        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-        searchWords={[props.searchText]}
-        autoEscape
-        textToHighlight={text || ''}
-      />
-    )
+    render(text: string, record: Transaction) {
+      return {
+        props: {
+          style: {
+            background: record.isFromTreatment
+              ? 'rgb(59, 59, 221)'
+              : record.amount > 0
+              ? 'rgb(1, 100, 1)'
+              : 'rgb(174, 230, 64)'
+          }
+        },
+        children: (
+          <Highlighter
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            searchWords={[props.searchText]}
+            autoEscape
+            textToHighlight={text || ''}
+          />
+        )
+      };
+    }
   });
 
   const tableUtils = new TableUtils<Transaction>();
@@ -36,36 +50,62 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
     tableUtils.getStringColumn(Dictionary.transactionForm.note, 'note', getHighlighter()),
     {
       ...tableUtils.getNumberColumn(Dictionary.transactionForm.amount, 'amount'),
-      render: (text: number) => (
-        <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-          searchWords={[props.searchText]}
-          autoEscape
-          textToHighlight={Math.abs(text).toString() || ''}
-        />
-      )
+      render(text: number, record) {
+        return {
+          props: {
+            style: {
+              background: record.isFromTreatment
+                ? 'rgb(59, 59, 221)'
+                : record.amount > 0
+                ? 'rgb(1, 100, 1)'
+                : 'rgb(174, 230, 64)'
+            }
+          },
+          children: (
+            <Highlighter
+              highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+              searchWords={[props.searchText]}
+              autoEscape
+              textToHighlight={Math.abs(text).toString() || ''}
+            />
+          )
+        };
+      }
     },
     {
       ...tableUtils.getDateColumn(Dictionary.transactionForm.createdAt, 'createdAt'),
-      render: createdAt =>
-        createdAt ? (
-          <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-            searchWords={[props.searchText]}
-            autoEscape
-            textToHighlight={moment(createdAt).format(DATE_FORMAT) || ''}
-          />
-        ) : null
+      render(createdAt, record) {
+        return {
+          props: {
+            style: {
+              background: record.isFromTreatment
+                ? 'rgb(59, 59, 221)'
+                : record.amount > 0
+                ? 'rgb(1, 100, 1)'
+                : 'rgb(174, 230, 64)'
+            }
+          },
+          children: createdAt ? (
+            <Highlighter
+              highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+              searchWords={[props.searchText]}
+              autoEscape
+              textToHighlight={moment(createdAt).format(DATE_FORMAT) || ''}
+            />
+          ) : null
+        };
+      }
     }
   ];
   return (
     <Table<Transaction>
       pagination={{ pageSize: 8 }}
-      rowClassName={(record, index) => {
-        if (record.isFromTreatment) {
-          return 'table-row-from-treatment';
-        } else if (record.amount > 0) return 'table-row-income';
-        return 'table-row-expenditure';
+      onRow={(record, rowIndex) => {
+        return {
+          onClick: () => {
+            history.push(routes.addTreatment);
+          }
+        };
       }}
       loading={isFetching}
       columns={columns}
