@@ -1,2 +1,11 @@
 @import 'common';
 @import '~antd/dist/antd.css';
+
+td {
+  white-space: pre-wrap;
+}
+
+.highlighted-text {
+  background-color: #ffc069;
+  padding: 0;
+}

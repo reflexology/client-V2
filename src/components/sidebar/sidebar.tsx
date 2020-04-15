@@ -40,7 +40,7 @@ const Sidebar: React.FC<any> = props => {
             <BellOutlined />
             <span>{Dictionary.sidebar.reminders}</span>
           </Menu.Item>
-          <Menu.Item key='3'>
+          <Menu.Item key='3' onClick={() => history.push(routes.transactions)}>
             <DollarCircleOutlined />
             <span>{Dictionary.sidebar.incomeAndExpense}</span>
           </Menu.Item>

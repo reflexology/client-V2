@@ -24,7 +24,7 @@ const AddTransaction: React.FC<Props> = props => {
     setError('');
 
     TransactionService.addTransaction(values)
-      .then(() => props.history.push(routes.patients))
+      .then(() => props.history.push(routes.transactions))
       .catch(err => {
         setError(CommonService.getErrorMessage(err));
         setIsSubmitting(false);

@@ -57,7 +57,7 @@ class TableUtils<T extends { [key: string]: any }> {
 
         if (formattedDate.toString().includes(searchQuery)) return true;
         else continue;
-      } else if (obj[name]?.toString().toLowerCase().includes(searchQuery)) return true;
+      } else if (obj[name]?.toString().toLowerCase().includes(searchQuery.toLowerCase())) return true;
     }
     return false;
   };

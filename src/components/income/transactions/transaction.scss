@@ -1,0 +1,17 @@
+.clickable-row {
+  cursor: pointer;
+}
+
+.amount {
+  &-income {
+    color: #008000;
+  }
+
+  &-expenditure {
+    color: #f00;
+  }
+
+  &-treatment {
+    color: #00f;
+  }
+}
