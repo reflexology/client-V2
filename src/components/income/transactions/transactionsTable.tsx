@@ -26,7 +26,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
     render(text: string) {
       return (
         <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          highlightClassName='highlighted-text'
           searchWords={[props.searchText]}
           autoEscape
           textToHighlight={text || ''}
@@ -36,6 +36,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
   });
 
   const tableUtils = new TableUtils<Transaction>();
+
   const columns: ColumnsType<Transaction> = [
     tableUtils.getStringColumn(Dictionary.transactionForm.description, 'description', getHighlighter()),
     tableUtils.getStringColumn(Dictionary.transactionForm.note, 'note', getHighlighter()),
@@ -44,14 +45,11 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
       render(text: number, record) {
         return {
           props: {
-            style: {
-              whiteSpace: 'pre-wrap',
-              color: record.isFromTreatment ? 'rgb(59, 59, 221)' : record.amount > 0 ? 'green' : 'red'
-            }
+            className: `amount-${record.isFromTreatment ? 'treatment' : record.amount > 0 ? 'income' : 'expenditure'}`
           },
           children: (
             <Highlighter
-              highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+              highlightClassName='highlighted-text'
               searchWords={[props.searchText]}
               autoEscape
               textToHighlight={Math.abs(text).toString() || ''}
@@ -65,7 +63,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
       render: createdAt =>
         createdAt ? (
           <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            highlightClassName='highlighted-text'
             searchWords={[props.searchText]}
             autoEscape
             textToHighlight={moment(createdAt).format(DATE_FORMAT) || ''}
@@ -73,17 +71,14 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
         ) : null
     }
   ];
+
   return (
     <Table<Transaction>
       pagination={{ pageSize: 8 }}
-      onRow={(record, rowIndex) => {
-        return {
-          onClick: () => {
-            history.push(routes.addTreatment);
-          }
-        };
-      }}
-      rowClassName={'table-row'}
+      onRow={record => ({
+        onClick: () => (record.isFromTreatment ? history.push(routes.addTreatment) : null)
+      })}
+      rowClassName={record => (record.isFromTreatment ? 'clickable-row' : '')}
       loading={isFetching}
       columns={columns}
       dataSource={transactions}

@@ -23,7 +23,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
   const getHighlighter = () => ({
     render: (text: string) => (
       <Highlighter
-        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+        highlightClassName='highlighted-text'
         searchWords={[props.searchText]}
         autoEscape
         textToHighlight={text || ''}
@@ -51,7 +51,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       render: lastTreatment =>
         lastTreatment ? (
           <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            highlightClassName='highlighted-text'
             searchWords={[props.searchText]}
             autoEscape
             textToHighlight={moment(lastTreatment).format(DATE_FORMAT) || ''}
