@@ -1,3 +1,5 @@
+import './transaction.scss';
+
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { routes } from 'components/router/routes';
@@ -21,26 +23,15 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
   const { isFetching, transactions } = props;
 
   const getHighlighter = () => ({
-    render(text: string, record: Transaction) {
-      return {
-        props: {
-          style: {
-            background: record.isFromTreatment
-              ? 'rgb(59, 59, 221)'
-              : record.amount > 0
-              ? 'rgb(1, 100, 1)'
-              : 'rgb(174, 230, 64)'
-          }
-        },
-        children: (
-          <Highlighter
-            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-            searchWords={[props.searchText]}
-            autoEscape
-            textToHighlight={text || ''}
-          />
-        )
-      };
+    render(text: string) {
+      return (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[props.searchText]}
+          autoEscape
+          textToHighlight={text || ''}
+        />
+      );
     }
   });
 
@@ -54,11 +45,8 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
         return {
           props: {
             style: {
-              background: record.isFromTreatment
-                ? 'rgb(59, 59, 221)'
-                : record.amount > 0
-                ? 'rgb(1, 100, 1)'
-                : 'rgb(174, 230, 64)'
+              whiteSpace: 'pre-wrap',
+              color: record.isFromTreatment ? 'rgb(59, 59, 221)' : record.amount > 0 ? 'green' : 'red'
             }
           },
           children: (
@@ -74,27 +62,15 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
     },
     {
       ...tableUtils.getDateColumn(Dictionary.transactionForm.createdAt, 'createdAt'),
-      render(createdAt, record) {
-        return {
-          props: {
-            style: {
-              background: record.isFromTreatment
-                ? 'rgb(59, 59, 221)'
-                : record.amount > 0
-                ? 'rgb(1, 100, 1)'
-                : 'rgb(174, 230, 64)'
-            }
-          },
-          children: createdAt ? (
-            <Highlighter
-              highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-              searchWords={[props.searchText]}
-              autoEscape
-              textToHighlight={moment(createdAt).format(DATE_FORMAT) || ''}
-            />
-          ) : null
-        };
-      }
+      render: createdAt =>
+        createdAt ? (
+          <Highlighter
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            searchWords={[props.searchText]}
+            autoEscape
+            textToHighlight={moment(createdAt).format(DATE_FORMAT) || ''}
+          />
+        ) : null
     }
   ];
   return (
@@ -107,6 +83,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
           }
         };
       }}
+      rowClassName={'table-row'}
       loading={isFetching}
       columns={columns}
       dataSource={transactions}

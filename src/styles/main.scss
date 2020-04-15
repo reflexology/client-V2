@@ -1,2 +1,6 @@
 @import 'common';
 @import '~antd/dist/antd.css';
+
+td {
+  white-space: pre-wrap;
+}
