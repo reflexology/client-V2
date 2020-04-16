@@ -52,6 +52,9 @@ const TransactionContainer: React.FC<TransactionContainerProps> = props => {
             delay={250}
           />
         </Col>
+        <Col>
+          <Button onClick={() => props.history.push(routes.amounts)}>הצג סכומים</Button>
+        </Col>
       </Row>
       <TransactionsTable searchText={searchQuery} isFetching={isFetching} transactions={filteredTransactions} />
     </div>

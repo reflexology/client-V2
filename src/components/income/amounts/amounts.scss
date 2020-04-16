@@ -1,0 +1,13 @@
+@import '../../../styles/common';
+
+.amounts-container {
+  .amounts-card {
+    @extend .card;
+
+    .amounts-h2-wrapper {
+      @extend .header-wrapper;
+
+      margin-bottom: 15px;
+    }
+  }
+}

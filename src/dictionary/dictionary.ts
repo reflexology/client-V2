@@ -40,6 +40,9 @@ const Dictionary = {
   addTransaction: {
     header: 'הוסף הכנסה/הוצאה'
   },
+  amount: {
+    header: 'סכומים'
+  },
   transaction: {
     addTransactionButton: 'הוסף הכנסה/הוצאה'
   },

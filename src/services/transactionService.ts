@@ -32,6 +32,9 @@ const TransactionService = {
       { label: Dictionary.transactionForm.income, value: 'Income' },
       { label: Dictionary.transactionForm.expenditure, value: 'Expenditure' }
     ];
+  },
+  getAmountByDates() {
+    return;
   }
 };
 
