@@ -13,6 +13,12 @@ export interface Transaction {
   transactionType: 'Income' | 'Expenditure';
 }
 
+export interface Report {
+  income: number;
+  expenditure: number;
+  netAmount: number;
+}
+
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const TransactionService = {
@@ -33,8 +39,10 @@ const TransactionService = {
       { label: Dictionary.transactionForm.expenditure, value: 'Expenditure' }
     ];
   },
-  getAmountByDates() {
-    return;
+  getReport(startDate: Date, endDate: Date) {
+    return HttpService.get<Report>(
+      baseEndPoint + '/incomeAndExpenditure/report?startDate=' + startDate + '&endDate=' + endDate
+    );
   }
 };
 
