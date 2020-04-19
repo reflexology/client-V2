@@ -53,7 +53,7 @@ const TransactionContainer: React.FC<TransactionContainerProps> = props => {
           />
         </Col>
         <Col>
-          <Button onClick={() => props.history.push(routes.reports)}>הצג סכומים</Button>
+          <Button onClick={() => props.history.push(routes.reports)}>{Dictionary.report.showReport}</Button>
         </Col>
       </Row>
       <TransactionsTable searchText={searchQuery} isFetching={isFetching} transactions={filteredTransactions} />

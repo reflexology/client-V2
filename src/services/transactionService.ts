@@ -1,4 +1,5 @@
 import Dictionary from 'dictionary/dictionary';
+import moment from 'moment';
 
 import HttpService from './httpService';
 
@@ -39,9 +40,9 @@ const TransactionService = {
       { label: Dictionary.transactionForm.expenditure, value: 'Expenditure' }
     ];
   },
-  getReport(startDate: Date, endDate: Date) {
+  getReport(startDate: moment.Moment, endDate: moment.Moment) {
     return HttpService.get<Report>(
-      baseEndPoint + '/incomeAndExpenditure/report?startDate=' + startDate + '&endDate=' + endDate
+      baseEndPoint + '/incomeAndExpenditure/report?startDate=' + startDate.toDate() + '&endDate=' + endDate.toDate()
     );
   }
 };

@@ -1,13 +1,17 @@
 @import '../../../styles/common';
 
-.amounts-container {
-  .amounts-card {
+.report-container {
+  .report-card {
     @extend .card;
 
-    .amounts-h2-wrapper {
+    .report-h2-wrapper {
       @extend .header-wrapper;
 
       margin-bottom: 15px;
     }
   }
+}
+
+.income {
+  color: #008000;
 }
