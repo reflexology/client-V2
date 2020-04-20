@@ -21,9 +21,9 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
     TreatmentService.getLastTreatment(props.match.params.patientId)
       .then(({ lastTreatment, balance }) => {
         setInitialValues({
-          treatmentNumber: (lastTreatment.treatmentNumber || 0) + 1,
-          referredBy: lastTreatment.referredBy,
-          treatmentPrice: lastTreatment.treatmentPrice
+          treatmentNumber: (lastTreatment?.treatmentNumber || 0) + 1,
+          referredBy: lastTreatment?.referredBy,
+          treatmentPrice: lastTreatment?.treatmentPrice
         });
         setBalance(balance);
       })
