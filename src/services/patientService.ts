@@ -7,7 +7,7 @@ export interface Patient {
   firstName: string;
   lastName: string;
   momName?: string;
-  birthday?: Date;
+  birthday?: Date | string;
   age?: string;
   phone?: string;
   email?: string;

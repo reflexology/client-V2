@@ -2,26 +2,33 @@ import { Col, message, Row, Spin } from 'antd';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import CommonService from 'services/commonService';
 import PatientService, { Patient } from 'services/patientService';
+import { DATE_FORMAT } from 'utils/constants';
 
 import PatientForm from '../patientForm/patientForm';
 
 interface EditPatientProps extends RouteComponentProps<{ patientId: string }, any, Patient> {}
 
 const EditPatient: React.FC<EditPatientProps> = props => {
+  const getPatient = (patient: Patient): Patient => ({
+    ...patient,
+    birthday: patient?.birthday ? moment(patient.birthday).format(DATE_FORMAT).toString() : undefined
+  });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState('');
-  const [patient, setPatient] = useState<Patient>(props.location.state);
+  const [patient, setPatient] = useState<Patient>(getPatient(props.location.state));
 
   useEffect(() => {
     if (!patient) {
       setIsFetching(true);
       PatientService.getPatient(props.match.params.patientId)
-        .then(res => setPatient(res))
+        .then(res => setPatient(getPatient(res)))
         .catch(() => {
           message.error(Dictionary.generalErrorAndRefresh);
         })

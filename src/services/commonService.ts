@@ -7,6 +7,7 @@ const CommonService = {
   getErrorMessage(err: AxiosError): string {
     return (Dictionary.serverErrors as { [key: string]: string })[err.response?.data?.msg] || Dictionary.generalError;
   },
+
   getDurationFromNow(start: moment.Moment) {
     const now = moment.utc();
 
