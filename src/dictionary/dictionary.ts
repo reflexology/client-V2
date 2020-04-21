@@ -40,6 +40,17 @@ const Dictionary = {
   addTransaction: {
     header: 'הוסף הכנסה/הוצאה'
   },
+  report: {
+    header: 'סכומים',
+    title: 'פרטים',
+    startDate: 'תאריך התחלה',
+    endDate: 'תאריך סיום',
+    income: 'הכנסה',
+    expenditure: 'הוצאה',
+    netAmount: 'נטו',
+    showReport: 'הצג דוח',
+    thisMonth: 'החודש הזה'
+  },
   transaction: {
     addTransactionButton: 'הוסף הכנסה/הוצאה'
   },
