@@ -11,8 +11,7 @@ import { DATE_FORMAT } from 'utils/constants';
 export interface ReportsProps {}
 
 const Reports: React.FC<ReportsProps> = () => {
-  const { RangePicker } = DatePicker;
-  const [report, setDetails] = useState<Report>();
+  const [report, setReport] = useState<Report>();
   const [startDate, setStartDate] = useState(moment().subtract(1, 'month').add(1, 'day'));
   const [endDate, setEndDate] = useState(moment());
 
@@ -21,7 +20,7 @@ const Reports: React.FC<ReportsProps> = () => {
   const getReport = () => {
     if (startDate && endDate)
       TransactionService.getReport(startDate, endDate)
-        .then(setDetails)
+        .then(setReport)
         .catch(() => message.error(Dictionary.generalErrorAndRefresh));
   };
 
@@ -37,9 +36,9 @@ const Reports: React.FC<ReportsProps> = () => {
           <div className='report-h2-wrapper'>
             <h2>{Dictionary.report.header}</h2>
           </div>
-          <RangePicker
+          <DatePicker.RangePicker
             ranges={{
-              'החודש הזה': [moment().startOf('month'), moment().endOf('month')]
+              [Dictionary.report.thisMonth]: [moment().startOf('month'), moment().endOf('month')]
             }}
             onChange={handleChange}
             value={[startDate, endDate]}

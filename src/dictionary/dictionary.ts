@@ -48,7 +48,8 @@ const Dictionary = {
     income: 'הכנסה',
     expenditure: 'הוצאה',
     netAmount: 'נטו',
-    showReport: 'הצג דוח'
+    showReport: 'הצג דוח',
+    thisMonth: 'החודש הזה'
   },
   transaction: {
     addTransactionButton: 'הוסף הכנסה/הוצאה'
