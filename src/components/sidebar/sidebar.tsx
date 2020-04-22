@@ -11,7 +11,7 @@ import { Avatar, Layout, Menu, Popover } from 'antd';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import AuthService from 'services/authService';
 
 import UserPopoverContent from './userPopoverContent';
@@ -21,8 +21,14 @@ const { Header, Content, Sider } = Layout;
 const collapsedKey = 'sidePanel';
 
 const Sidebar: React.FC<any> = props => {
-  const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
   const history = useHistory();
+  const location = useLocation();
+
+  const [selectedPage, setSelectedPage] = useState(
+    Object.values(routes).includes(location.pathname as any) ? location.pathname : routes.patients
+  );
+
+  const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
   const toggle = () => setCollapsed(!collapsed);
 
   useEffect(() => localStorage.setItem(collapsedKey, collapsed ? 'collapsed' : 'expanded'), [collapsed]);
@@ -31,8 +37,14 @@ const Sidebar: React.FC<any> = props => {
     <Layout dir='rtl' className='layout-container'>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className='logo' />
-        <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline' style={{ borderLeft: 'none' }}>
-          <Menu.Item key='1' onClick={() => history.push(routes.patients)}>
+        <Menu
+          theme='dark'
+          selectedKeys={[selectedPage]}
+          onSelect={e => setSelectedPage(e.key as routes)}
+          mode='inline'
+          style={{ borderLeft: 'none' }}
+        >
+          <Menu.Item key={routes.patients} onClick={() => history.push(routes.patients)}>
             <TeamOutlined />
             <span>{Dictionary.sidebar.patients}</span>
           </Menu.Item>
@@ -40,7 +52,7 @@ const Sidebar: React.FC<any> = props => {
             <BellOutlined />
             <span>{Dictionary.sidebar.reminders}</span>
           </Menu.Item>
-          <Menu.Item key='3' onClick={() => history.push(routes.transactions)}>
+          <Menu.Item key={routes.transactions} onClick={() => history.push(routes.transactions)}>
             <DollarCircleOutlined />
             <span>{Dictionary.sidebar.incomeAndExpense}</span>
           </Menu.Item>
