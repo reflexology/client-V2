@@ -1,3 +1,4 @@
+import DiagnosisService from './diagnosesService';
 import HttpService from './httpService';
 
 export interface Treatment {

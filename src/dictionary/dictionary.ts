@@ -71,7 +71,8 @@ const Dictionary = {
     remarks: 'הערות',
     reminders: 'תזכורות',
     reminderDate: 'תאריך תזכורת',
-    inAWeek: 'עוד שבוע'
+    inAWeek: 'עוד שבוע',
+    errorFetchingDiagnoses: 'היתה בעיה לטעון את האבחונים מהשרת..'
   },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',
