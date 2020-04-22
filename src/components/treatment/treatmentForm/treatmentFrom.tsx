@@ -10,6 +10,7 @@ interface TreatmentFromProps {
   error: string;
   isLoading: boolean;
   initialValues?: Partial<Treatment>;
+  balance: number;
 }
 
 const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
@@ -65,7 +66,15 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
             placeholder={Dictionary.treatmentForm.treatmentNumber}
           />
         </Form.Item>
-        <Form.Item style={{ display: 'inline-block' }} name='treatmentPrice' hasFeedback>
+        <Form.Item
+          style={{ display: 'inline-block' }}
+          name='treatmentPrice'
+          extra={Dictionary.treatmentForm.treatmentPriceExtra.format(
+            props.balance >= 0 ? Dictionary.treatmentForm.credit : Dictionary.treatmentForm.debt,
+            Math.abs(props.balance).toString()
+          )}
+          hasFeedback
+        >
           <InputNumber
             style={{ width: '100%' }}
             autoComplete='off'
