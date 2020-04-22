@@ -12,19 +12,21 @@ interface AddTreatmentProps extends RouteComponentProps<{ patientId: string }> {
 
 const AddTreatment: React.FC<AddTreatmentProps> = props => {
   const [initialValues, setInitialValues] = useState<Partial<Treatment>>();
+  const [balance, setBalance] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     TreatmentService.getLastTreatment(props.match.params.patientId)
-      .then(treatment =>
+      .then(({ lastTreatment, balance }) => {
         setInitialValues({
-          treatmentNumber: (treatment.treatmentNumber || 0) + 1,
-          referredBy: treatment.referredBy,
-          treatmentPrice: treatment.treatmentPrice
-        })
-      )
+          treatmentNumber: (lastTreatment?.treatmentNumber || 0) + 1,
+          referredBy: lastTreatment?.referredBy,
+          treatmentPrice: lastTreatment?.treatmentPrice
+        });
+        setBalance(balance);
+      })
       .finally(() => setIsFetching(false));
   }, []);
 
@@ -43,7 +45,7 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
   return (
     <Spin spinning={isFetching}>
       <Row justify='center' className='add-patient-container'>
-        <Col span={10}>
+        <Col span={12}>
           <div className='add-patient-card'>
             <div className='add-patient-h2-wrapper'>
               <h2>{Dictionary.addTreatment.header}</h2>
@@ -53,6 +55,7 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
               isLoading={isSubmitting}
               onSubmit={handleSubmit}
               error={error}
+              balance={balance}
             />
           </div>
         </Col>
