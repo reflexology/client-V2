@@ -41,6 +41,10 @@ const PatientForm: React.FC<PatientFormProps> = props => {
         <Input autoComplete='off' placeholder={Dictionary.patientForm.momName} />
       </Form.Item>
 
+      <Form.Item name='profession' hasFeedback>
+        <Input autoComplete='off' placeholder={Dictionary.patientForm.profession} />
+      </Form.Item>
+
       <Form.Item name='birthday' hasFeedback>
         <ReactInputMask
           onBlur={e => {
@@ -91,6 +95,15 @@ const PatientForm: React.FC<PatientFormProps> = props => {
           </Radio.Group>
         </Form.Item>
       </Row>
+
+      <Form.Item
+        name='childrenAge'
+        hasFeedback
+        style={{ display: form.getFieldValue('childrenCount') === undefined ? 'none' : 'inline-block' }}
+        rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
+      >
+        <InputNumber style={{ width: '30%' }} autoComplete='off' />
+      </Form.Item>
 
       <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}>
         {() => (
