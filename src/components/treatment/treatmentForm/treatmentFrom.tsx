@@ -1,4 +1,5 @@
 import { Alert, Button, DatePicker, Form, Input, InputNumber, message, Row, Select } from 'antd';
+import { Store } from 'antd/lib/form/interface';
 import TextArea from 'antd/lib/input/TextArea';
 import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
@@ -7,7 +8,7 @@ import DiagnosisService from 'services/diagnosesService';
 import { Treatment } from 'services/treatmentService';
 
 interface TreatmentFromProps {
-  onSubmit: (values: any) => void;
+  onSubmit: (values: any, newDiagnoses: string[]) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Partial<Treatment>;
@@ -26,8 +27,13 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
       .catch(() => message.error(Dictionary.treatmentForm.errorFetchingDiagnoses));
   }, []);
 
+  const onSubmit = (values: Store) => {
+    const newDiagnoses = (values as Treatment).diagnoses?.filter(diagnosis => !diagnoses?.includes(diagnosis));
+    props.onSubmit(values, newDiagnoses);
+  };
+
   return (
-    <Form form={form} initialValues={props.initialValues} onFinish={props.onSubmit}>
+    <Form form={form} initialValues={props.initialValues} onFinish={onSubmit}>
       <Form.Item name='treatmentDate'>
         <DatePicker
           showTime

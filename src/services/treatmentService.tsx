@@ -1,4 +1,3 @@
-import DiagnosisService from './diagnosesService';
 import HttpService from './httpService';
 
 export interface Treatment {
@@ -16,6 +15,7 @@ export interface Treatment {
   reminderDate?: Date;
   isReminderCompleted?: boolean;
   createdBy?: string;
+  diagnoses: string[];
 }
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 

@@ -105,6 +105,7 @@ const Dictionary = {
   },
   generalError: 'בעיה בלתי צפויה התרחשה בשרת',
   generalErrorAndRefresh: 'בעיה בלתי צפויה התרחשה בשרת, נסה לרענן את הדף',
+  cantSaveDiagnosesError: 'היתה בעיה לשמור את האבחונים החדשים',
   male: 'זכר',
   female: 'נקבה',
   search: 'חפש..',
