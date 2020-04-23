@@ -1,6 +1,6 @@
 import 'moment/locale/he';
 
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, message } from 'antd';
 import heIL from 'antd/es/locale/he_IL';
 import ErrorBoundary from 'components/errorBoundaries/errorBoundary';
 import Sidebar from 'components/sidebar/sidebar';
@@ -12,6 +12,8 @@ import Routes from './components/router/routes';
 import history from './utils/history';
 
 moment.locale('he');
+
+message.config({ rtl: true, duration: 3 });
 
 const App: React.FC = () => {
   const [locale] = useState(heIL);
