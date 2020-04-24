@@ -1,9 +1,10 @@
-import { Col, Row, Spin } from 'antd';
+import { Col, message, Row, Spin } from 'antd';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import CommonService from 'services/commonService';
+import DiagnosisService from 'services/diagnosesService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 
 import TreatmentFrom from '../treatmentForm/treatmentFrom';
@@ -30,16 +31,20 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
       .finally(() => setIsFetching(false));
   }, []);
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: any, newDiagnoses: string[]) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
     setError('');
+
     TreatmentService.addTreatment(props.match.params.patientId, values)
       .then(() => props.history.push(routes.patients))
       .catch(err => {
         setError(CommonService.getErrorMessage(err));
         setIsSubmitting(false);
       });
+
+    if (newDiagnoses?.length > 0)
+      DiagnosisService.addDiagnoses(newDiagnoses).catch(() => message.error(Dictionary.cantSaveDiagnosesError));
   };
 
   return (
