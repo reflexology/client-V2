@@ -4,12 +4,22 @@
     right: 30px;
     top: 10px;
 
-    .ant-page-header-heading-title {
-      line-height: 30px;
-    }
-  }
+    .ant-page-header-heading {
+      cursor: pointer;
 
-  .back-text {
-    cursor: pointer;
+      &:hover {
+        .ant-page-header-back-button {
+          color: #40a9ff;
+        }
+      }
+    }
+
+    .ant-page-header-heading-title {
+      margin-bottom: 4px;
+    }
+
+    .ant-page-header-back {
+      margin-left: 10px;
+    }
   }
 }
