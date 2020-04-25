@@ -85,7 +85,8 @@ const Dictionary = {
     remarks: 'הערות',
     reminders: 'תזכורות',
     reminderDate: 'תאריך תזכורת',
-    inAWeek: 'עוד שבוע'
+    inAWeek: 'עוד שבוע',
+    errorFetchingDiagnoses: 'היתה בעיה לטעון את האבחונים מהשרת..'
   },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',
@@ -104,6 +105,7 @@ const Dictionary = {
   },
   generalError: 'בעיה בלתי צפויה התרחשה בשרת',
   generalErrorAndRefresh: 'בעיה בלתי צפויה התרחשה בשרת, נסה לרענן את הדף',
+  cantSaveDiagnosesError: 'היתה בעיה לשמור את האבחונים החדשים',
   male: 'זכר',
   female: 'נקבה',
   search: 'חפש..',

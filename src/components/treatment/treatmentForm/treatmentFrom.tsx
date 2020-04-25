@@ -1,12 +1,14 @@
-import { Alert, Button, DatePicker, Form, Input, InputNumber, Row, Select, Tag } from 'antd';
+import { Alert, Button, DatePicker, Form, Input, InputNumber, message, Row, Select } from 'antd';
+import { Store } from 'antd/lib/form/interface';
 import TextArea from 'antd/lib/input/TextArea';
 import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import DiagnosisService from 'services/diagnosesService';
 import { Treatment } from 'services/treatmentService';
 
 interface TreatmentFromProps {
-  onSubmit: (values: any) => void;
+  onSubmit: (values: any, newDiagnoses: string[]) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Partial<Treatment>;
@@ -15,29 +17,23 @@ interface TreatmentFromProps {
 
 const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
   const [form] = Form.useForm();
+  const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
 
   useEffect(() => form.resetFields(), [props.initialValues]);
-  const tagRender = (props: any) => {
-    console.log(props);
 
-    const { label, value, closable, onClose } = props;
+  useEffect(() => {
+    DiagnosisService.getDiagnoses()
+      .then(setDiagnoses)
+      .catch(() => message.error(Dictionary.treatmentForm.errorFetchingDiagnoses));
+  }, []);
 
-    return (
-      <Tag color={value} closable={closable} onClose={onClose} style={{ marginRight: 3 }}>
-        {label}
-      </Tag>
-    );
+  const onSubmit = (values: Store) => {
+    const newDiagnoses = (values as Treatment).diagnoses?.filter(diagnosis => !diagnoses?.includes(diagnosis));
+    props.onSubmit(values, newDiagnoses);
   };
 
-  const options = [
-    { value: 'gold', label: 'תזונה' },
-    { value: 'lime', label: 'סוכר' },
-    { value: 'green', label: 'רפלקסולוגיה' },
-    { value: 'cyan', label: 'someword' }
-  ];
-
   return (
-    <Form form={form} initialValues={props.initialValues} onFinish={props.onSubmit}>
+    <Form form={form} initialValues={props.initialValues} onFinish={onSubmit}>
       <Form.Item name='treatmentDate'>
         <DatePicker
           showTime
@@ -51,6 +47,15 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
       </Form.Item>
       <Form.Item name='visitReason' hasFeedback>
         <TextArea autoSize autoComplete='off' placeholder={Dictionary.treatmentForm.visitReason} />
+      </Form.Item>
+      <Form.Item name='diagnoses' hasFeedback>
+        <Select showArrow loading={!diagnoses} placeholder={Dictionary.treatmentForm.diagnoses} mode='tags'>
+          {diagnoses?.map(diagnosis => (
+            <Select.Option value={diagnosis} key={diagnosis}>
+              {diagnosis}
+            </Select.Option>
+          ))}
+        </Select>
       </Form.Item>
       <Form.Item name='findings' hasFeedback>
         <TextArea autoSize autoComplete='off' placeholder={Dictionary.treatmentForm.findings} />
@@ -100,19 +105,6 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
             </Row>
           )}
         />
-      </Form.Item>
-      <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}>
-        {() => (
-          <Form.Item name='maritalStatus' hasFeedback>
-            <Select
-              placeholder={Dictionary.treatmentForm.diagnoses}
-              mode='tags'
-              tagRender={tagRender}
-              style={{ width: '100%' }}
-              options={options}
-            />
-          </Form.Item>
-        )}
       </Form.Item>
       ,{props.error && <Alert message={props.error} type='error' showIcon />}
       <Form.Item>

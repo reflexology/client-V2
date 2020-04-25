@@ -64,17 +64,11 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       dataIndex: 'diagnoses',
       render: (diagnoses: string[]) => (
         <span>
-          {diagnoses?.map(diagnosis => {
-            let color = diagnosis.length > 5 ? 'geekblue' : 'green';
-            if (diagnosis === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={diagnosis}>
-                {diagnosis.toUpperCase()}
-              </Tag>
-            );
-          })}
+          {diagnoses?.map(diagnosis => (
+            <Tag color='green' key={diagnosis}>
+              {diagnosis.toUpperCase()}
+            </Tag>
+          ))}
         </span>
       )
     },
