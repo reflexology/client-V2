@@ -63,13 +63,13 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       key: 'diagnoses',
       dataIndex: 'diagnoses',
       render: (diagnoses: string[]) => (
-        <span>
+        <div className='diagnoses-container'>
           {diagnoses?.map(diagnosis => (
             <Tag color='green' key={diagnosis}>
               {diagnosis.toUpperCase()}
             </Tag>
           ))}
-        </span>
+        </div>
       )
     },
     {
@@ -87,9 +87,10 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       )
     }
   ];
+
   return (
     <Table<Patient>
-      pagination={{ pageSize: 8 }}
+      pagination={{ pageSize: 7 }}
       loading={props.isFetching}
       columns={columns}
       dataSource={props.patients}

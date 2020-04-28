@@ -1,5 +1,15 @@
 .patients-container {
   height: 100%;
+
+  .diagnoses-container {
+    max-height: 50px;
+    -ms-overflow-style: none;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .email-check:active {

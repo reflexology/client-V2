@@ -23,8 +23,9 @@ export interface Patient {
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const PatientService = {
-  getPatients() {
-    return HttpService.get<Patient[]>(baseEndPoint + '/patient');
+  async getPatients() {
+    const patients = await HttpService.get<Patient[]>(baseEndPoint + '/patient');
+    return patients.map(patient => ({ ...patient, key: patient._id }));
   },
   getPatient(patientId: string) {
     return HttpService.get<Patient>(baseEndPoint + '/patient/' + patientId);
