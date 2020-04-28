@@ -36,7 +36,8 @@ const Dictionary = {
     minChildrenCount: 'ערך שגוי',
     firstNameRequired: 'חובה למלא שם פרטי',
     lastNameRequired: 'חובה למלא שם משפחה',
-    save: 'שמור'
+    save: 'שמור',
+    saveAndAddTreatment: 'שמור והוסף טיפול'
   },
   addTransaction: {
     header: 'הוסף הכנסה/הוצאה'

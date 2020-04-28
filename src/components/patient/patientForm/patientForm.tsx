@@ -1,3 +1,5 @@
+import './patientForm.scss';
+
 import { Alert, Button, Form, Input, InputNumber, Radio, Row, Select } from 'antd';
 import Dictionary from 'dictionary/dictionary';
 import React, { useEffect } from 'react';
@@ -96,14 +98,23 @@ const PatientForm: React.FC<PatientFormProps> = props => {
         </Form.Item>
       </Row>
 
-      <Form.Item
-        name='childrenAge'
-        hasFeedback
-        style={{ display: form.getFieldValue('childrenCount') === undefined ? 'none' : 'inline-block' }}
-        rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
-      >
-        <InputNumber style={{ width: '30%' }} autoComplete='off' />
-      </Form.Item>
+      <div className='flex'>
+        <Form.Item shouldUpdate>
+          {() =>
+            Array(form.getFieldValue('childrenCount'))
+              .fill(0)
+              ?.map(i => (
+                <Form.Item
+                  name={'childrenAge' + i}
+                  hasFeedback
+                  rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
+                >
+                  <InputNumber style={{ width: '50%' }} autoComplete='off' />
+                </Form.Item>
+              ))
+          }
+        </Form.Item>
+      </div>
 
       <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}>
         {() => (
@@ -121,11 +132,18 @@ const PatientForm: React.FC<PatientFormProps> = props => {
 
       {props.error && <Alert message={props.error} type='error' showIcon />}
 
-      <Form.Item>
-        <Button block loading={props.isLoading} type='primary' htmlType='submit'>
-          {Dictionary.patientForm.save}
-        </Button>
-      </Form.Item>
+      <Row justify='space-around'>
+        <Form.Item>
+          <Button block loading={props.isLoading} type='primary' htmlType='submit'>
+            {Dictionary.patientForm.save}
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button block loading={props.isLoading} type='primary' htmlType='submit'>
+            {Dictionary.patientForm.saveAndAddTreatment}
+          </Button>
+        </Form.Item>
+      </Row>
     </Form>
   );
 };
