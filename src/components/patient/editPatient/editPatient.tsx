@@ -22,6 +22,7 @@ const EditPatient: React.FC<EditPatientProps> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState('');
+  const [buttonClicked, setButtonClicked] = useState('');
   const [patient, setPatient] = useState<Patient>(getPatient(props.location.state));
 
   useEffect(() => {
@@ -43,11 +44,19 @@ const EditPatient: React.FC<EditPatientProps> = props => {
     setError('');
 
     PatientService.editPatient(props.match.params.patientId, values)
-      .then(() => props.history.push(routes.patients))
+      .then(() => {
+        if (buttonClicked === Dictionary.patientForm.saveAndAddTreatment) {
+          props.history.push(routes.addTreatment.format(patient._id));
+        } else props.history.push(routes.patients);
+      })
       .catch(err => {
         setError(CommonService.getErrorMessage(err));
         setIsSubmitting(false);
       });
+  };
+
+  const handleButtonClick = (buttonClicked: string) => {
+    setButtonClicked(buttonClicked);
   };
 
   return (
@@ -58,7 +67,13 @@ const EditPatient: React.FC<EditPatientProps> = props => {
             <div className='add-patient-h2-wrapper'>
               <h2>{Dictionary.editPatient.header}</h2>
             </div>
-            <PatientForm initialValues={patient} isLoading={isSubmitting} onSubmit={handleSubmit} error={error} />
+            <PatientForm
+              initialValues={patient}
+              isLoading={isSubmitting}
+              onSubmit={handleSubmit}
+              error={error}
+              onButtonClick={handleButtonClick}
+            />
           </div>
         </Col>
       </Row>

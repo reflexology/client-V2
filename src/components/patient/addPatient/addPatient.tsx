@@ -16,6 +16,7 @@ interface Props extends RouteComponentProps {}
 const AddPatient: React.FC<Props> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [buttonClicked, setButtonClicked] = useState('');
 
   const handleSubmit = (values: any) => {
     if (isSubmitting) return;
@@ -24,11 +25,19 @@ const AddPatient: React.FC<Props> = props => {
     setError('');
 
     PatientService.addPatient(values)
-      .then(() => props.history.push(routes.patients))
+      .then(patient => {
+        if (buttonClicked === Dictionary.patientForm.saveAndAddTreatment) {
+          props.history.push(routes.addTreatment.format(patient._id));
+        } else props.history.push(routes.patients);
+      })
       .catch(err => {
         setError(CommonService.getErrorMessage(err));
         setIsSubmitting(false);
       });
+  };
+
+  const handleButtonClick = (buttonClicked: string) => {
+    setButtonClicked(buttonClicked);
   };
 
   return (
@@ -38,7 +47,12 @@ const AddPatient: React.FC<Props> = props => {
           <div className='add-patient-h2-wrapper'>
             <h2>{Dictionary.addPatient.header}</h2>
           </div>
-          <PatientForm isLoading={isSubmitting} onSubmit={handleSubmit} error={error} />
+          <PatientForm
+            isLoading={isSubmitting}
+            onSubmit={handleSubmit}
+            error={error}
+            onButtonClick={handleButtonClick}
+          />
         </div>
       </Col>
     </Row>

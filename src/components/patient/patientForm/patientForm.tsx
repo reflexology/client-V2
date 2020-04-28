@@ -9,6 +9,7 @@ import PatientService, { Patient } from 'services/patientService';
 
 interface PatientFormProps {
   onSubmit: (values: any) => void;
+  onButtonClick: (buttonClicked: string) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Patient;
@@ -134,12 +135,24 @@ const PatientForm: React.FC<PatientFormProps> = props => {
 
       <Row justify='space-around'>
         <Form.Item>
-          <Button block loading={props.isLoading} type='primary' htmlType='submit'>
+          <Button
+            block
+            loading={props.isLoading}
+            type='primary'
+            htmlType='submit'
+            onClick={() => props.onButtonClick(Dictionary.patientForm.save)}
+          >
             {Dictionary.patientForm.save}
           </Button>
         </Form.Item>
         <Form.Item>
-          <Button block loading={props.isLoading} type='primary' htmlType='submit'>
+          <Button
+            block
+            loading={props.isLoading}
+            type='primary'
+            htmlType='submit'
+            onClick={() => props.onButtonClick(Dictionary.patientForm.saveAndAddTreatment)}
+          >
             {Dictionary.patientForm.saveAndAddTreatment}
           </Button>
         </Form.Item>
