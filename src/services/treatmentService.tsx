@@ -1,8 +1,10 @@
+import moment from 'moment';
+
 import HttpService from './httpService';
 
 export interface Treatment {
   _id: string;
-  treatmentDate?: Date;
+  treatmentDate?: Date | moment.Moment;
   referredBy?: string;
   visitReason?: string;
   treatmentNumber: number;
@@ -16,6 +18,11 @@ export interface Treatment {
   isReminderCompleted?: boolean;
   createdBy?: string;
   diagnoses: string[];
+}
+
+export enum TreatmentType {
+  Reflexology = 'Reflexology',
+  Diet = 'Diet'
 }
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 

@@ -1,6 +1,7 @@
 import { Col, message, Row, Spin } from 'antd';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import CommonService from 'services/commonService';
@@ -24,7 +25,8 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
         setInitialValues({
           treatmentNumber: (lastTreatment?.treatmentNumber || 0) + 1,
           referredBy: lastTreatment?.referredBy,
-          treatmentPrice: lastTreatment?.treatmentPrice
+          treatmentPrice: lastTreatment?.treatmentPrice,
+          treatmentDate: moment()
         });
         setBalance(balance);
       })

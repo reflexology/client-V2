@@ -70,6 +70,7 @@ const Dictionary = {
     header: 'הוסף טיפול'
   },
   treatmentForm: {
+    treatmentType: 'סוג טיפול',
     treatmentDate: 'תאריך טיפול',
     referredBy: 'הופנה ע"י',
     visitReason: 'סיבת ביקור',
@@ -86,7 +87,12 @@ const Dictionary = {
     reminders: 'תזכורות',
     reminderDate: 'תאריך תזכורת',
     inAWeek: 'עוד שבוע',
+    treatmentNumberChangedWarning: 'מספר טיפול קודם היה {0} ',
     errorFetchingDiagnoses: 'היתה בעיה לטעון את האבחונים מהשרת..'
+  },
+  treatmentTypes: {
+    diet: 'תזונה',
+    reflexology: 'רפלקסולוגיה'
   },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',
