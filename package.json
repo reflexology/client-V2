@@ -8,15 +8,13 @@
     "antd": "4.2.2",
     "axios": "^0.19.2",
     "axios-auth-refresh": "2.2.6",
-    "formik": "^2.1.4",
     "moment": "^2.25.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-highlight-words": "^0.16.0",
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
-    "yup": "^0.28.5"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "lint": "yarn lint:script && yarn lint:style",
