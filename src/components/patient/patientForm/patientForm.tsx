@@ -117,8 +117,8 @@ const PatientForm: React.FC<PatientFormProps> = props => {
                       <Form.Item noStyle shouldUpdate key={field.key}>
                         <Form.Item
                           {...field}
+                          className='ages'
                           style={{ width: '18%', marginLeft: '1%', marginRight: '1%' }}
-                          className=''
                           hasFeedback
                           rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
                         >
