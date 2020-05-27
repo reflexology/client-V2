@@ -27,9 +27,9 @@ const AddPatient: React.FC<Props> = props => {
     values.childrenAges = values.childrenAges?.filter((childAge: number) => !!childAge);
     PatientService.addPatient(values)
       .then(patient => {
-        if (buttonClicked === Dictionary.patientForm.saveAndAddTreatment) {
+        if (buttonClicked === Dictionary.patientForm.saveAndAddTreatment)
           props.history.push(routes.addTreatment.format(patient._id));
-        } else props.history.push(routes.patients);
+        else props.history.push(routes.patients);
       })
       .catch(err => {
         setError(CommonService.getErrorMessage(err));
@@ -37,9 +37,7 @@ const AddPatient: React.FC<Props> = props => {
       });
   };
 
-  const handleButtonClick = (buttonClicked: string) => {
-    setButtonClicked(buttonClicked);
-  };
+  const handleButtonClick = (buttonClicked: string) => setButtonClicked(buttonClicked);
 
   return (
     <Row justify='center' className='add-patient-container'>

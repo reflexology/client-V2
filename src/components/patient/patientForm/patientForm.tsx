@@ -86,8 +86,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
               if (childrenCount !== undefined)
                 form.setFieldsValue({
                   ...form.getFieldsValue(),
-                  childrenAges:
-                    childrenCount > 0 ? Array(childrenCount || 0).fill(undefined) : []
+                  childrenAges: childrenCount > 0 ? Array(childrenCount || 0).fill(undefined) : []
                 });
             }}
             style={{ width: '100%' }}
@@ -114,7 +113,13 @@ const PatientForm: React.FC<PatientFormProps> = props => {
               <Row>
                 {fields.length < 21 && fields.length > -1
                   ? fields.map((field, index) => (
-                      <Form.Item noStyle shouldUpdate key={field.key}>
+                      <Form.Item
+                        noStyle
+                        shouldUpdate={(prevValues, currentValues) =>
+                          prevValues.childrenCount !== currentValues.childrenCount
+                        }
+                        key={field.key}
+                      >
                         <Form.Item
                           {...field}
                           className='ages'
