@@ -82,6 +82,14 @@ const PatientForm: React.FC<PatientFormProps> = props => {
           rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
         >
           <InputNumber
+            onChange={childrenCount => {
+              if (childrenCount !== undefined)
+                form.setFieldsValue({
+                  ...form.getFieldsValue(),
+                  childrenAges:
+                    childrenCount > -1 ? Array(childrenCount || 0).fill(undefined) : Array(0).fill(undefined)
+                });
+            }}
             style={{ width: '100%' }}
             autoComplete='off'
             placeholder={Dictionary.patientForm.childrenCount}
@@ -99,23 +107,31 @@ const PatientForm: React.FC<PatientFormProps> = props => {
         </Form.Item>
       </Row>
 
-      <div className='flex'>
-        <Form.Item shouldUpdate>
-          {() =>
-            Array(form.getFieldValue('childrenCount'))
-              .fill(0)
-              ?.map(i => (
-                <Form.Item
-                  name={'childrenAge' + i}
-                  hasFeedback
-                  rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
-                >
-                  <InputNumber style={{ width: '50%' }} autoComplete='off' />
-                </Form.Item>
-              ))
-          }
-        </Form.Item>
-      </div>
+      <Form.List name='childrenAges'>
+        {fields => {
+          return (
+            <div>
+              <Row>
+                {fields.length < 21 && fields.length > -1
+                  ? fields.map((field, index) => (
+                      <Form.Item noStyle shouldUpdate key={field.key}>
+                        <Form.Item
+                          {...field}
+                          style={{ width: '18%', marginLeft: '1%', marginRight: '1%' }}
+                          className=''
+                          hasFeedback
+                          rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
+                        >
+                          <InputNumber style={{ width: '100%' }} autoComplete='off' />
+                        </Form.Item>
+                      </Form.Item>
+                    ))
+                  : null}
+              </Row>
+            </div>
+          );
+        }}
+      </Form.List>
 
       <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}>
         {() => (

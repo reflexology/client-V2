@@ -24,6 +24,7 @@ const AddPatient: React.FC<Props> = props => {
     setIsSubmitting(true);
     setError('');
 
+    values.childrenAges = values.childrenAges.filter((e: number) => e);
     PatientService.addPatient(values)
       .then(patient => {
         if (buttonClicked === Dictionary.patientForm.saveAndAddTreatment) {
