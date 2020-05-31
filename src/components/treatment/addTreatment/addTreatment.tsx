@@ -1,4 +1,4 @@
-import { Col, message, Row, Spin } from 'antd';
+import { message, Spin } from 'antd';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
@@ -51,22 +51,13 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
 
   return (
     <Spin spinning={isFetching}>
-      <Row justify='center' className='add-patient-container'>
-        <Col span={12}>
-          <div className='add-patient-card'>
-            <div className='add-patient-h2-wrapper'>
-              <h2>{Dictionary.addTreatment.header}</h2>
-            </div>
-            <TreatmentFrom
-              initialValues={initialValues}
-              isLoading={isSubmitting}
-              onSubmit={handleSubmit}
-              error={error}
-              balance={balance}
-            />
-          </div>
-        </Col>
-      </Row>
+      <TreatmentFrom
+        initialValues={initialValues}
+        isLoading={isSubmitting}
+        onSubmit={handleSubmit}
+        error={error}
+        balance={balance}
+      />
     </Spin>
   );
 };
