@@ -10,3 +10,11 @@ td {
   background-color: #ffc069;
   padding: 0;
 }
+
+.ant-form-item-label {
+  text-align: right !important;
+}
+
+.ant-steps-item-container > .ant-steps-item-tail::after {
+  background-color: #b6b3b3 !important;
+}

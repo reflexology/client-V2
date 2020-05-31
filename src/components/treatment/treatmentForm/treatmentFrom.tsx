@@ -1,11 +1,15 @@
-import { Alert, Button, DatePicker, Form, Input, InputNumber, message, Row, Select } from 'antd';
+import './treatmentForm.scss';
+
+import { Alert, Button, Col, Form, message, Radio, Row, Steps } from 'antd';
 import { Store } from 'antd/lib/form/interface';
-import TextArea from 'antd/lib/input/TextArea';
 import Dictionary from 'dictionary/dictionary';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import DiagnosisService from 'services/diagnosesService';
-import { Treatment } from 'services/treatmentService';
+import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
+
+import BloodTestsForm from './bloodTestsForm';
+import ReminderStep from './reminderStep';
+import StepOne from './stepOne';
 
 interface TreatmentFromProps {
   onSubmit: (values: any, newDiagnoses: string[]) => void;
@@ -15,11 +19,38 @@ interface TreatmentFromProps {
   balance: number;
 }
 
+const keyUp = 38;
+const keyDown = 40;
+
 const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
   const [form] = Form.useForm();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
+  const [treatmentType, setTreatmentType] = useState(TreatmentType.Reflexology);
+  const [currentStep, setCurrentStep] = useState(0);
 
-  useEffect(() => form.resetFields(), [props.initialValues]);
+  const isReflexology = treatmentType === TreatmentType.Reflexology;
+  const isDiet = treatmentType === TreatmentType.Diet;
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeydown);
+    return () => document.removeEventListener('keydown', onKeydown);
+  }, [currentStep]);
+
+  const onKeydown = (e: KeyboardEvent) => {
+    if (e.keyCode === keyUp && currentStep > 0) {
+      setCurrentStep(cs => cs - 1);
+      // e.stopPropagation();
+    }
+    if (e.keyCode === keyDown && currentStep < 3) {
+      setCurrentStep(cs => cs + 1);
+      // e.stopPropagation();
+    }
+    e.stopPropagation();
+  };
+
+  useEffect(() => {
+    if (props.initialValues) form.setFieldsValue(props.initialValues);
+  }, [props.initialValues]);
 
   useEffect(() => {
     DiagnosisService.getDiagnoses()
@@ -33,87 +64,63 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
   };
 
   return (
-    <Form form={form} initialValues={props.initialValues} onFinish={onSubmit}>
-      <Form.Item name='treatmentDate'>
-        <DatePicker
-          showTime
-          format='DD/MM/YYYY HH:mm'
-          placeholder={Dictionary.treatmentForm.treatmentDate}
-          defaultValue={moment()}
-        />
-      </Form.Item>
-      <Form.Item name='referredBy' hasFeedback>
-        <Input autoComplete='off' placeholder={Dictionary.treatmentForm.referredBy} />
-      </Form.Item>
-      <Form.Item name='visitReason' hasFeedback>
-        <TextArea autoSize autoComplete='off' placeholder={Dictionary.treatmentForm.visitReason} />
-      </Form.Item>
-      <Form.Item name='diagnoses' hasFeedback>
-        <Select showArrow loading={!diagnoses} placeholder={Dictionary.treatmentForm.diagnoses} mode='tags'>
-          {diagnoses?.map(diagnosis => (
-            <Select.Option value={diagnosis} key={diagnosis}>
-              {diagnosis}
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item name='findings' hasFeedback>
-        <TextArea autoSize autoComplete='off' placeholder={Dictionary.treatmentForm.findings} />
-      </Form.Item>
-      <Form.Item name='recommendations' hasFeedback>
-        <TextArea autoSize autoComplete='off' placeholder={Dictionary.treatmentForm.recommendations} />
-      </Form.Item>
-      <Row justify='space-between'>
-        <Form.Item style={{ display: 'inline-block' }} name='treatmentNumber' hasFeedback>
-          <InputNumber
-            style={{ width: '100%' }}
-            autoComplete='off'
-            placeholder={Dictionary.treatmentForm.treatmentNumber}
-          />
-        </Form.Item>
-        <Form.Item
-          style={{ display: 'inline-block' }}
-          name='treatmentPrice'
-          extra={Dictionary.treatmentForm.treatmentPriceExtra.format(
-            props.balance >= 0 ? Dictionary.treatmentForm.credit : Dictionary.treatmentForm.debt,
-            Math.abs(props.balance).toString()
+    <Row>
+      <Col span={4}>
+        <h2 style={{ marginBottom: '20px' }}>{Dictionary.addTreatment.header}</h2>
+
+        <Steps current={currentStep} onChange={stepNumber => setCurrentStep(stepNumber)} direction='vertical'>
+          <Steps.Step title='כללי' />
+          <Steps.Step title='בדיקות דם' />
+          {isDiet && (
+            <>
+              <Steps.Step title='המשך תשאול' />
+              <Steps.Step title='תזונה' />
+            </>
           )}
-          hasFeedback
+        </Steps>
+      </Col>
+      <Col span={20} className='form-container'>
+        <Form
+          layout='vertical'
+          hideRequiredMark
+          form={form}
+          initialValues={{
+            treatmentType: TreatmentType.Reflexology,
+            ...props.initialValues,
+            bloodTests: TreatmentService.getBloodTests()
+          }}
+          onFinish={onSubmit}
         >
-          <InputNumber
-            style={{ width: '100%' }}
-            autoComplete='off'
-            placeholder={Dictionary.treatmentForm.treatmentPrice}
-          />
-        </Form.Item>
-        <Form.Item rules={[{ type: 'number' }]} style={{ display: 'inline-block' }} name='paidPrice' hasFeedback>
-          <InputNumber style={{ width: '100%' }} autoComplete='off' placeholder={Dictionary.treatmentForm.paidPrice} />
-        </Form.Item>
-      </Row>
-      <Form.Item name='reminders' hasFeedback>
-        <TextArea autoSize autoComplete='off' placeholder={Dictionary.treatmentForm.reminders} />
-      </Form.Item>
-      <Form.Item name='reminderDate' label={Dictionary.treatmentForm.reminderDate}>
-        <DatePicker
-          format='YYYY-MM-DD'
-          showToday={false}
-          renderExtraFooter={() => (
-            <Row justify='center'>
-              <Button type='link' onClick={() => form.setFieldsValue({ reminderDate: moment().add(7, 'days') })}>
-                {Dictionary.treatmentForm.inAWeek}
-              </Button>
-            </Row>
+          <Form.Item name='treatmentType' label={Dictionary.treatmentForm.treatmentType}>
+            <Radio.Group onChange={e => setTreatmentType(e.target.value)}>
+              {Object.values(TreatmentType).map(treatmentType => (
+                <Radio key={treatmentType} value={treatmentType}>
+                  {Dictionary.treatmentTypes[treatmentType.toLowerCase() as keyof typeof Dictionary.treatmentTypes]}
+                </Radio>
+              ))}
+            </Radio.Group>
+          </Form.Item>
+          {currentStep === 0 && (
+            <StepOne
+              balance={props.balance}
+              initialValues={props.initialValues}
+              diagnoses={diagnoses}
+              form={form}
+              isReflexology={isReflexology}
+            />
           )}
-        />
-      </Form.Item>
-      ,{props.error && <Alert message={props.error} type='error' showIcon />}
-      <Form.Item>
-        <Button block loading={props.isLoading} type='primary' htmlType='submit'>
-          {Dictionary.patientForm.save}
-        </Button>
-      </Form.Item>
-    </Form>
+          {currentStep === 1 && <BloodTestsForm />}
+          {currentStep === 2 && <ReminderStep form={form} />}
+          {props.error && <Alert message={props.error} type='error' showIcon />}
+          <Form.Item>
+            <Button block loading={props.isLoading} type='primary' htmlType='submit'>
+              {Dictionary.patientForm.save}
+            </Button>
+          </Form.Item>
+        </Form>
+      </Col>
+    </Row>
   );
 };
 
-export default TreatmentFrom;
+export default React.memo(TreatmentFrom);

@@ -72,6 +72,7 @@ const Dictionary = {
     header: 'הוסף טיפול'
   },
   treatmentForm: {
+    treatmentType: 'סוג טיפול',
     treatmentDate: 'תאריך טיפול',
     referredBy: 'הופנה ע"י',
     visitReason: 'סיבת ביקור',
@@ -88,7 +89,52 @@ const Dictionary = {
     reminders: 'תזכורות',
     reminderDate: 'תאריך תזכורת',
     inAWeek: 'עוד שבוע',
-    errorFetchingDiagnoses: 'היתה בעיה לטעון את האבחונים מהשרת..'
+    treatmentNumberChangedWarning: 'מספר טיפול קודם היה {0} ',
+    errorFetchingDiagnoses: 'היתה בעיה לטעון את האבחונים מהשרת..',
+
+    // diet
+    mainComplaint: 'תלונה עיקרית',
+    mainComplaintPlaceholder: 'כולל אבחנה מערבית',
+    mainComplaintExtra:
+      'מתי התחיל? באיזה גיל? מה קרה בחיים ובתקופה לפני שהתחילה הבעיה? מה מחמיר? מה מקל? \n איך משפיע על החיים? איך מתמודד עם הבעיה?',
+    secondaryComplaint: 'תלונה משנית',
+    secondaryComplaintPlaceholder: 'כנ"ל תחקור כמו התלונה העיקרית 👆',
+    medicalPast: 'עבר רפואי:',
+    medicalPastExtra: 'אנטיביוטיקה בעבר והיום, ניתוחים, אישפוזים, מחלות משמעותיות, חומרי הרדמה, תאונות - מתי?',
+    drugsAndSupplements: 'תרופות ותוספי מזון',
+    drugsAndSupplementsExtra: '(בהווה ובעבר), כמה תרופות? איזה תרופות? וכמה זמן נוטל?',
+    height: 'גובה',
+    weight: 'משקל',
+    additionalTreatments: 'טיפולים נוספים',
+    additionalTreatmentsExtra: 'רפואיים ומשלימים איזה טיפול, כמה זמן? ומתי?',
+    familyMedicalHistory: 'היסטוריה רפואית משפחתית',
+    sleep: 'שינה: איכות השינה, אורך השינה',
+    sleepExtra:
+      'האם נרדם בקלות? האם ישן שינה טובה? עמוקה? האם מתעורר במהלך הלילה מסיבה כלשהי - אם כן פרט מהי?\nהאם מתעורר עקב דאגות / מתח - כל רעש קטן מעיר, צורך לשירותים...',
+    howWakeUp: 'איך קם בבוקר',
+    howWakeUpExtra: 'בקלות וחיוניות/בכבדות',
+    appetite: 'תיאבון',
+    thirst: 'צמא, שתיית מים, כמה?',
+
+    // stimulants
+    coffee: 'קפה / תה, חם / קר, סוכר, כמה כפיות?',
+    softDrinks: 'משקאות קלים / ממריצים: קולה, רד בול',
+    salt: 'מלח',
+    spices: 'תבלינים',
+    spicy: 'חריף',
+    sweets: 'ממתקים',
+    snacks: 'חטיפים',
+    alcohol: 'אלכוהול',
+    drugs: 'סמים',
+    cleaners: 'חומרי ניקוי',
+    screenTime: 'זמן מסך',
+    pollutedAir: 'אוויר מזוהם',
+    smoking: 'עישון: כמה? מה? וכמה זמן?',
+    cosmetics: 'תכשירי קוסמטיקה (רחצה, משחות, צבע...)'
+  },
+  treatmentTypes: {
+    diet: 'תזונה',
+    reflexology: 'רפלקסולוגיה'
   },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',
