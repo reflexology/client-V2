@@ -34,7 +34,7 @@ const Sidebar: React.FC<any> = props => {
   useEffect(() => localStorage.setItem(collapsedKey, collapsed ? 'collapsed' : 'expanded'), [collapsed]);
 
   return AuthService.isAuthorized() ? (
-    <Layout dir='rtl' className='layout-container'>
+    <Layout className='layout-container'>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className='logo' />
         <Menu
