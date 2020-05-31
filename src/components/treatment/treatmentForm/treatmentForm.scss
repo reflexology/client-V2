@@ -1,0 +1,12 @@
+@import '../../../styles/variables';
+@import '../../../styles/common';
+
+.form-container {
+  height: calc(100vh - #{$content-padding} - #{$header-height});
+  overflow-y: auto;
+
+  .form-card {
+    @extend .card;
+    margin-bottom: 24px;
+  }
+}

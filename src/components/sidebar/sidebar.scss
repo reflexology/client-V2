@@ -36,8 +36,7 @@
 
   .content {
     max-height: calc(100% - #{$header-height});
-    // margin: 24px 16px;
-    padding: 24px;
+    padding: $content-padding;
     position: relative;
   }
 
