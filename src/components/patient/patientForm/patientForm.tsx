@@ -1,3 +1,5 @@
+import './patientForm.scss';
+
 import { Alert, Button, Form, Input, InputNumber, Radio, Row, Select } from 'antd';
 import Dictionary from 'dictionary/dictionary';
 import React, { useEffect } from 'react';
@@ -7,6 +9,7 @@ import PatientService, { Patient } from 'services/patientService';
 
 interface PatientFormProps {
   onSubmit: (values: any) => void;
+  onButtonClick: (buttonClicked: string) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Patient;
@@ -39,6 +42,10 @@ const PatientForm: React.FC<PatientFormProps> = props => {
 
       <Form.Item name='momName' hasFeedback>
         <Input autoComplete='off' placeholder={Dictionary.patientForm.momName} />
+      </Form.Item>
+
+      <Form.Item name='profession' hasFeedback>
+        <Input autoComplete='off' placeholder={Dictionary.patientForm.profession} />
       </Form.Item>
 
       <Form.Item name='birthday' hasFeedback>
@@ -75,6 +82,13 @@ const PatientForm: React.FC<PatientFormProps> = props => {
           rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
         >
           <InputNumber
+            onChange={childrenCount => {
+              if (childrenCount !== undefined)
+                form.setFieldsValue({
+                  ...form.getFieldsValue(),
+                  childrenAges: childrenCount > 0 ? Array(childrenCount || 0).fill(undefined) : []
+                });
+            }}
             style={{ width: '100%' }}
             autoComplete='off'
             placeholder={Dictionary.patientForm.childrenCount}
@@ -92,6 +106,38 @@ const PatientForm: React.FC<PatientFormProps> = props => {
         </Form.Item>
       </Row>
 
+      <Form.List name='childrenAges'>
+        {fields => {
+          return (
+            <div>
+              <Row>
+                {fields.length < 21 && fields.length > -1
+                  ? fields.map((field, index) => (
+                      <Form.Item
+                        noStyle
+                        shouldUpdate={(prevValues, currentValues) =>
+                          prevValues.childrenCount !== currentValues.childrenCount
+                        }
+                        key={field.key}
+                      >
+                        <Form.Item
+                          {...field}
+                          className='ages'
+                          style={{ width: '18%', marginLeft: '1%', marginRight: '1%' }}
+                          hasFeedback
+                          rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
+                        >
+                          <InputNumber style={{ width: '100%' }} autoComplete='off' />
+                        </Form.Item>
+                      </Form.Item>
+                    ))
+                  : null}
+              </Row>
+            </div>
+          );
+        }}
+      </Form.List>
+
       <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}>
         {() => (
           <Form.Item name='maritalStatus' hasFeedback>
@@ -108,11 +154,30 @@ const PatientForm: React.FC<PatientFormProps> = props => {
 
       {props.error && <Alert message={props.error} type='error' showIcon />}
 
-      <Form.Item>
-        <Button block loading={props.isLoading} type='primary' htmlType='submit'>
-          {Dictionary.patientForm.save}
-        </Button>
-      </Form.Item>
+      <Row justify='space-around'>
+        <Form.Item>
+          <Button
+            block
+            loading={props.isLoading}
+            type='primary'
+            htmlType='submit'
+            onClick={() => props.onButtonClick(Dictionary.patientForm.save)}
+          >
+            {Dictionary.patientForm.save}
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button
+            block
+            loading={props.isLoading}
+            type='primary'
+            htmlType='submit'
+            onClick={() => props.onButtonClick(Dictionary.patientForm.saveAndAddTreatment)}
+          >
+            {Dictionary.patientForm.saveAndAddTreatment}
+          </Button>
+        </Form.Item>
+      </Row>
     </Form>
   );
 };

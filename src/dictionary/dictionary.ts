@@ -23,6 +23,7 @@ const Dictionary = {
     firstName: 'שם פרטי',
     lastName: 'שם משפחה',
     momName: 'שם האמא',
+    profession: 'מקצוע',
     birthday: 'תאריך לידה',
     age: 'גיל',
     phone: 'טלפון',
@@ -30,12 +31,13 @@ const Dictionary = {
     gender: 'מין',
     childrenCount: 'מספר ילדים',
     lastTreatment: 'טיפול אחרון',
-    maritalStatus: 'סטטוס',
+    maritalStatus: 'מצב משפחתי',
     wrongEmail: 'כתובת האימיל שגוייה',
     minChildrenCount: 'ערך שגוי',
     firstNameRequired: 'חובה למלא שם פרטי',
     lastNameRequired: 'חובה למלא שם משפחה',
-    save: 'שמור'
+    save: 'שמור',
+    saveAndAddTreatment: 'שמור והוסף טיפול'
   },
   addTransaction: {
     header: 'הוסף הכנסה/הוצאה'
