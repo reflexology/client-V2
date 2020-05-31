@@ -86,7 +86,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
               if (childrenCount !== undefined)
                 form.setFieldsValue({
                   ...form.getFieldsValue(),
-                  childrenAges: childrenCount > 0 ? Array(childrenCount || 0).fill(undefined) : []
+                  childrenAges: childrenCount > 0 ? Array(childrenCount || 0).fill(undefined!) : []
                 });
             }}
             style={{ width: '100%' }}
