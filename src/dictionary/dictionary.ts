@@ -29,6 +29,7 @@ const Dictionary = {
     phone: 'טלפון',
     email: 'אימיל',
     gender: 'מין',
+    diagnoses: 'אבחנות',
     childrenCount: 'מספר ילדים',
     lastTreatment: 'טיפול אחרון',
     maritalStatus: 'מצב משפחתי',
