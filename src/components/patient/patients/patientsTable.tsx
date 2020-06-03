@@ -73,7 +73,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       filters: diagnoses?.map(diag => ({ value: diag, text: diag })),
       onFilter: (value, record) => {
         console.log(diagnoses);
-        return record.firstName.indexOf(value.toString()) === 0;
+        return record.diagnoses?.indexOf(value.toString()) === 0;
       },
       render: (diagnoses: string[]) => (
         <div className='diagnoses-container'>

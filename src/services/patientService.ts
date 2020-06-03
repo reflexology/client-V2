@@ -18,6 +18,7 @@ export interface Patient {
   gender: 'Male' | 'Female';
   maritalStatus: 'Married' | 'Single' | 'Divorced' | 'Widowed';
   calculatedAge: Readonly<string>;
+  diagnoses?: string[];
 }
 
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
@@ -35,6 +36,12 @@ const PatientService = {
   },
   editPatient(patientId: string, patient: Patient) {
     return HttpService.patch<Patient>(baseEndPoint + '/patient/' + patientId, patient);
+  },
+  getPatientsInCredit() {
+    return HttpService.get<Patient[]>(baseEndPoint + '/patient?inCredit=true');
+  },
+  getPatientsInDebt() {
+    return HttpService.get<Patient[]>(baseEndPoint + '/patient?inDebt=true');
   },
   getMaritalStatusOptions(isMale: boolean) {
     const maritalStatuses = isMale ? Dictionary.MaritalStatusForMale : Dictionary.MaritalStatusForFemale;

@@ -4,6 +4,7 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { Button, Col, Row } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
+import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PatientService, { Patient } from 'services/patientService';
@@ -39,7 +40,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
       <Row>
         <Col>
           <Button icon={<UserAddOutlined />} onClick={() => props.history.push(routes.addPatient)}>
-            הוסף לקוח
+            {Dictionary.addPatient.header}
           </Button>
         </Col>
         <Col>
@@ -50,6 +51,30 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
             }}
             delay={250}
           />
+        </Col>
+        <Col>
+          <Button
+            icon={<UserAddOutlined />}
+            onClick={() => {
+              PatientService.getPatientsInDebt()
+                .then(setFilteredPatients)
+                .finally(() => setIsFetching(false));
+            }}
+          >
+            {Dictionary.patientContainer.showInDebt}
+          </Button>
+        </Col>
+        <Col>
+          <Button
+            icon={<UserAddOutlined />}
+            onClick={() => {
+              PatientService.getPatientsInCredit()
+                .then(setFilteredPatients)
+                .finally(() => setIsFetching(false));
+            }}
+          >
+            {Dictionary.patientContainer.showInCredit}
+          </Button>
         </Col>
       </Row>
       <PatientsTable searchText={searchQuery} isFetching={isFetching} patients={filteredPatients} />
