@@ -20,8 +20,9 @@ const Dictionary = {
     header: 'ערוך לקוח'
   },
   patientContainer: {
-    showInDebt: 'הצג לקוחות בחוב',
-    showInCredit: 'הצג לקוחות בזכות'
+    showInDebt: 'לקוחות בחוב',
+    showInCredit: 'לקוחות בזכות',
+    showAllPatients: 'כל הלקוחות'
   },
   patientForm: {
     firstName: 'שם פרטי',

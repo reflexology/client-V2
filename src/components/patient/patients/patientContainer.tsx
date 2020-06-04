@@ -1,7 +1,7 @@
 import './patient.scss';
 
-import { UserAddOutlined } from '@ant-design/icons';
-import { Button, Col, Row } from 'antd';
+import { DownOutlined, UserAddOutlined } from '@ant-design/icons';
+import { Button, Col, Dropdown, Menu, Row } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
@@ -21,6 +21,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [patientsInDebtOrCredit, setPatientsInDebtOrCredit] = useState(Dictionary.patientContainer.showAllPatients);
 
   useEffect(() => {
     PatientService.getPatients()
@@ -34,6 +35,50 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
     setFilteredPatients(
       patients.filter(patient => tableUtils.filter(patient, search, ['_id', 'maritalStatus', 'createdAt', 'createdBy']))
     );
+
+  const patientsInDebtOrCreditMenu = (
+    <Menu>
+      <Menu.Item
+        key='1'
+        onClick={() => {
+          PatientService.getPatientsInCredit()
+            .then(setPatients)
+            .finally(() => {
+              setIsFetching(false);
+              setPatientsInDebtOrCredit(Dictionary.patientContainer.showInCredit);
+            });
+        }}
+      >
+        {Dictionary.patientContainer.showInCredit}
+      </Menu.Item>
+      <Menu.Item
+        key='2'
+        onClick={() => {
+          PatientService.getPatientsInDebt()
+            .then(setPatients)
+            .finally(() => {
+              setIsFetching(false);
+              setPatientsInDebtOrCredit(Dictionary.patientContainer.showInDebt);
+            });
+        }}
+      >
+        {Dictionary.patientContainer.showInDebt}
+      </Menu.Item>
+      <Menu.Item
+        key='3'
+        onClick={() => {
+          PatientService.getPatients()
+            .then(setPatients)
+            .finally(() => {
+              setIsFetching(false);
+              setPatientsInDebtOrCredit(Dictionary.patientContainer.showAllPatients);
+            });
+        }}
+      >
+        {Dictionary.patientContainer.showAllPatients}
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <div className='patients-container'>
@@ -53,28 +98,11 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
           />
         </Col>
         <Col>
-          <Button
-            icon={<UserAddOutlined />}
-            onClick={() => {
-              PatientService.getPatientsInDebt()
-                .then(setFilteredPatients)
-                .finally(() => setIsFetching(false));
-            }}
-          >
-            {Dictionary.patientContainer.showInDebt}
-          </Button>
-        </Col>
-        <Col>
-          <Button
-            icon={<UserAddOutlined />}
-            onClick={() => {
-              PatientService.getPatientsInCredit()
-                .then(setFilteredPatients)
-                .finally(() => setIsFetching(false));
-            }}
-          >
-            {Dictionary.patientContainer.showInCredit}
-          </Button>
+          <Dropdown overlay={patientsInDebtOrCreditMenu}>
+            <Button>
+              {patientsInDebtOrCredit} <DownOutlined />
+            </Button>
+          </Dropdown>
         </Col>
       </Row>
       <PatientsTable searchText={searchQuery} isFetching={isFetching} patients={filteredPatients} />
