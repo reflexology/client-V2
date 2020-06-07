@@ -1,15 +1,16 @@
 import './patient.scss';
 
-import { DownOutlined, UserAddOutlined } from '@ant-design/icons';
-import { Button, Col, Dropdown, Menu, Row } from 'antd';
+import { UserAddOutlined } from '@ant-design/icons';
+import { Button, Col, Row } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import PatientService, { Patient } from 'services/patientService';
+import PatientService, { Patient, PatientType } from 'services/patientService';
 import TableUtils from 'utils/tableUtils';
 
+import PatientInCreditOrDebt from './patientInCreditOrDebt';
 import PatientsTable from './patientsTable';
 
 const tableUtils = new TableUtils<Patient>();
@@ -21,7 +22,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [patientsInDebtOrCredit, setPatientsInDebtOrCredit] = useState(Dictionary.patientContainer.showAllPatients);
+  const [patientsInDebtOrCredit, setPatientsInDebtOrCredit] = useState(PatientType.AllPatients);
 
   useEffect(() => {
     PatientService.getPatients()
@@ -36,49 +37,18 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
       patients.filter(patient => tableUtils.filter(patient, search, ['_id', 'maritalStatus', 'createdAt', 'createdBy']))
     );
 
-  const patientsInDebtOrCreditMenu = (
-    <Menu>
-      <Menu.Item
-        key='1'
-        onClick={() => {
-          PatientService.getPatientsInCredit()
-            .then(setPatients)
-            .finally(() => {
-              setIsFetching(false);
-              setPatientsInDebtOrCredit(Dictionary.patientContainer.showInCredit);
-            });
-        }}
-      >
-        {Dictionary.patientContainer.showInCredit}
-      </Menu.Item>
-      <Menu.Item
-        key='2'
-        onClick={() => {
-          PatientService.getPatientsInDebt()
-            .then(setPatients)
-            .finally(() => {
-              setIsFetching(false);
-              setPatientsInDebtOrCredit(Dictionary.patientContainer.showInDebt);
-            });
-        }}
-      >
-        {Dictionary.patientContainer.showInDebt}
-      </Menu.Item>
-      <Menu.Item
-        key='3'
-        onClick={() => {
-          PatientService.getPatients()
-            .then(setPatients)
-            .finally(() => {
-              setIsFetching(false);
-              setPatientsInDebtOrCredit(Dictionary.patientContainer.showAllPatients);
-            });
-        }}
-      >
-        {Dictionary.patientContainer.showAllPatients}
-      </Menu.Item>
-    </Menu>
-  );
+  const onClickPatientsInDebtOrCredit = (inCredit?: boolean, inDebt?: boolean) => {
+    PatientService.getPatients(inCredit, inDebt)
+      .then(setPatients)
+      .finally(() => {
+        setIsFetching(false);
+        inCredit
+          ? setPatientsInDebtOrCredit(PatientType.InCredit)
+          : inDebt
+          ? setPatientsInDebtOrCredit(PatientType.InDebt)
+          : setPatientsInDebtOrCredit(PatientType.AllPatients);
+      });
+  };
 
   return (
     <div className='patients-container'>
@@ -98,11 +68,10 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
           />
         </Col>
         <Col>
-          <Dropdown overlay={patientsInDebtOrCreditMenu}>
-            <Button>
-              {patientsInDebtOrCredit} <DownOutlined />
-            </Button>
-          </Dropdown>
+          <PatientInCreditOrDebt
+            inDebtOrCredit={onClickPatientsInDebtOrCredit}
+            patientsInDebtOrCredit={patientsInDebtOrCredit}
+          />
         </Col>
       </Row>
       <PatientsTable searchText={searchQuery} isFetching={isFetching} patients={filteredPatients} />

@@ -21,11 +21,19 @@ export interface Patient {
   diagnoses?: string[];
 }
 
+export enum PatientType {
+  AllPatients = 'showAllPatients',
+  InCredit = 'showInCredit',
+  InDebt = 'showInDebt'
+}
+
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const PatientService = {
-  async getPatients() {
-    const patients = await HttpService.get<Patient[]>(baseEndPoint + '/patient');
+  async getPatients(inCredit?: boolean, inDebt?: boolean) {
+    const patients = await HttpService.get<Patient[]>(
+      `${baseEndPoint}/patient${inCredit ? '?inCredit=true' : ''}${inDebt ? '?inDebt=true' : ''}`
+    );
     return patients.map(patient => ({ ...patient, key: patient._id }));
   },
   getPatient(patientId: string) {
@@ -36,12 +44,6 @@ const PatientService = {
   },
   editPatient(patientId: string, patient: Patient) {
     return HttpService.patch<Patient>(baseEndPoint + '/patient/' + patientId, patient);
-  },
-  getPatientsInCredit() {
-    return HttpService.get<Patient[]>(baseEndPoint + '/patient?inCredit=true');
-  },
-  getPatientsInDebt() {
-    return HttpService.get<Patient[]>(baseEndPoint + '/patient?inDebt=true');
   },
   getMaritalStatusOptions(isMale: boolean) {
     const maritalStatuses = isMale ? Dictionary.MaritalStatusForMale : Dictionary.MaritalStatusForFemale;

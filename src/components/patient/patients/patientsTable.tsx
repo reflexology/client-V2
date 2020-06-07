@@ -70,9 +70,8 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       title: Dictionary.patientForm.diagnoses,
       key: 'diagnoses',
       dataIndex: 'diagnoses',
-      filters: diagnoses?.map(diag => ({ value: diag, text: diag })),
+      filters: diagnoses?.map(diagnosis => ({ value: diagnosis, text: diagnosis })),
       onFilter: (value, record) => {
-        console.log(diagnoses);
         return record.diagnoses?.indexOf(value.toString()) === 0;
       },
       render: (diagnoses: string[]) => (
