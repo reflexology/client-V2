@@ -1,12 +1,13 @@
 import { CheckOutlined } from '@ant-design/icons';
-import { Button, Table, Tag } from 'antd';
+import { Button, message, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useHistory } from 'react-router-dom';
+import DiagnosisService from 'services/diagnosesService';
 import { Patient } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import TableUtils from 'utils/tableUtils';
@@ -19,6 +20,13 @@ interface PatientsTableProps {
 
 const PatientsTable: React.FC<PatientsTableProps> = props => {
   const history = useHistory<Patient>();
+  const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
+
+  useEffect(() => {
+    DiagnosisService.getDiagnoses()
+      .then(setDiagnoses)
+      .catch(() => message.error(Dictionary.treatmentForm.errorFetchingDiagnoses));
+  }, []);
 
   const getHighlighter = () => ({
     render: (text: string) => (
@@ -59,9 +67,13 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
         ) : null
     },
     {
-      title: 'אבחנות',
+      title: Dictionary.patientForm.diagnoses,
       key: 'diagnoses',
       dataIndex: 'diagnoses',
+      filters: diagnoses?.map(diagnosis => ({ value: diagnosis, text: diagnosis })),
+      onFilter: (value, record) => {
+        return record.diagnoses?.indexOf(value.toString()) === 0;
+      },
       render: (diagnoses: string[]) => (
         <div className='diagnoses-container'>
           {diagnoses?.map(diagnosis => (

@@ -19,6 +19,11 @@ const Dictionary = {
   editPatient: {
     header: 'ערוך לקוח'
   },
+  patientContainer: {
+    showInDebt: 'לקוחות בחוב',
+    showInCredit: 'לקוחות בזכות',
+    showAllPatients: 'כל הלקוחות'
+  },
   patientForm: {
     firstName: 'שם פרטי',
     lastName: 'שם משפחה',
@@ -29,6 +34,7 @@ const Dictionary = {
     phone: 'טלפון',
     email: 'אימיל',
     gender: 'מין',
+    diagnoses: 'אבחנות',
     childrenCount: 'מספר ילדים',
     lastTreatment: 'טיפול אחרון',
     maritalStatus: 'מצב משפחתי',
