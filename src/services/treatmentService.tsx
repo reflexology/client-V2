@@ -102,23 +102,23 @@ const TreatmentService = {
 
   getBloodTests() {
     return [
-      { name: 'glucose', value: null },
-      { name: 'creatinine', value: null },
-      { name: 'urea', value: null },
-      { name: 'uricAei', value: null },
-      { name: 'HDL', value: null },
-      { name: 'LDL', value: null },
-      { name: 'cholesterol', value: null },
-      { name: 'triglycerides', value: null },
-      { name: 'AST', value: null },
-      { name: 'ALT', value: null },
-      { name: 'GGl', value: null },
-      { name: 'B12', value: null },
-      { name: 'VitaminD', value: null },
-      { name: 'TSH', value: null },
-      { name: 'HB', value: null },
-      { name: 'HBA1C', value: null },
-      { name: 'ferritin', value: null }
+      { name: 'glucose', value: null, isImportant: false },
+      { name: 'creatinine', value: null, isImportant: false },
+      { name: 'urea', value: null, isImportant: false },
+      { name: 'uricAei', value: null, isImportant: false },
+      { name: 'HDL', value: null, isImportant: false },
+      { name: 'LDL', value: null, isImportant: false },
+      { name: 'cholesterol', value: null, isImportant: false },
+      { name: 'triglycerides', value: null, isImportant: false },
+      { name: 'AST', value: null, isImportant: false },
+      { name: 'ALT', value: null, isImportant: false },
+      { name: 'GGl', value: null, isImportant: false },
+      { name: 'B12', value: null, isImportant: false },
+      { name: 'VitaminD', value: null, isImportant: false },
+      { name: 'TSH', value: null, isImportant: false },
+      { name: 'HB', value: null, isImportant: false },
+      { name: 'HBA1C', value: null, isImportant: false },
+      { name: 'ferritin', value: null, isImportant: false }
     ];
   }
 };

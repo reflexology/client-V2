@@ -1,92 +1,62 @@
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Col, Form, InputNumber, Row } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Card, Checkbox, Col, Form, Input, InputNumber, Row } from 'antd';
+import Dictionary from 'dictionary/dictionary';
 import React from 'react';
+import TreatmentService from 'services/treatmentService';
 
 interface BloodTestsFormProps {}
 
 const BloodTestsForm: React.FC<BloodTestsFormProps> = props => {
+  const originalBloodTestsCount = TreatmentService.getBloodTests().length;
+
   return (
-    <>
+    <Card title={Dictionary.treatmentForm.bloodTestHeader} bordered={false} className='form-card'>
       <Form.List name='bloodTests'>
-        {(fields, { add, remove }) => {
-          console.log(fields);
-
-          /**
-           * `fields` internal fill with `name`, `key`, `fieldKey` props.
-           * You can extends this into sub field to support multiple dynamic fields.
-           */
-          return (
-            <div>
+        {(fields, { add }) => (
+          <>
+            <Row gutter={16}>
               {fields.map((field, index) => (
-                <Row key={field.key}>
-                  <Col>
-                    <Form.Item
-                      name={[field.name, 'lastName']}
-                      //@ts-ignore
-                      fieldKey={[field.fieldKey, 'lastName']}
-                    >
-                      <InputNumber
-                        dir='ltr'
-                        placeholder={field.name.toExponential()}
-                        style={{ width: '100%' }}
-                        autoComplete='off'
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col>
-                    <Form.Item
-                      name={[field.name, 'firstName']}
-                      //@ts-ignore
-                      fieldKey={[field.fieldKey, 'firstName']}
-                    >
-                      <InputNumber
-                        dir='ltr'
-                        placeholder={field.name.toString()}
-                        style={{ width: '100%' }}
-                        autoComplete='off'
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col flex='none'>
-                    <MinusCircleOutlined
-                      className='dynamic-delete-button'
-                      onClick={() => {
-                        remove(field.name);
-                      }}
-                    />
-                  </Col>
-                </Row>
+                <Col key={field.name} lg={12} md={12} sm={24}>
+                  <Row gutter={16} key={field.key}>
+                    <Col span={5}>
+                      {index < originalBloodTestsCount ? (
+                        <Form.Item shouldUpdate noStyle>
+                          {({ getFieldValue }) => <div>{getFieldValue('bloodTests')[field.key].name}</div>}
+                        </Form.Item>
+                      ) : (
+                        <Form.Item name={[field.name, 'name']} fieldKey={[field.fieldKey, 'name']}>
+                          <Input autoComplete='off' />
+                        </Form.Item>
+                      )}
+                    </Col>
+                    <Col span={13}>
+                      <Form.Item name={[field.name, 'value']} fieldKey={[field.fieldKey, 'value']}>
+                        <InputNumber style={{ width: '100%' }} autoComplete='off' />
+                      </Form.Item>
+                    </Col>
+                    <Col span={6}>
+                      <Form.Item
+                        name={[field.name, 'isImportant']}
+                        fieldKey={[field.fieldKey, 'isImportant']}
+                        valuePropName='checked'
+                      >
+                        <Checkbox>{Dictionary.treatmentForm.isImportant}</Checkbox>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Col>
               ))}
-              <Form.Item>
-                <Button
-                  type='dashed'
-                  onClick={() => {
-                    add();
-                  }}
-                  style={{ width: '100%' }}
-                >
-                  <PlusOutlined /> Add field
-                </Button>
-              </Form.Item>
-            </div>
-          );
-        }}
-      </Form.List>
+            </Row>
 
-      {/* {TreatmentService.getBloodTests().map(bloodTest => (
-        <Form.Item
-          key={bloodTest.name}
-          wrapperCol={{ span: 13 }}
-          labelCol={{ span: 9, offset: 2 }}
-          style={{ display: 'inline-flex', width: '50%' }}
-          name={bloodTest.name}
-          //   label={bloodTest}
-          hasFeedback
-        >
-          <InputNumber dir='ltr' placeholder={bloodTest.name} style={{ width: '100%' }} autoComplete='off' />
-        </Form.Item>
-      ))} */}
-    </>
+            <Form.Item>
+              <Button type='dashed' onClick={() => add()}>
+                <PlusOutlined /> {Dictionary.treatmentForm.addBloodTest}
+              </Button>
+            </Form.Item>
+          </>
+        )}
+      </Form.List>
+    </Card>
   );
 };
 
