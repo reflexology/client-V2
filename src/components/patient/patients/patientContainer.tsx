@@ -37,18 +37,13 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
       patients.filter(patient => tableUtils.filter(patient, search, ['_id', 'maritalStatus', 'createdAt', 'createdBy']))
     );
 
-  const onClickPatientsInDebtOrCredit = (inCredit?: boolean, inDebt?: boolean) => {
-    PatientService.getPatients(inCredit, inDebt)
+  const onClickPatientsInDebtOrCredit = (type: PatientType) =>
+    PatientService.getPatients(type === PatientType.InCredit, type === PatientType.InDebt)
       .then(setPatients)
       .finally(() => {
         setIsFetching(false);
-        inCredit
-          ? setPatientsInDebtOrCredit(PatientType.InCredit)
-          : inDebt
-          ? setPatientsInDebtOrCredit(PatientType.InDebt)
-          : setPatientsInDebtOrCredit(PatientType.AllPatients);
+        setPatientsInDebtOrCredit(type);
       });
-  };
 
   return (
     <div className='patients-container'>

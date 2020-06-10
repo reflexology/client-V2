@@ -5,22 +5,18 @@ import React from 'react';
 import { PatientType } from 'services/patientService';
 
 interface PatientInCreditOrDebtProps {
-  inDebtOrCredit: any;
+  inDebtOrCredit: (type: PatientType) => void;
   patientsInDebtOrCredit: string;
 }
 
 const PatientInCreditOrDebt: React.FC<PatientInCreditOrDebtProps> = props => {
   const patientsInDebtOrCreditMenu = (
     <Menu>
-      <Menu.Item key={PatientType.InCredit} onClick={() => props.inDebtOrCredit(true)}>
-        {Dictionary.patientContainer.showInCredit}
-      </Menu.Item>
-      <Menu.Item key={PatientType.InDebt} onClick={() => props.inDebtOrCredit(false, true)}>
-        {Dictionary.patientContainer.showInDebt}
-      </Menu.Item>
-      <Menu.Item key={PatientType.AllPatients} onClick={props.inDebtOrCredit}>
-        {Dictionary.patientContainer.showAllPatients}
-      </Menu.Item>
+      {Object.values(PatientType).map(value => (
+        <Menu.Item key={value} onClick={() => props.inDebtOrCredit(value)}>
+          {Dictionary.patientContainer[value]}
+        </Menu.Item>
+      ))}
     </Menu>
   );
 
