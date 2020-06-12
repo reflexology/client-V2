@@ -1,12 +1,20 @@
 @import '../../../styles/variables';
 @import '../../../styles/common';
 
-.form-container {
-  height: calc(100vh - #{$content-padding} - #{$header-height});
+$next-prev-container-height: 70px;
+
+.treatment-form {
+  height: calc(100vh - #{$content-padding} - #{$header-height} - #{$next-prev-container-height});
   overflow-y: auto;
 
   .form-card {
     @extend .card;
     margin-bottom: 24px;
   }
+}
+
+.next-prev-container {
+  align-items: center;
+  display: flex;
+  height: $next-prev-container-height;
 }

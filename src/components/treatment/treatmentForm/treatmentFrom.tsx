@@ -1,6 +1,6 @@
 import './treatmentForm.scss';
 
-import { Alert, Button, Col, Form, message, Radio, Row, Steps } from 'antd';
+import { Alert, Button, Col, Form, message, Row, Space, Steps } from 'antd';
 import { Store } from 'antd/lib/form/interface';
 import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
@@ -22,6 +22,11 @@ interface TreatmentFromProps {
 const keyUp = 38;
 const keyDown = 40;
 
+const treatmentTypesStepCount: Record<TreatmentType, number> = {
+  [TreatmentType.Reflexology]: 2,
+  [TreatmentType.Diet]: 5
+};
+
 const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
   const [form] = Form.useForm();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
@@ -36,15 +41,12 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
     return () => document.removeEventListener('keydown', onKeydown);
   }, [currentStep]);
 
+  const nextStep = () => setCurrentStep(currentStep => currentStep + 1);
+  const prevStep = () => setCurrentStep(currentStep => currentStep - 1);
+
   const onKeydown = (e: KeyboardEvent) => {
-    if (e.keyCode === keyUp && currentStep > 0) {
-      setCurrentStep(cs => cs - 1);
-      // e.stopPropagation();
-    }
-    if (e.keyCode === keyDown && currentStep < 3) {
-      setCurrentStep(cs => cs + 1);
-      // e.stopPropagation();
-    }
+    if (e.keyCode === keyUp && currentStep > 0) prevStep();
+    if (e.keyCode === keyDown && currentStep < 3) nextStep();
     e.stopPropagation();
   };
 
@@ -71,6 +73,7 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
         <Steps current={currentStep} onChange={stepNumber => setCurrentStep(stepNumber)} direction='vertical'>
           <Steps.Step title='כללי' />
           <Steps.Step title='בדיקות דם' />
+          <Steps.Step title='תזכורת' />
           {isDiet && (
             <>
               <Steps.Step title='המשך תשאול' />
@@ -79,8 +82,9 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
           )}
         </Steps>
       </Col>
-      <Col span={20} className='form-container'>
+      <Col span={20}>
         <Form
+          className='treatment-form'
           layout='vertical'
           hideRequiredMark
           form={form}
@@ -91,15 +95,6 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
           }}
           onFinish={onSubmit}
         >
-          <Form.Item name='treatmentType' label={Dictionary.treatmentForm.treatmentType}>
-            <Radio.Group onChange={e => setTreatmentType(e.target.value)}>
-              {Object.values(TreatmentType).map(treatmentType => (
-                <Radio key={treatmentType} value={treatmentType}>
-                  {Dictionary.treatmentTypes[treatmentType.toLowerCase() as keyof typeof Dictionary.treatmentTypes]}
-                </Radio>
-              ))}
-            </Radio.Group>
-          </Form.Item>
           {currentStep === 0 && (
             <StepOne
               balance={props.balance}
@@ -107,17 +102,30 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
               diagnoses={diagnoses}
               form={form}
               isReflexology={isReflexology}
+              setTreatmentType={setTreatmentType}
             />
           )}
           {currentStep === 1 && <BloodTestsForm />}
           {currentStep === 2 && <ReminderStep form={form} />}
           {props.error && <Alert message={props.error} type='error' showIcon />}
           <Form.Item>
-            <Button block loading={props.isLoading} type='primary' htmlType='submit'>
-              {Dictionary.patientForm.save}
-            </Button>
+            {currentStep === 5 && (
+              <Button loading={props.isLoading} type='primary' htmlType='submit'>
+                {Dictionary.treatmentForm.save}
+              </Button>
+            )}
           </Form.Item>
         </Form>
+        <div className='next-prev-container'>
+          <Space>
+            {currentStep > 0 && <Button onClick={prevStep}>{Dictionary.treatmentForm.previous}</Button>}
+            {treatmentTypesStepCount[treatmentType] !== currentStep && (
+              <Button onClick={nextStep} type='primary'>
+                {Dictionary.treatmentForm.next}
+              </Button>
+            )}
+          </Space>
+        </div>
       </Col>
     </Row>
   );

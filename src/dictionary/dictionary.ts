@@ -78,6 +78,9 @@ const Dictionary = {
     header: 'הוסף טיפול'
   },
   treatmentForm: {
+    save: 'שמור',
+    next: 'הבא',
+    previous: 'הקודם',
     treatmentType: 'סוג טיפול',
     treatmentDate: 'תאריך טיפול',
     referredBy: 'הופנה ע"י',
@@ -140,7 +143,7 @@ const Dictionary = {
 
     bloodTestHeader: 'בדיקות דם',
     addBloodTest: 'הוסף בדיקת דם',
-    isImportant: 'חשוב'
+    isImportant: 'חריג'
   },
   treatmentTypes: {
     diet: 'תזונה',
