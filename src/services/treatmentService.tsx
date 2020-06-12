@@ -1,4 +1,4 @@
-import { InputType } from 'components/common/formCard';
+import { Field, InputType } from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
 
@@ -100,6 +100,13 @@ const TreatmentService = {
     ];
   },
 
+  getReminderFields(): TreatmentFields[] {
+    return [
+      { name: 'reminders', inputType: InputType.TextArea },
+      { name: 'reminderDate', inputType: InputType.DatePicker }
+    ];
+  },
+
   getBloodTests() {
     return [
       { name: 'glucose', value: null, isImportant: false },
@@ -120,6 +127,20 @@ const TreatmentService = {
       { name: 'HBA1C', value: null, isImportant: false },
       { name: 'ferritin', value: null, isImportant: false }
     ];
+  },
+
+  getFields(
+    fields: TreatmentFields[],
+    getCustomFields: (fieldName: keyof typeof Dictionary.treatmentForm) => JSX.Element | undefined
+  ): Field[] {
+    return fields.map(field => ({
+      ...field,
+      label: Dictionary.treatmentForm[field.name],
+      placeholder:
+        Dictionary.treatmentForm[(field.name + 'Placeholder') as keyof typeof Dictionary.treatmentForm] || undefined,
+      extra: Dictionary.treatmentForm[(field.name + 'Extra') as keyof typeof Dictionary.treatmentForm] || undefined,
+      formItem: field.inputType === InputType.FormItem ? getCustomFields(field.name) : undefined
+    }));
   }
 };
 

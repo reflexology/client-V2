@@ -1,9 +1,10 @@
 import { Button, DatePicker, Form, Row } from 'antd';
 import { FormInstance } from 'antd/lib/form';
-import TextArea from 'antd/lib/input/TextArea';
+import FormCard from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
 import React from 'react';
+import TreatmentService from 'services/treatmentService';
 import { DATE_FORMAT } from 'utils/constants';
 
 interface ReminderStepProps {
@@ -11,25 +12,35 @@ interface ReminderStepProps {
 }
 
 const ReminderStep: React.FC<ReminderStepProps> = props => {
+  const getCustomFields = (fieldName: keyof typeof Dictionary.treatmentForm) => {
+    switch (fieldName) {
+      case 'reminderDate':
+        return (
+          <Form.Item name='reminderDate' label={Dictionary.treatmentForm.reminderDate}>
+            <DatePicker
+              format={DATE_FORMAT}
+              showToday={false}
+              renderExtraFooter={() => (
+                <Row justify='center'>
+                  <Button
+                    type='link'
+                    onClick={() => props.form.setFieldsValue({ reminderDate: moment().add(7, 'days') })}
+                  >
+                    {Dictionary.treatmentForm.inAWeek}
+                  </Button>
+                </Row>
+              )}
+            />
+          </Form.Item>
+        );
+    }
+  };
+
   return (
-    <>
-      <Form.Item name='reminders' hasFeedback label={Dictionary.treatmentForm.reminders}>
-        <TextArea autoSize autoComplete='off' />
-      </Form.Item>
-      <Form.Item name='reminderDate' label={Dictionary.treatmentForm.reminderDate}>
-        <DatePicker
-          format={DATE_FORMAT}
-          showToday={false}
-          renderExtraFooter={() => (
-            <Row justify='center'>
-              <Button type='link' onClick={() => props.form.setFieldsValue({ reminderDate: moment().add(7, 'days') })}>
-                {Dictionary.treatmentForm.inAWeek}
-              </Button>
-            </Row>
-          )}
-        />
-      </Form.Item>
-    </>
+    <FormCard
+      title='תזכורת'
+      fields={TreatmentService.getFields(TreatmentService.getReminderFields(), getCustomFields)}
+    />
   );
 };
 

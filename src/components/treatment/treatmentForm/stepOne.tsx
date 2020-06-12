@@ -1,9 +1,9 @@
-import { Form, InputNumber, Select } from 'antd';
+import { Form, InputNumber, Radio, Select } from 'antd';
 import { FormInstance } from 'antd/lib/form';
-import FormCard, { Field, InputType } from 'components/common/formCard';
+import FormCard from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
 import React from 'react';
-import TreatmentService, { Treatment, TreatmentFields } from 'services/treatmentService';
+import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
 
 interface StepOneProps {
   diagnoses: string[] | null;
@@ -11,19 +11,10 @@ interface StepOneProps {
   isReflexology: boolean;
   form: FormInstance;
   balance: number;
+  setTreatmentType: (treatmentType: TreatmentType) => void;
 }
 
 const StepOne: React.FC<StepOneProps> = props => {
-  const getFields = (fields: TreatmentFields[]): Field[] =>
-    fields.map(field => ({
-      ...field,
-      label: Dictionary.treatmentForm[field.name],
-      placeholder:
-        Dictionary.treatmentForm[(field.name + 'Placeholder') as keyof typeof Dictionary.treatmentForm] || undefined,
-      extra: Dictionary.treatmentForm[(field.name + 'Extra') as keyof typeof Dictionary.treatmentForm] || undefined,
-      formItem: field.inputType === InputType.FormItem ? getCustomFields(field.name) : undefined
-    }));
-
   const getCustomFields = (fieldName: keyof typeof Dictionary.treatmentForm) => {
     switch (fieldName) {
       case 'diagnoses':
@@ -87,12 +78,30 @@ const StepOne: React.FC<StepOneProps> = props => {
 
   return (
     <>
-      <FormCard title='כללי' fields={getFields(TreatmentService.getGeneralFields())} />
+      <Form.Item name='treatmentType' label={Dictionary.treatmentForm.treatmentType}>
+        <Radio.Group onChange={e => props.setTreatmentType(e.target.value)}>
+          {Object.values(TreatmentType).map(treatmentType => (
+            <Radio key={treatmentType} value={treatmentType}>
+              {Dictionary.treatmentTypes[treatmentType.toLowerCase() as keyof typeof Dictionary.treatmentTypes]}
+            </Radio>
+          ))}
+        </Radio.Group>
+      </Form.Item>
+      <FormCard
+        title='כללי'
+        fields={TreatmentService.getFields(TreatmentService.getGeneralFields(), getCustomFields)}
+      />
 
       {!props.isReflexology && (
         <>
-          <FormCard title='תשאול' fields={getFields(TreatmentService.getDietFields())} />
-          <FormCard title='צריכה של חומרי גרוי וכמויות ביום' fields={getFields(TreatmentService.getStimulants())} />
+          <FormCard
+            title='תשאול'
+            fields={TreatmentService.getFields(TreatmentService.getDietFields(), getCustomFields)}
+          />
+          <FormCard
+            title='צריכה של חומרי גרוי וכמויות ביום'
+            fields={TreatmentService.getFields(TreatmentService.getStimulants(), getCustomFields)}
+          />
         </>
       )}
     </>
