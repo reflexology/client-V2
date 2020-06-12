@@ -1,6 +1,7 @@
 import { Card, Col, DatePicker, Form, Input, InputNumber, Row } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import React from 'react';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'utils/constants';
 
 export enum InputType {
   Input,
@@ -35,9 +36,9 @@ const FormCard: React.FC<FormCardProps> = props => {
       case InputType.TextArea:
         return <TextArea autoComplete='off' placeholder={field.placeholder} autoSize />;
       case InputType.DatePicker:
-        return <DatePicker format='DD/MM/YYYY' style={{ width: '100%' }} />;
+        return <DatePicker format={DATE_FORMAT} style={{ width: '100%' }} />;
       case InputType.DateTimePicker:
-        return <DatePicker showTime format='DD/MM/YYYY HH:mm' style={{ width: '100%' }} />;
+        return <DatePicker showTime format={DATE_TIME_FORMAT} style={{ width: '100%' }} />;
     }
   };
 

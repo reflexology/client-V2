@@ -4,6 +4,7 @@ import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import TransactionService, { Transaction } from 'services/transactionService';
+import { DATE_FORMAT } from 'utils/constants';
 
 export interface TransactionFormProps {
   onSubmit: (values: any) => void;
@@ -59,7 +60,7 @@ const TransactionForm: React.SFC<TransactionFormProps> = props => {
         <DatePicker
           showTime
           defaultValue={moment()}
-          format='DD/MM/YYYY'
+          format={DATE_FORMAT}
           placeholder={Dictionary.transactionForm.createdAt}
         />
       </Form.Item>
