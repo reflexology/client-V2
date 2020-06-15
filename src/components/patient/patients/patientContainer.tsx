@@ -1,7 +1,7 @@
 import './patient.scss';
 
 import { UserAddOutlined } from '@ant-design/icons';
-import { Button, Col, Row } from 'antd';
+import { Button, Col, message, Row } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
@@ -25,10 +25,17 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
   const [patientsInDebtOrCredit, setPatientsInDebtOrCredit] = useState(PatientType.AllPatients);
 
   useEffect(() => {
-    PatientService.getPatients()
+    setIsFetching(true);
+    PatientService.getPatients(
+      patientsInDebtOrCredit === PatientType.InCredit,
+      patientsInDebtOrCredit === PatientType.InDebt
+    )
       .then(setPatients)
+      .catch(() => {
+        message.error('could not load patients');
+      })
       .finally(() => setIsFetching(false));
-  }, []);
+  }, [patientsInDebtOrCredit]);
 
   useEffect(() => setFilteredPatients(patients), [patients]);
 
@@ -37,13 +44,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
       patients.filter(patient => tableUtils.filter(patient, search, ['_id', 'maritalStatus', 'createdAt', 'createdBy']))
     );
 
-  const onClickPatientsInDebtOrCredit = (type: PatientType) =>
-    PatientService.getPatients(type === PatientType.InCredit, type === PatientType.InDebt)
-      .then(setPatients)
-      .finally(() => {
-        setIsFetching(false);
-        setPatientsInDebtOrCredit(type);
-      });
+  const handlePatientTypeChanged = (type: PatientType) => setPatientsInDebtOrCredit(type);
 
   return (
     <div className='patients-container'>
@@ -64,14 +65,15 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
         </Col>
         <Col>
           <PatientInCreditOrDebt
-            inDebtOrCredit={onClickPatientsInDebtOrCredit}
+            onSelect={handlePatientTypeChanged}
             patientsInDebtOrCredit={patientsInDebtOrCredit}
+            isLoading={patients.length > 0 && isFetching}
           />
         </Col>
       </Row>
       <PatientsTable
         searchText={searchQuery}
-        isFetching={isFetching}
+        isFetching={isFetching && patients.length === 0}
         patients={filteredPatients.map(patient => ({ ...patient, key: patient._id }))}
       />
     </div>
