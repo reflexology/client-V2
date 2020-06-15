@@ -56,7 +56,11 @@ const TransactionContainer: React.FC<TransactionContainerProps> = props => {
           <Button onClick={() => props.history.push(routes.reports)}>{Dictionary.report.showReport}</Button>
         </Col>
       </Row>
-      <TransactionsTable searchText={searchQuery} isFetching={isFetching} transactions={filteredTransactions} />
+      <TransactionsTable
+        searchText={searchQuery}
+        isFetching={isFetching}
+        transactions={filteredTransactions.map(transaction => ({ ...transaction, key: transaction._id }))}
+      />
     </div>
   );
 };

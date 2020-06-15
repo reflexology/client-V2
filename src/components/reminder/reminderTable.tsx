@@ -6,11 +6,11 @@ import React, { useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { Reminder } from 'services/reminderService';
 import { DATE_FORMAT } from 'utils/constants';
-import TableUtils from 'utils/tableUtils';
+import TableUtils, { WithKey } from 'utils/tableUtils';
 
 interface ReminderTableProps {
   isFetching: boolean;
-  reminders: Reminder[];
+  reminders: WithKey<Reminder>[];
   searchText: string;
 }
 

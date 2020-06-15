@@ -3,6 +3,10 @@ import moment from 'moment';
 
 import { DATE_FORMAT } from './constants';
 
+export type WithKey<T> = T & {
+  key: string;
+};
+
 class TableUtils<T extends { [key: string]: any }> {
   formats = [moment.ISO_8601, DATE_FORMAT];
 

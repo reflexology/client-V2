@@ -8,7 +8,6 @@ export interface Reminder {
   reminderDate: Date;
   name: string;
   reminder: string;
-  key: string;
 }
 
 export enum PatientType {
@@ -20,12 +19,11 @@ export enum PatientType {
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const ReminderService = {
-  async getReminders() {
+  async getReminders(): Promise<Reminder[]> {
     const reminders = await HttpService.get<Reminder[]>(baseEndPoint + '/reminder');
     return reminders.map(reminder => ({
       ...reminder,
-      name: `${reminder.firstName} ${reminder.lastName}`,
-      key: reminder.treatmentId
+      name: `${reminder.firstName} ${reminder.lastName}`
     }));
   }
 };

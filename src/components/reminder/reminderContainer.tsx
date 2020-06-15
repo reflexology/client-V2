@@ -40,7 +40,11 @@ const ReminderContainer: React.FC<ReminderContainerProps> = () => {
           />
         </Col>
       </Row>
-      <ReminderTable searchText={searchQuery} isFetching={isFetching} reminders={filteredReminders} />
+      <ReminderTable
+        searchText={searchQuery}
+        isFetching={isFetching}
+        reminders={filteredReminders.map(reminder => ({ ...reminder, key: reminder.treatmentId }))}
+      />
     </div>
   );
 };

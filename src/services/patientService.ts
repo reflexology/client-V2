@@ -30,11 +30,10 @@ export enum PatientType {
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const PatientService = {
-  async getPatients(inCredit?: boolean, inDebt?: boolean) {
-    const patients = await HttpService.get<Patient[]>(
+  getPatients(inCredit?: boolean, inDebt?: boolean) {
+    return HttpService.get<Patient[]>(
       `${baseEndPoint}/patient${inCredit ? '?inCredit=true' : ''}${inDebt ? '?inDebt=true' : ''}`
     );
-    return patients.map(patient => ({ ...patient, key: patient._id }));
   },
   getPatient(patientId: string) {
     return HttpService.get<Patient>(baseEndPoint + '/patient/' + patientId);

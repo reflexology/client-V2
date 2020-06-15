@@ -10,11 +10,11 @@ import Highlighter from 'react-highlight-words';
 import { useHistory } from 'react-router-dom';
 import { Transaction } from 'services/transactionService';
 import { DATE_FORMAT } from 'utils/constants';
-import TableUtils from 'utils/tableUtils';
+import TableUtils, { WithKey } from 'utils/tableUtils';
 
 interface TransactionsTableProps {
   isFetching: boolean;
-  transactions: Transaction[];
+  transactions: WithKey<Transaction>[];
   searchText: string;
 }
 

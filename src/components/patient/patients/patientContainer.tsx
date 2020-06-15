@@ -69,7 +69,11 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
           />
         </Col>
       </Row>
-      <PatientsTable searchText={searchQuery} isFetching={isFetching} patients={filteredPatients} />
+      <PatientsTable
+        searchText={searchQuery}
+        isFetching={isFetching}
+        patients={filteredPatients.map(patient => ({ ...patient, key: patient._id }))}
+      />
     </div>
   );
 };

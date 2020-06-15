@@ -10,11 +10,11 @@ import { useHistory } from 'react-router-dom';
 import DiagnosisService from 'services/diagnosesService';
 import { Patient } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
-import TableUtils from 'utils/tableUtils';
+import TableUtils, { WithKey } from 'utils/tableUtils';
 
 interface PatientsTableProps {
   isFetching: boolean;
-  patients: Patient[];
+  patients: WithKey<Patient>[];
   searchText: string;
 }
 
