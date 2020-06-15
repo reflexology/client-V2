@@ -48,7 +48,7 @@ const Sidebar: React.FC<any> = props => {
             <TeamOutlined />
             <span>{Dictionary.sidebar.patients}</span>
           </Menu.Item>
-          <Menu.Item key='2'>
+          <Menu.Item key={routes.reminders} onClick={() => history.push(routes.reminders)}>
             <BellOutlined />
             <span>{Dictionary.sidebar.reminders}</span>
           </Menu.Item>

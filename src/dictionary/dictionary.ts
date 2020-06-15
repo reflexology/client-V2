@@ -149,6 +149,11 @@ const Dictionary = {
     diet: 'תזונה',
     reflexology: 'רפלקסולוגיה'
   },
+  reminders: {
+    name: 'שם',
+    reminder: 'תזכורת',
+    date: 'תאריך'
+  },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',
     err_user_does_not_exist: 'משתמש לא קיים',
