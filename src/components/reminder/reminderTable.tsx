@@ -47,7 +47,7 @@ const ReminderTable: React.FC<ReminderTableProps> = props => {
   const [selectedRows, setSelectedRows] = useState<React.Key[]>([]);
   return (
     <Table<Reminder>
-      pagination={{ pageSize: 7 }}
+      pagination={{ pageSize: 7, showSizeChanger: false }}
       loading={props.isFetching}
       columns={columns}
       rowSelection={{

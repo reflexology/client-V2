@@ -102,7 +102,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
 
   return (
     <Table<Patient>
-      pagination={{ pageSize: 7 }}
+      pagination={{ pageSize: 7, showSizeChanger: false }}
       loading={props.isFetching}
       columns={columns}
       dataSource={props.patients}

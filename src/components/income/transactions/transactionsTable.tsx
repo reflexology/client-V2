@@ -74,7 +74,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
 
   return (
     <Table<Transaction>
-      pagination={{ pageSize: 8 }}
+      pagination={{ pageSize: 8, showSizeChanger: false }}
       onRow={record => ({
         onClick: () => (record.isFromTreatment ? history.push(routes.addTreatment) : null)
       })}
