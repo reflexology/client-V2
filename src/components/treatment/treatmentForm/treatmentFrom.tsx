@@ -23,8 +23,8 @@ const keyUp = 38;
 const keyDown = 40;
 
 const treatmentTypesStepCount: Record<TreatmentType, number> = {
-  [TreatmentType.Reflexology]: 2,
-  [TreatmentType.Diet]: 5
+  [TreatmentType.Reflexology]: 3,
+  [TreatmentType.Diet]: 6
 };
 
 const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
@@ -66,68 +66,70 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
   };
 
   return (
-    <Row>
-      <Col span={4}>
-        <h2 style={{ marginBottom: '20px' }}>{Dictionary.addTreatment.header}</h2>
+    <Form
+      layout='vertical'
+      hideRequiredMark
+      form={form}
+      initialValues={{
+        treatmentType: TreatmentType.Reflexology,
+        ...props.initialValues,
+        bloodTests: TreatmentService.getBloodTests()
+      }}
+      onFinish={onSubmit}
+    >
+      <Row>
+        <Col span={4}>
+          <h2 style={{ marginBottom: '20px' }}>{Dictionary.addTreatment.header}</h2>
 
-        <Steps current={currentStep} onChange={stepNumber => setCurrentStep(stepNumber)} direction='vertical'>
-          <Steps.Step title='כללי' />
-          <Steps.Step title='בדיקות דם' />
-          <Steps.Step title='תזכורת' />
-          {isDiet && (
-            <>
-              <Steps.Step title='המשך תשאול' />
-              <Steps.Step title='תזונה' />
-            </>
-          )}
-        </Steps>
-      </Col>
-      <Col span={20}>
-        <Form
-          className='treatment-form'
-          layout='vertical'
-          hideRequiredMark
-          form={form}
-          initialValues={{
-            treatmentType: TreatmentType.Reflexology,
-            ...props.initialValues,
-            bloodTests: TreatmentService.getBloodTests()
-          }}
-          onFinish={onSubmit}
-        >
-          {currentStep === 0 && (
-            <StepOne
-              balance={props.balance}
-              initialValues={props.initialValues}
-              diagnoses={diagnoses}
-              form={form}
-              isReflexology={isReflexology}
-              setTreatmentType={setTreatmentType}
-            />
-          )}
-          {currentStep === 1 && <BloodTestsForm />}
-          {currentStep === 2 && <ReminderStep form={form} />}
-          {props.error && <Alert message={props.error} type='error' showIcon />}
-          <Form.Item>
-            {currentStep === 5 && (
-              <Button loading={props.isLoading} type='primary' htmlType='submit'>
-                {Dictionary.treatmentForm.save}
-              </Button>
+          <Steps current={currentStep} onChange={stepNumber => setCurrentStep(stepNumber)} direction='vertical'>
+            <Steps.Step title='כללי' />
+            <Steps.Step title='בדיקות דם' />
+            <Steps.Step title='תזכורת' />
+            {isDiet && (
+              <>
+                <Steps.Step title='המשך תשאול' />
+                <Steps.Step title='תזונה' />
+              </>
             )}
-          </Form.Item>
-        </Form>
-        <div className='next-prev-container'>
-          <Space>
-            {currentStep > 0 && <Button onClick={prevStep}>{Dictionary.treatmentForm.previous}</Button>}
-            {treatmentTypesStepCount[treatmentType] !== currentStep && (
-              <Button onClick={nextStep} type='primary'>
-                {Dictionary.treatmentForm.next}
-              </Button>
+          </Steps>
+          <Button loading={props.isLoading} type='primary' htmlType='submit'>
+            {Dictionary.treatmentForm.save}
+          </Button>
+        </Col>
+        <Col span={20}>
+          <div className='treatment-form'>
+            {currentStep === 0 && (
+              <StepOne
+                balance={props.balance}
+                initialValues={props.initialValues}
+                diagnoses={diagnoses}
+                form={form}
+                isReflexology={isReflexology}
+                setTreatmentType={setTreatmentType}
+              />
             )}
-          </Space>
-        </div>
-      </Col>
-    </Row>
+            {currentStep === 1 && <BloodTestsForm />}
+            {currentStep === 2 && <ReminderStep form={form} />}
+            {props.error && <Alert message={props.error} type='error' showIcon />}
+          </div>
+
+          <div className='next-prev-container'>
+            <Space>
+              {currentStep > 0 && <Button onClick={prevStep}>{Dictionary.treatmentForm.previous}</Button>}
+              {treatmentTypesStepCount[treatmentType] !== currentStep + 1 ? (
+                <Button onClick={nextStep} type='primary'>
+                  {Dictionary.treatmentForm.next}
+                </Button>
+              ) : (
+                <Button loading={props.isLoading} type='primary' onClick={form.submit}>
+                  {Dictionary.treatmentForm.save}
+                </Button>
+              )}
+            </Space>
+          </div>
+        </Col>
+      </Row>
+    </Form>
   );
 };
 

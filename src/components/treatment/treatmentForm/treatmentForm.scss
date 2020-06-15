@@ -4,7 +4,7 @@
 $next-prev-container-height: 70px;
 
 .treatment-form {
-  height: calc(100vh - #{$content-padding} - #{$header-height} - #{$next-prev-container-height});
+  max-height: calc(100vh - #{$content-padding} - #{$header-height} - #{$next-prev-container-height});
   overflow-y: auto;
 
   .form-card {
