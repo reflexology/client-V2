@@ -1,7 +1,7 @@
 import './patient.scss';
 
 import { UserAddOutlined } from '@ant-design/icons';
-import { Button, Col, message, Row } from 'antd';
+import { Button, Col, DatePicker, message, Row } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
@@ -46,6 +46,23 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
 
   const handlePatientTypeChanged = (type: PatientType) => setPatientsInDebtOrCredit(type);
 
+  const filterByTreatmentStartDate = (date: any, dateString: string) => {
+    console.log(date, dateString);
+    setFilteredPatients(
+      patients.filter(patient =>
+        patient.lastTreatment ? new Date(patient.lastTreatment as any) > new Date(date?.toDate() as any) : patient
+      )
+    );
+  };
+
+  const filterByTreatmentEndDate = (date: any, dateString: string) => {
+    setFilteredPatients(
+      patients.filter(patient =>
+        patient.lastTreatment ? new Date(patient.lastTreatment as any) < new Date(date?.toDate() as any) : patient
+      )
+    );
+  };
+
   return (
     <div className='patients-container'>
       <Row>
@@ -69,6 +86,14 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
             patientsInDebtOrCredit={patientsInDebtOrCredit}
             isLoading={patients.length > 0 && isFetching}
           />
+        </Col>
+        <Col>
+          מטיפול אחרון
+          <DatePicker onChange={filterByTreatmentStartDate} />
+        </Col>
+        <Col>
+          עד טיפול אחרון
+          <DatePicker onChange={filterByTreatmentEndDate} />
         </Col>
       </Row>
       <PatientsTable
