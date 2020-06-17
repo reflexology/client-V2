@@ -35,7 +35,7 @@ const Login: React.FC<Props> = props => {
 
   return (
     <Row align='middle' justify='center' className='login-container'>
-      <Col span={9}>
+      <Col span={22} sm={20} md={14} lg={9}>
         <img src='' alt='' />
         <div className='login-card'>
           <div className='header-wrapper'>
