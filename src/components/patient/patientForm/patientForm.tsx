@@ -23,7 +23,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
   useEffect(() => form.resetFields(), [props.initialValues]);
 
   return (
-    <Form form={form} initialValues={props.initialValues} onFinish={props.onSubmit}>
+    <Form noValidate form={form} initialValues={props.initialValues} onFinish={props.onSubmit}>
       <Form.Item
         name='lastName'
         hasFeedback
@@ -67,11 +67,11 @@ const PatientForm: React.FC<PatientFormProps> = props => {
       </Form.Item>
 
       <Form.Item name='phone' hasFeedback>
-        <Input autoComplete='off' placeholder={Dictionary.patientForm.phone} />
+        <Input autoComplete='off' type='tel' placeholder={Dictionary.patientForm.phone} />
       </Form.Item>
 
       <Form.Item name='email' hasFeedback rules={[{ pattern: emailRegex, message: Dictionary.patientForm.wrongEmail }]}>
-        <Input autoComplete='off' placeholder={Dictionary.patientForm.email} />
+        <Input autoComplete='off' type='email' placeholder={Dictionary.patientForm.email} />
       </Form.Item>
 
       <Row justify='space-between'>
