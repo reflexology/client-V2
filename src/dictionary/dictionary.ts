@@ -74,6 +74,7 @@ const Dictionary = {
     income: 'הכנסה',
     expenditure: 'הוצאה'
   },
+  treatments: { addTreatment: 'הוסף טיפול' },
   addTreatment: {
     header: 'הוסף טיפול'
   },

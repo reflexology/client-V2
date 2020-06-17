@@ -89,7 +89,13 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       key: 'action',
       render: (text: string, record: Patient) => (
         <span>
-          <Button onClick={() => history.push(routes.addTreatment.format(record._id))} type='link'>
+          <Button
+            onClick={e => {
+              history.push(routes.addTreatment.format(record._id));
+              e.stopPropagation();
+            }}
+            type='link'
+          >
             הוסף טיפול
           </Button>
           <Button onClick={() => history.push(routes.editPatient.format(record._id), record)} type='link'>
@@ -103,6 +109,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
   return (
     <Table<Patient>
       pagination={{ pageSize: 7, showSizeChanger: false }}
+      onRow={record => ({ onClick: () => history.push(routes.treatments.format(record._id)) })}
       loading={props.isFetching}
       columns={columns}
       dataSource={props.patients}
