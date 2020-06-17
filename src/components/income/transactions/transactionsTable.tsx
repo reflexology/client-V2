@@ -82,6 +82,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
       loading={isFetching}
       columns={columns}
       dataSource={transactions}
+      scroll={{ x: 'max-content' }}
     />
   );
 };

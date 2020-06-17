@@ -68,6 +68,7 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
       loading={props.isFetching}
       columns={columns}
       dataSource={props.treatments}
+      scroll={{ x: 'max-content' }}
     />
   );
 };

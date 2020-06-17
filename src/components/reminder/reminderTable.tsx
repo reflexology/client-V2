@@ -55,6 +55,7 @@ const ReminderTable: React.FC<ReminderTableProps> = props => {
         onChange: selectedRows => setSelectedRows(selectedRows)
       }}
       dataSource={props.reminders}
+      scroll={{ x: 'max-content' }}
     />
   );
 };

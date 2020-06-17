@@ -125,6 +125,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       loading={props.isFetching}
       columns={columns}
       dataSource={props.patients}
+      scroll={{ x: 'max-content' }}
     />
   );
 };
