@@ -18,6 +18,8 @@ export interface Patient {
   gender: 'Male' | 'Female';
   maritalStatus: 'Married' | 'Single' | 'Divorced' | 'Widowed';
   calculatedAge: Readonly<string>;
+  profession: string;
+  childrenAges: string[];
   diagnoses?: string[];
 }
 
