@@ -2,7 +2,8 @@ import { Input } from 'antd';
 import { SearchProps } from 'antd/lib/input/Search';
 import Dictionary from 'dictionary/dictionary';
 import useDebounce from 'hooks/useDebounce';
-import React, { useEffect, useState } from 'react';
+import useDidUpdateEffect from 'hooks/useDidUpdateEffect';
+import React, { useState } from 'react';
 
 interface DebouncedSearchInputProps extends SearchProps {
   onDebounced: (searchQuery: string) => void;
@@ -13,7 +14,7 @@ const DebouncedSearchInput: React.FC<DebouncedSearchInputProps> = ({ onDebounced
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, delay);
 
-  useEffect(() => onDebounced(debouncedSearchQuery), [debouncedSearchQuery]);
+  useDidUpdateEffect(() => onDebounced(debouncedSearchQuery), [debouncedSearchQuery]);
 
   return (
     <Input.Search
