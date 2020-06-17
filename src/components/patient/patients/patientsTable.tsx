@@ -52,7 +52,15 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       ...tableUtils.getBooleanColumn(Dictionary.patientForm.email, 'email'),
 
       render: email =>
-        email ? <CheckOutlined className='email-check' onClick={() => navigator.clipboard.writeText(email)} /> : null
+        email ? (
+          <CheckOutlined
+            className='email-check'
+            onClick={e => {
+              e.stopPropagation();
+              navigator.clipboard.writeText(email);
+            }}
+          />
+        ) : null
     },
     {
       ...tableUtils.getDateColumn(Dictionary.patientForm.lastTreatment, 'lastTreatment'),
@@ -71,9 +79,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       key: 'diagnoses',
       dataIndex: 'diagnoses',
       filters: diagnoses?.map(diagnosis => ({ value: diagnosis, text: diagnosis })),
-      onFilter: (value, record) => {
-        return record.diagnoses?.indexOf(value.toString()) === 0;
-      },
+      onFilter: (value, record) => record.diagnoses?.indexOf(value.toString()) === 0,
       render: (diagnoses: string[]) => (
         <div className='diagnoses-container'>
           {diagnoses?.map(diagnosis => (
@@ -91,14 +97,20 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
         <span>
           <Button
             onClick={e => {
-              history.push(routes.addTreatment.format(record._id));
               e.stopPropagation();
+              history.push(routes.addTreatment.format(record._id));
             }}
             type='link'
           >
             הוסף טיפול
           </Button>
-          <Button onClick={() => history.push(routes.editPatient.format(record._id), record)} type='link'>
+          <Button
+            onClick={e => {
+              e.stopPropagation();
+              history.push(routes.editPatient.format(record._id), record);
+            }}
+            type='link'
+          >
             ערוך
           </Button>
         </span>
