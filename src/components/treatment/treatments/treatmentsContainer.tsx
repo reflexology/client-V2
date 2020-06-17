@@ -2,6 +2,7 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { Button, Col, message, Row } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
+import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
@@ -19,6 +20,12 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
   const [filteredTreatments, setFilteredTreatments] = useState<Treatment[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const { patients, currentPatient, setCurrentPatient } = usePatients();
+
+  useEffect(() => setCurrentPatient(patients.find(patient => patient._id === props.match.params.patientId)), [
+    patients
+  ]);
 
   useEffect(() => {
     TreatmentService.getTreatmentsByPatientId(props.match.params.patientId)
@@ -59,6 +66,7 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
         searchText={searchQuery}
         isFetching={isFetching}
         treatments={filteredTreatments.map(Treatment => ({ ...Treatment, key: Treatment._id }))}
+        currentPatient={currentPatient}
       />
     </div>
   );

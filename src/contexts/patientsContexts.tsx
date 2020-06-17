@@ -5,12 +5,15 @@ type PatientsContextType = {
   patients: Patient[];
   isDataFetchedOnce: boolean;
   setPatients: (patients: Patient[]) => void;
+  currentPatient: Patient | undefined;
+  setCurrentPatient: (patient: Patient | undefined) => void;
 };
 
 export const PatientsContext = React.createContext<PatientsContextType>(undefined!);
 
 export const PatientsProvider: React.FC = props => {
   const [patients, setPatients] = useState<Patient[]>([]);
+  const [currentPatient, setCurrentPatient] = useState<Patient | undefined>(undefined);
   const [isDataFetchedOnce, setIsDataFetchedOnce] = useState(false);
 
   useEffect(() => {
@@ -20,7 +23,7 @@ export const PatientsProvider: React.FC = props => {
   }, []);
 
   return (
-    <PatientsContext.Provider value={{ patients, setPatients, isDataFetchedOnce }}>
+    <PatientsContext.Provider value={{ patients, setPatients, isDataFetchedOnce, currentPatient, setCurrentPatient }}>
       {props.children}
     </PatientsContext.Provider>
   );
