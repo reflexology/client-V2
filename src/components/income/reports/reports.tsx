@@ -44,6 +44,7 @@ const Reports: React.FC<ReportsProps> = () => {
             value={[startDate, endDate]}
             defaultPickerValue={[moment(), moment()]}
             allowClear={false}
+            format={DATE_FORMAT}
           />
           <Descriptions title={Dictionary.report.title} layout='vertical'>
             <Descriptions.Item label={Dictionary.report.income}>
