@@ -8,11 +8,14 @@ interface CurrentPatientProps {
 const CurrentPatient: React.FC<CurrentPatientProps> = props => {
   if (!props.patient) return null;
 
-  const { firstName, lastName, momName, age } = props.patient;
+  const { firstName, lastName, momName, age, phone } = props.patient;
   return (
     <b>
-      <span>{firstName}</span> <span>{lastName}</span> <span>{momName ? `(${momName})` : null}</span>{' '}
-      <span>גיל: {age}</span>
+      <span className='ml-6'>
+        <span>{firstName}</span> <span>{lastName}</span> {momName && <span>({momName})</span>}
+      </span>
+      {age && <span className='ml-6'>גיל: {age}</span>}
+      {phone && <span className='ml-6'>טלפון: {phone}</span>}
     </b>
   );
 };
