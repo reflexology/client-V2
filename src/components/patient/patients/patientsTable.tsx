@@ -1,5 +1,5 @@
 import { CheckOutlined } from '@ant-design/icons';
-import { Button, message, Table, Tag } from 'antd';
+import { Button, message, Table, Tag, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
@@ -46,7 +46,15 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
     },
     tableUtils.getStringColumn(Dictionary.patientForm.firstName, 'firstName', getHighlighter()),
     tableUtils.getStringColumn(Dictionary.patientForm.momName, 'momName', getHighlighter()),
-    tableUtils.getNumberColumn(Dictionary.patientForm.age, 'calculatedAge', getHighlighter()),
+    {
+      ...tableUtils.getNumberColumn(Dictionary.patientForm.age, 'calculatedAge'),
+      render: (calculatedAge, patient) =>
+        patient.birthday ? (
+          <Tooltip title={moment(patient.birthday).format(DATE_FORMAT)}>{calculatedAge}</Tooltip>
+        ) : (
+          calculatedAge
+        )
+    },
     tableUtils.getStringColumn(Dictionary.patientForm.phone, 'phone', getHighlighter()),
     {
       ...tableUtils.getBooleanColumn(Dictionary.patientForm.email, 'email'),
