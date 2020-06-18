@@ -134,6 +134,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       columns={columns}
       dataSource={props.patients}
       scroll={{ x: 'max-content' }}
+      rowClassName='clickable'
     />
   );
 };

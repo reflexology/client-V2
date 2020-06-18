@@ -70,6 +70,7 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
       dataSource={props.treatments}
       onRow={treatment => ({ onClick: () => history.push(routes.treatment.format(treatment._id), treatment) })}
       scroll={{ x: 'max-content' }}
+      rowClassName='clickable'
     />
   );
 };
