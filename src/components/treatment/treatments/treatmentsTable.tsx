@@ -68,6 +68,7 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
       loading={props.isFetching}
       columns={columns}
       dataSource={props.treatments}
+      onRow={treatment => ({ onClick: () => history.push(routes.treatment.format(treatment._id), treatment) })}
       scroll={{ x: 'max-content' }}
     />
   );

@@ -43,6 +43,9 @@ const TreatmentService = {
       baseEndPoint + '/treatment/lastTreatment/byPatientId/' + patientId
     );
   },
+  getTreatmentById(patientId: string) {
+    return HttpService.get<Treatment>(baseEndPoint + '/treatment/' + patientId);
+  },
   addTreatment(patientId: string, treatment: Treatment) {
     return HttpService.post<Treatment>(baseEndPoint + '/treatment/patient/' + patientId, treatment);
   },
