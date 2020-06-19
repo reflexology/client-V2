@@ -20,6 +20,13 @@ export interface Treatment {
   isReminderCompleted?: boolean;
   createdBy?: string;
   diagnoses: string[];
+  bloodTests: BloodTest[];
+}
+
+export interface BloodTest {
+  name: string;
+  value: string | number;
+  isImportant: boolean;
 }
 
 export enum TreatmentType {
