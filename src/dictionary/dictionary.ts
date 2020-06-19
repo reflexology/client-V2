@@ -153,7 +153,9 @@ const Dictionary = {
   reminders: {
     name: 'שם',
     reminder: 'תזכורת',
-    date: 'תאריך'
+    date: 'תאריך',
+    showNew: 'תזכורות חדשות',
+    showAll: 'כל התזכורות'
   },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',

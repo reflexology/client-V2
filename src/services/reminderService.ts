@@ -10,17 +10,13 @@ export interface Reminder {
   reminders: string;
 }
 
-export enum PatientType {
-  AllPatients = 'showAllPatients',
-  InCredit = 'showInCredit',
-  InDebt = 'showInDebt'
-}
-
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
 const ReminderService = {
-  async getReminders(): Promise<Reminder[]> {
-    const reminders = await HttpService.get<Reminder[]>(baseEndPoint + '/reminder');
+  async getReminders(isNewReminders?: boolean): Promise<Reminder[]> {
+    const reminders = await HttpService.get<Reminder[]>(
+      `${baseEndPoint}/reminder${isNewReminders ? '?isNewReminders=true' : ''}`
+    );
     return reminders.map(reminder => ({
       ...reminder,
       name: `${reminder.firstName} ${reminder.lastName}`
