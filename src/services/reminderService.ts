@@ -7,7 +7,7 @@ export interface Reminder {
   isReminderCompleted: boolean;
   reminderDate: Date;
   name: string;
-  reminder: string;
+  reminders: string;
 }
 
 export enum PatientType {

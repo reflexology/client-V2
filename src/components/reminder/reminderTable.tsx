@@ -29,7 +29,7 @@ const ReminderTable: React.FC<ReminderTableProps> = props => {
   const tableUtils = new TableUtils<Reminder>();
   const columns: ColumnsType<Reminder> = [
     tableUtils.getStringColumn(Dictionary.reminders.name, 'name', getHighlighter()),
-    tableUtils.getNumberColumn(Dictionary.reminders.reminder, 'reminder', getHighlighter()),
+    tableUtils.getNumberColumn(Dictionary.reminders.reminder, 'reminders', getHighlighter()),
     {
       ...tableUtils.getDateColumn(Dictionary.reminders.date, 'reminderDate'),
       render: lastTreatment =>
