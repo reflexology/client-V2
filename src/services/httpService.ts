@@ -5,59 +5,43 @@ import history from 'utils/history';
 
 import AuthService from './authService';
 
-const getAuthorizationHeader = (jwt: boolean) =>
-  jwt ? { authorization: 'Bearer ' + AuthService.getAccessToken() } : null;
-
 const HttpService = {
-  async get<T = any>(url: string, config?: AxiosRequestConfig, jwt = false) {
-    const headers = getHeaders(config, getAuthorizationHeader(jwt));
-    const res = await axios.get<T>(url, { ...config, headers });
+  async get<T = any>(url: string, config?: AxiosRequestConfig) {
+    const res = await axios.get<T>(url, { ...config });
     return res.data;
   },
 
-  async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig, jwt = false) {
-    const headers = getHeaders(config, {
-      'Content-Type': 'application/json;charset=utf-8',
-      ...getAuthorizationHeader(jwt)
-    });
-    const res = await axios.post<T>(url, data, { ...config, headers });
+  async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    const res = await axios.post<T>(url, data, { ...config });
 
     return res.data;
   },
 
-  async put<T = any>(url: string, data?: any, config?: AxiosRequestConfig, jwt = false) {
-    const headers = getHeaders(config, {
-      'Content-Type': 'application/json;charset=utf-8',
-      ...getAuthorizationHeader(jwt)
-    });
-
-    const res = await axios.put<T>(url, data, { ...config, headers });
+  async put<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    const res = await axios.put<T>(url, data, { ...config });
     return res.data;
   },
 
-  async patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig, jwt = false) {
-    const headers = getHeaders(config, {
-      'Content-Type': 'application/json;charset=utf-8',
-      ...getAuthorizationHeader(jwt)
-    });
-
-    const res = await axios.patch<T>(url, data, { ...config, headers });
+  async patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    const res = await axios.patch<T>(url, data, { ...config });
     return res.data;
   },
 
-  async delete<T = any>(url: string, config?: AxiosRequestConfig, jwt = false) {
-    const headers = getHeaders(config, getAuthorizationHeader(jwt));
-
-    const res = await axios.delete<T>(url, { ...config, headers });
+  async delete<T = any>(url: string, config?: AxiosRequestConfig) {
+    const res = await axios.delete<T>(url, { ...config });
     return res.data;
   }
 };
 
-const getHeaders = (config: AxiosRequestConfig | undefined, headers: any) => {
-  const configHeaders = config ? { ...config.headers } : null;
+axios.interceptors.request.use(config => {
+  if (config.method === 'POST' || config.method === 'PATCH' || config.method === 'PUT')
+    config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
-  return { ...configHeaders, ...headers };
-};
+  const accessToken = AuthService.getAccessToken();
+  if (accessToken) config.headers.Authorization = 'Bearer ' + accessToken;
+
+  return config;
+});
 
 // Function that will be called to refresh authorization
 const refreshAuthLogic = (failedRequest: any) =>

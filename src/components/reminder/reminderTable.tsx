@@ -1,9 +1,11 @@
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
 import React, { useState } from 'react';
 import Highlighter from 'react-highlight-words';
+import { useHistory } from 'react-router-dom';
 import { Reminder } from 'services/reminderService';
 import { DATE_FORMAT } from 'utils/constants';
 import TableUtils, { WithKey } from 'utils/tableUtils';
@@ -15,6 +17,7 @@ interface ReminderTableProps {
 }
 
 const ReminderTable: React.FC<ReminderTableProps> = props => {
+  const history = useHistory();
   const getHighlighter = () => ({
     render: (text: string) => (
       <Highlighter
@@ -29,7 +32,7 @@ const ReminderTable: React.FC<ReminderTableProps> = props => {
   const tableUtils = new TableUtils<Reminder>();
   const columns: ColumnsType<Reminder> = [
     tableUtils.getStringColumn(Dictionary.reminders.name, 'name', getHighlighter()),
-    tableUtils.getNumberColumn(Dictionary.reminders.reminder, 'reminder', getHighlighter()),
+    tableUtils.getNumberColumn(Dictionary.reminders.reminder, 'reminders', getHighlighter()),
     {
       ...tableUtils.getDateColumn(Dictionary.reminders.date, 'reminderDate'),
       render: lastTreatment =>
@@ -55,6 +58,9 @@ const ReminderTable: React.FC<ReminderTableProps> = props => {
         onChange: selectedRows => setSelectedRows(selectedRows)
       }}
       dataSource={props.reminders}
+      scroll={{ x: 'max-content' }}
+      rowClassName='clickable'
+      onRow={record => ({ onClick: () => history.push(routes.treatment.format(record.treatmentId)) })}
     />
   );
 };

@@ -1,5 +1,5 @@
 import { CheckOutlined } from '@ant-design/icons';
-import { Button, message, Table, Tag } from 'antd';
+import { Button, message, Table, Tag, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
@@ -46,13 +46,29 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
     },
     tableUtils.getStringColumn(Dictionary.patientForm.firstName, 'firstName', getHighlighter()),
     tableUtils.getStringColumn(Dictionary.patientForm.momName, 'momName', getHighlighter()),
-    tableUtils.getNumberColumn(Dictionary.patientForm.age, 'calculatedAge', getHighlighter()),
+    {
+      ...tableUtils.getNumberColumn(Dictionary.patientForm.age, 'calculatedAge'),
+      render: (calculatedAge, patient) =>
+        patient.birthday ? (
+          <Tooltip title={moment(patient.birthday).format(DATE_FORMAT)}>{calculatedAge}</Tooltip>
+        ) : (
+          calculatedAge
+        )
+    },
     tableUtils.getStringColumn(Dictionary.patientForm.phone, 'phone', getHighlighter()),
     {
       ...tableUtils.getBooleanColumn(Dictionary.patientForm.email, 'email'),
 
       render: email =>
-        email ? <CheckOutlined className='email-check' onClick={() => navigator.clipboard.writeText(email)} /> : null
+        email ? (
+          <CheckOutlined
+            className='email-check'
+            onClick={e => {
+              e.stopPropagation();
+              navigator.clipboard.writeText(email);
+            }}
+          />
+        ) : null
     },
     {
       ...tableUtils.getDateColumn(Dictionary.patientForm.lastTreatment, 'lastTreatment'),
@@ -71,9 +87,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       key: 'diagnoses',
       dataIndex: 'diagnoses',
       filters: diagnoses?.map(diagnosis => ({ value: diagnosis, text: diagnosis })),
-      onFilter: (value, record) => {
-        return record.diagnoses?.indexOf(value.toString()) === 0;
-      },
+      onFilter: (value, record) => record.diagnoses?.indexOf(value.toString()) === 0,
       render: (diagnoses: string[]) => (
         <div className='diagnoses-container'>
           {diagnoses?.map(diagnosis => (
@@ -89,10 +103,22 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       key: 'action',
       render: (text: string, record: Patient) => (
         <span>
-          <Button onClick={() => history.push(routes.addTreatment.format(record._id))} type='link'>
+          <Button
+            onClick={e => {
+              e.stopPropagation();
+              history.push(routes.addTreatment.format(record._id));
+            }}
+            type='link'
+          >
             הוסף טיפול
           </Button>
-          <Button onClick={() => history.push(routes.editPatient.format(record._id), record)} type='link'>
+          <Button
+            onClick={e => {
+              e.stopPropagation();
+              history.push(routes.editPatient.format(record._id), record);
+            }}
+            type='link'
+          >
             ערוך
           </Button>
         </span>
@@ -103,9 +129,12 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
   return (
     <Table<Patient>
       pagination={{ pageSize: 7, showSizeChanger: false }}
+      onRow={record => ({ onClick: () => history.push(routes.treatments.format(record._id)) })}
       loading={props.isFetching}
       columns={columns}
       dataSource={props.patients}
+      scroll={{ x: 'max-content' }}
+      rowClassName='clickable'
     />
   );
 };

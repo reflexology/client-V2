@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import HttpService from './httpService';
 
 export interface Tokens {
@@ -61,11 +59,5 @@ const AuthService = {
     }
   }
 };
-
-axios.interceptors.request.use(config => {
-  config.headers.Authorization = 'Bearer ' + AuthService.getAccessToken();
-
-  return config;
-});
 
 export default AuthService;

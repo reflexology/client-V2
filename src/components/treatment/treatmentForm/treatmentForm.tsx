@@ -1,7 +1,6 @@
 import './treatmentForm.scss';
 
 import { Alert, Button, Col, Form, message, Row, Space, Steps } from 'antd';
-import { Store } from 'antd/lib/form/interface';
 import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
 import DiagnosisService from 'services/diagnosesService';
@@ -11,7 +10,7 @@ import BloodTestsForm from './bloodTestsForm';
 import ReminderStep from './reminderStep';
 import StepOne from './stepOne';
 
-interface TreatmentFromProps {
+interface TreatmentFormProps {
   onSubmit: (values: any, newDiagnoses: string[]) => void;
   error: string;
   isLoading: boolean;
@@ -27,7 +26,7 @@ const treatmentTypesStepCount: Record<TreatmentType, number> = {
   [TreatmentType.Diet]: 6
 };
 
-const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
+const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const [form] = Form.useForm();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
   const [treatmentType, setTreatmentType] = useState(TreatmentType.Reflexology);
@@ -60,8 +59,10 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
       .catch(() => message.error(Dictionary.treatmentForm.errorFetchingDiagnoses));
   }, []);
 
-  const onSubmit = (values: Store) => {
-    const newDiagnoses = (values as Treatment).diagnoses?.filter(diagnosis => !diagnoses?.includes(diagnosis));
+  const onSubmit = () => {
+    const values = { ...(form.getFieldsValue(true) as Treatment) };
+    values.bloodTests = values.bloodTests.filter(bloodTest => !!bloodTest.value);
+    const newDiagnoses = values.diagnoses?.filter(diagnosis => !diagnoses?.includes(diagnosis));
     props.onSubmit(values, newDiagnoses);
   };
 
@@ -133,4 +134,4 @@ const TreatmentFrom: React.FC<TreatmentFromProps> = props => {
   );
 };
 
-export default React.memo(TreatmentFrom);
+export default React.memo(TreatmentForm);

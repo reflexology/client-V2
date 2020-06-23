@@ -20,6 +20,13 @@ export interface Treatment {
   isReminderCompleted?: boolean;
   createdBy?: string;
   diagnoses: string[];
+  bloodTests: BloodTest[];
+}
+
+export interface BloodTest {
+  name: string;
+  value: string | number;
+  isImportant: boolean;
 }
 
 export enum TreatmentType {
@@ -42,6 +49,9 @@ const TreatmentService = {
     return HttpService.get<{ balance: number; lastTreatment: Treatment }>(
       baseEndPoint + '/treatment/lastTreatment/byPatientId/' + patientId
     );
+  },
+  getTreatmentById(patientId: string) {
+    return HttpService.get<Treatment>(baseEndPoint + '/treatment/' + patientId);
   },
   addTreatment(patientId: string, treatment: Treatment) {
     return HttpService.post<Treatment>(baseEndPoint + '/treatment/patient/' + patientId, treatment);

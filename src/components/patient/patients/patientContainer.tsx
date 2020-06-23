@@ -4,7 +4,9 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, message, Row } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
+import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
+import useDidUpdateEffect from 'hooks/useDidUpdateEffect';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PatientService, { Patient, PatientType } from 'services/patientService';
@@ -18,14 +20,14 @@ const tableUtils = new TableUtils<Patient>();
 interface PatientContainerProps extends RouteComponentProps {}
 
 const PatientContainer: React.FC<PatientContainerProps> = props => {
-  const [patients, setPatients] = useState<Patient[]>([]);
+  const { patients, setPatients, isDataFetchedOnce } = usePatients();
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
-  const [isFetching, setIsFetching] = useState(true);
+  const [isSelectPatientTypeLoading, setIsSelectPatientTypeLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [patientsInDebtOrCredit, setPatientsInDebtOrCredit] = useState(PatientType.AllPatients);
 
-  useEffect(() => {
-    setIsFetching(true);
+  useDidUpdateEffect(() => {
+    setIsSelectPatientTypeLoading(true);
     PatientService.getPatients(
       patientsInDebtOrCredit === PatientType.InCredit,
       patientsInDebtOrCredit === PatientType.InDebt
@@ -34,15 +36,27 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
       .catch(() => {
         message.error('could not load patients');
       })
-      .finally(() => setIsFetching(false));
+      .finally(() => setIsSelectPatientTypeLoading(false));
   }, [patientsInDebtOrCredit]);
 
   useEffect(() => setFilteredPatients(patients), [patients]);
 
-  const filterPatients = (search: string) =>
-    setFilteredPatients(
-      patients.filter(patient => tableUtils.filter(patient, search, ['_id', 'maritalStatus', 'createdAt', 'createdBy']))
-    );
+  const filterPatients = (search: string) => {
+    !search
+      ? setFilteredPatients(patients)
+      : setFilteredPatients(
+          patients.filter(patient =>
+            tableUtils.filter(patient, search, [
+              '_id',
+              'maritalStatus',
+              'createdAt',
+              'createdBy',
+              'childrenAges',
+              'profession'
+            ])
+          )
+        );
+  };
 
   const handlePatientTypeChanged = (type: PatientType) => setPatientsInDebtOrCredit(type);
 
@@ -84,7 +98,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
           <PatientInCreditOrDebt
             onSelect={handlePatientTypeChanged}
             patientsInDebtOrCredit={patientsInDebtOrCredit}
-            isLoading={patients.length > 0 && isFetching}
+            isLoading={isSelectPatientTypeLoading}
           />
         </Col>
         <Col>
@@ -98,7 +112,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
       </Row>
       <PatientsTable
         searchText={searchQuery}
-        isFetching={isFetching && patients.length === 0}
+        isFetching={!isDataFetchedOnce}
         patients={filteredPatients.map(patient => ({ ...patient, key: patient._id }))}
       />
     </div>

@@ -78,10 +78,11 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
       onRow={record => ({
         onClick: () => (record.isFromTreatment ? history.push(routes.addTreatment) : null)
       })}
-      rowClassName={record => (record.isFromTreatment ? 'clickable-row' : '')}
+      rowClassName={record => (record.isFromTreatment ? 'clickable' : '')}
       loading={isFetching}
       columns={columns}
       dataSource={transactions}
+      scroll={{ x: 'max-content' }}
     />
   );
 };

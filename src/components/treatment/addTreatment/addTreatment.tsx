@@ -8,7 +8,7 @@ import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 
-import TreatmentFrom from '../treatmentForm/treatmentFrom';
+import TreatmentForm from '../treatmentForm/treatmentForm';
 
 interface AddTreatmentProps extends RouteComponentProps<{ patientId: string }> {}
 
@@ -51,7 +51,7 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
 
   return (
     <Spin spinning={isFetching}>
-      <TreatmentFrom
+      <TreatmentForm
         initialValues={initialValues}
         isLoading={isSubmitting}
         onSubmit={handleSubmit}

@@ -50,12 +50,10 @@ class TableUtils<T extends { [key: string]: any }> {
   filter = (obj: T, searchQuery: string, excludedFields: (keyof T)[]): boolean => {
     for (const name in obj) {
       if (excludedFields.includes(name)) continue;
-
-      if (Array.isArray(obj[name])) {
-        return this.filter(obj[name][0], searchQuery, excludedFields);
-      }
+      if (Array.isArray(obj[name])) return this.filter(obj[name][0], searchQuery, excludedFields);
 
       const date = moment(obj[name], this.formats, true);
+
       if (date.isValid()) {
         const formattedDate = date.format(DATE_FORMAT);
 
