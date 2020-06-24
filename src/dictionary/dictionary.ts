@@ -22,7 +22,9 @@ const Dictionary = {
   patientContainer: {
     showInDebt: 'לקוחות בחוב',
     showInCredit: 'לקוחות בזכות',
-    showAllPatients: 'כל הלקוחות'
+    showAllPatients: 'כל הלקוחות',
+    fromLastTreatment: 'מטיפול אחרון',
+    toLastTreatment: 'עד טיפול אחרון'
   },
   patientForm: {
     firstName: 'שם פרטי',
