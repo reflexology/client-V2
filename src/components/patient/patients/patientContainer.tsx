@@ -7,6 +7,7 @@ import { routes } from 'components/router/routes';
 import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import useDidUpdateEffect from 'hooks/useDidUpdateEffect';
+import moment, { Moment } from 'moment';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PatientService, { Patient, PatientType } from 'services/patientService';
@@ -20,13 +21,18 @@ const tableUtils = new TableUtils<Patient>();
 
 interface PatientContainerProps extends RouteComponentProps {}
 
+interface Filters {
+  startDate: Moment | null;
+  endDate: moment.Moment | null;
+  search: string;
+}
+
 const PatientContainer: React.FC<PatientContainerProps> = props => {
   const { patients, setPatients, isDataFetchedOnce } = usePatients();
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
   const [isSelectPatientTypeLoading, setIsSelectPatientTypeLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [patientsInDebtOrCredit, setPatientsInDebtOrCredit] = useState(PatientType.AllPatients);
-  const [filter, setFilter] = useState<{ startDate: any; endDate: any; search: string }>({
+  const [filter, setFilter] = useState<Filters>({
     endDate: null,
     startDate: null,
     search: ''
@@ -66,24 +72,12 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
         ])
       );
 
-    if (filter.startDate && filter.endDate) {
-      filteredPatients = filteredPatients.filter(
-        patient =>
-          new Date(patient.lastTreatment as any) > new Date(filter.startDate.toDate() as any) &&
-          new Date(patient.lastTreatment as any) < new Date(filter.endDate.toDate() as any)
-      );
-    }
+    if (filter.startDate)
+      filteredPatients = filteredPatients.filter(patient => moment(patient.lastTreatment) < filter.startDate!);
 
-    if (filter.startDate) {
-      filteredPatients = filteredPatients.filter(
-        patient => new Date(patient.lastTreatment as any) > new Date(filter.startDate as any)
-      );
-    }
-    if (filter.endDate) {
-      filteredPatients = filteredPatients.filter(
-        patient => new Date(patient.lastTreatment as any) < new Date(filter.endDate.toDate() as any)
-      );
-    }
+    if (filter.endDate)
+      filteredPatients = filteredPatients.filter(patient => moment(patient.lastTreatment) > filter.endDate!);
+
     setFilteredPatients(filteredPatients);
   };
 
@@ -96,14 +90,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
           </Button>
         </Col>
         <Col>
-          <DebouncedSearchInput
-            onDebounced={text => {
-              setFilter({ endDate: filter.endDate, startDate: filter.startDate, search: text });
-              filterPatients();
-              setSearchQuery(text);
-            }}
-            delay={250}
-          />
+          <DebouncedSearchInput onDebounced={text => setFilter({ ...filter, search: text })} delay={250} />
         </Col>
         <Col>
           <PatientInCreditOrDebt
@@ -116,19 +103,19 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
           <DatePicker
             format={DATE_FORMAT}
             placeholder={Dictionary.patientContainer.fromLastTreatment}
-            onChange={date => setFilter({ endDate: date, startDate: filter.startDate, search: filter.search })}
+            onChange={date => setFilter({ ...filter, endDate: date as moment.Moment })}
           />
         </Col>
         <Col>
           <DatePicker
             format={DATE_FORMAT}
             placeholder={Dictionary.patientContainer.toLastTreatment}
-            onChange={date => setFilter({ startDate: date, endDate: filter.endDate, search: filter.search })}
+            onChange={date => setFilter({ ...filter, startDate: date as moment.Moment })}
           />
         </Col>
       </Row>
       <PatientsTable
-        searchText={searchQuery}
+        searchText={filter.search}
         isFetching={!isDataFetchedOnce}
         patients={filteredPatients.map(patient => ({ ...patient, key: patient._id }))}
       />
