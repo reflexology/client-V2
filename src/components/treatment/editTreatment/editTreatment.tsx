@@ -14,7 +14,7 @@ import TreatmentForm from '../treatmentForm/treatmentForm';
 interface EditTreatmentProps extends RouteComponentProps<{ treatmentId: string }, any, Treatment> {}
 
 const EditTreatment: React.FC<EditTreatmentProps> = props => {
-  const { currentPatient, patients } = usePatients();
+  const { currentPatient } = usePatients();
 
   const [treatment, setTreatment] = useState<Treatment>(props.location.state);
 
