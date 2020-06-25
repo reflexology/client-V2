@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Col, Row } from 'antd';
+import { Button, Space } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
@@ -37,25 +37,19 @@ const TransactionContainer: React.FC<TransactionContainerProps> = props => {
 
   return (
     <div>
-      <Row>
-        <Col>
-          <Button icon={<PlusOutlined />} onClick={() => props.history.push(routes.addTransaction)}>
-            {Dictionary.transaction.addTransactionButton}
-          </Button>
-        </Col>
-        <Col>
-          <DebouncedSearchInput
-            onDebounced={text => {
-              filterTransactions(text);
-              setSearchQuery(text);
-            }}
-            delay={250}
-          />
-        </Col>
-        <Col>
-          <Button onClick={() => props.history.push(routes.reports)}>{Dictionary.report.showReport}</Button>
-        </Col>
-      </Row>
+      <Space>
+        <Button icon={<PlusOutlined />} onClick={() => props.history.push(routes.addTransaction)}>
+          {Dictionary.transaction.addTransactionButton}
+        </Button>
+        <DebouncedSearchInput
+          onDebounced={text => {
+            filterTransactions(text);
+            setSearchQuery(text);
+          }}
+          delay={250}
+        />
+        <Button onClick={() => props.history.push(routes.reports)}>{Dictionary.report.showReport}</Button>
+      </Space>
       <TransactionsTable
         searchText={searchQuery}
         isFetching={isFetching}

@@ -1,5 +1,5 @@
 import { UserAddOutlined } from '@ant-design/icons';
-import { Button, Col, message, Row } from 'antd';
+import { Button, message, Space } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import usePatients from 'contexts/patientsContexts';
@@ -43,25 +43,21 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
 
   return (
     <div className='Treatments-container'>
-      <Row>
-        <Col>
-          <Button
-            icon={<UserAddOutlined />}
-            onClick={() => props.history.push(routes.addTreatment.format(props.match.params.patientId))}
-          >
-            {Dictionary.treatments.addTreatment}
-          </Button>
-        </Col>
-        <Col>
-          <DebouncedSearchInput
-            onDebounced={text => {
-              filterTreatments(text);
-              setSearchQuery(text);
-            }}
-            delay={250}
-          />
-        </Col>
-      </Row>
+      <Space>
+        <Button
+          icon={<UserAddOutlined />}
+          onClick={() => props.history.push(routes.addTreatment.format(props.match.params.patientId))}
+        >
+          {Dictionary.treatments.addTreatment}
+        </Button>
+        <DebouncedSearchInput
+          onDebounced={text => {
+            filterTreatments(text);
+            setSearchQuery(text);
+          }}
+          delay={250}
+        />
+      </Space>
       <TreatmentsTable
         searchText={searchQuery}
         isFetching={isFetching}

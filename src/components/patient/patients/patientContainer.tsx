@@ -1,7 +1,7 @@
 import './patient.scss';
 
 import { UserAddOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, message, Row } from 'antd';
+import { Button, DatePicker, message, Space } from 'antd';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import usePatients from 'contexts/patientsContexts';
@@ -83,37 +83,31 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
 
   return (
     <div className='patients-container'>
-      <Row>
-        <Col>
-          <Button icon={<UserAddOutlined />} onClick={() => props.history.push(routes.addPatient)}>
-            {Dictionary.addPatient.header}
-          </Button>
-        </Col>
-        <Col>
-          <DebouncedSearchInput onDebounced={text => setFilter({ ...filter, search: text })} delay={250} />
-        </Col>
-        <Col>
-          <PatientInCreditOrDebt
-            onSelect={handlePatientTypeChanged}
-            patientsInDebtOrCredit={patientsInDebtOrCredit}
-            isLoading={isSelectPatientTypeLoading}
-          />
-        </Col>
-        <Col>
-          <DatePicker
-            format={DATE_FORMAT}
-            placeholder={Dictionary.patientContainer.fromLastTreatment}
-            onChange={date => setFilter({ ...filter, endDate: date as moment.Moment })}
-          />
-        </Col>
-        <Col>
-          <DatePicker
-            format={DATE_FORMAT}
-            placeholder={Dictionary.patientContainer.toLastTreatment}
-            onChange={date => setFilter({ ...filter, startDate: date as moment.Moment })}
-          />
-        </Col>
-      </Row>
+      <Space>
+        <Button icon={<UserAddOutlined />} onClick={() => props.history.push(routes.addPatient)}>
+          {Dictionary.addPatient.header}
+        </Button>
+
+        <DebouncedSearchInput onDebounced={text => setFilter({ ...filter, search: text })} delay={250} />
+
+        <PatientInCreditOrDebt
+          onSelect={handlePatientTypeChanged}
+          patientsInDebtOrCredit={patientsInDebtOrCredit}
+          isLoading={isSelectPatientTypeLoading}
+        />
+
+        <DatePicker
+          format={DATE_FORMAT}
+          placeholder={Dictionary.patientContainer.fromLastTreatment}
+          onChange={date => setFilter({ ...filter, endDate: date as moment.Moment })}
+        />
+
+        <DatePicker
+          format={DATE_FORMAT}
+          placeholder={Dictionary.patientContainer.toLastTreatment}
+          onChange={date => setFilter({ ...filter, startDate: date as moment.Moment })}
+        />
+      </Space>
       <PatientsTable
         searchText={filter.search}
         isFetching={!isDataFetchedOnce}
