@@ -6,6 +6,7 @@ import EditPatient from 'components/patient/editPatient/editPatient';
 import PatientContainer from 'components/patient/patients/patientContainer';
 import ReminderContainer from 'components/reminder/reminderContainer';
 import AddTreatment from 'components/treatment/addTreatment/addTreatment';
+import EditTreatment from 'components/treatment/editTreatment/editTreatment';
 import TreatmentData from 'components/treatment/treatment/treatment';
 import TreatmentsContainer from 'components/treatment/treatments/treatmentsContainer';
 import React from 'react';
@@ -22,6 +23,7 @@ export enum routes {
   patients = '/patients',
   transactions = '/transactions',
   addTreatment = '/add-treatment/{0}',
+  editTreatment = '/edit-treatment/{0}',
   treatments = '/treatments/{0}',
   treatment = '/treatment/{0}',
   addTransaction = '/add-transaction',
@@ -37,6 +39,7 @@ const Routes: React.FC = () => {
       <ProtectedRoute exact path={routes.patients} component={PatientContainer} />
       <ProtectedRoute exact path={routes.transactions} component={TransactionContainer} />
       <ProtectedRoute exact path={routes.addTreatment.format(':patientId')} component={AddTreatment} />
+      <ProtectedRoute exact path={routes.editTreatment.format(':treatmentId')} component={EditTreatment} />
       <ProtectedRoute exact path={routes.treatments.format(':patientId')} component={TreatmentsContainer} />
       <ProtectedRoute exact path={routes.treatment.format(':treatmentId')} component={TreatmentData} />
       <ProtectedRoute exact path={routes.addTransaction} component={AddTransaction} />

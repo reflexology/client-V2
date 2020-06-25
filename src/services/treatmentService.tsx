@@ -21,6 +21,7 @@ export interface Treatment {
   createdBy?: string;
   diagnoses: string[];
   bloodTests: BloodTest[];
+  treatmentType: TreatmentType;
 }
 
 export interface BloodTest {
@@ -56,8 +57,8 @@ const TreatmentService = {
   addTreatment(patientId: string, treatment: Treatment) {
     return HttpService.post<Treatment>(baseEndPoint + '/treatment/patient/' + patientId, treatment);
   },
-  editTreatment(TreatmentId: string, treatment: Treatment) {
-    return HttpService.patch<Treatment>(baseEndPoint + '/treatment/' + TreatmentId, treatment);
+  editTreatment(treatmentId: string, treatment: Treatment) {
+    return HttpService.patch<Treatment>(baseEndPoint + '/treatment/' + treatmentId, treatment);
   },
 
   getGeneralFields(): TreatmentFields[] {

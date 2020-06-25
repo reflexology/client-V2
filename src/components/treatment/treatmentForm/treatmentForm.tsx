@@ -15,7 +15,7 @@ interface TreatmentFormProps {
   error: string;
   isLoading: boolean;
   initialValues?: Partial<Treatment>;
-  balance: number;
+  balance?: number;
 }
 
 const keyUp = 38;
@@ -29,7 +29,7 @@ const treatmentTypesStepCount: Record<TreatmentType, number> = {
 const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const [form] = Form.useForm();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
-  const [treatmentType, setTreatmentType] = useState(TreatmentType.Reflexology);
+  const [treatmentType, setTreatmentType] = useState(props.initialValues?.treatmentType || TreatmentType.Reflexology);
   const [currentStep, setCurrentStep] = useState(0);
 
   const isReflexology = treatmentType === TreatmentType.Reflexology;

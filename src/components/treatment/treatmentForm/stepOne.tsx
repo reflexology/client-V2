@@ -10,7 +10,7 @@ interface StepOneProps {
   initialValues?: Partial<Treatment>;
   isReflexology: boolean;
   form: FormInstance;
-  balance: number;
+  balance?: number;
   setTreatmentType: (treatmentType: TreatmentType) => void;
 }
 
@@ -63,10 +63,14 @@ const StepOne: React.FC<StepOneProps> = props => {
         return (
           <Form.Item
             name='treatmentPrice'
-            extra={Dictionary.treatmentForm.treatmentPriceExtra.format(
-              props.balance >= 0 ? Dictionary.treatmentForm.credit : Dictionary.treatmentForm.debt,
-              Math.abs(props.balance).toString()
-            )}
+            extra={
+              typeof props.balance !== 'undefined'
+                ? Dictionary.treatmentForm.treatmentPriceExtra.format(
+                    props.balance >= 0 ? Dictionary.treatmentForm.credit : Dictionary.treatmentForm.debt,
+                    Math.abs(props.balance).toString()
+                  )
+                : null
+            }
             hasFeedback
             label={Dictionary.treatmentForm.treatmentPrice}
           >
