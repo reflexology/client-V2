@@ -79,14 +79,15 @@ const PatientForm: React.FC<PatientFormProps> = props => {
           name='childrenCount'
           hasFeedback
           style={{ display: 'inline-block' }}
-          rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
+          rules={[{ type: 'number', min: 0, max: 20, message: Dictionary.patientForm.minChildrenCount }]}
         >
           <InputNumber
             onChange={childrenCount => {
               if (childrenCount !== undefined)
                 form.setFieldsValue({
                   ...form.getFieldsValue(),
-                  childrenAges: childrenCount > 0 ? Array(childrenCount || 0).fill(undefined!) : []
+                  childrenAges:
+                    childrenCount > 0 && childrenCount < 20 ? Array(childrenCount || 0).fill(undefined!) : []
                 });
             }}
             style={{ width: '100%' }}
@@ -109,31 +110,25 @@ const PatientForm: React.FC<PatientFormProps> = props => {
       <Form.List name='childrenAges'>
         {fields => {
           return (
-            <div>
-              <Row>
-                {fields.length < 21 && fields.length > -1
-                  ? fields.map((field, index) => (
-                      <Form.Item
-                        noStyle
-                        shouldUpdate={(prevValues, currentValues) =>
-                          prevValues.childrenCount !== currentValues.childrenCount
-                        }
-                        key={field.key}
-                      >
-                        <Form.Item
-                          {...field}
-                          className='ages'
-                          style={{ width: '18%', marginLeft: '1%', marginRight: '1%' }}
-                          hasFeedback
-                          rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
-                        >
-                          <InputNumber style={{ width: '100%' }} autoComplete='off' />
-                        </Form.Item>
-                      </Form.Item>
-                    ))
-                  : null}
-              </Row>
-            </div>
+            <Row>
+              {fields.map(field => (
+                <Form.Item
+                  noStyle
+                  shouldUpdate={(prevValues, currentValues) => prevValues.childrenCount !== currentValues.childrenCount}
+                  key={field.key}
+                >
+                  <Form.Item
+                    {...field}
+                    className='ages'
+                    style={{ width: '18%', marginLeft: '1%', marginRight: '1%' }}
+                    hasFeedback
+                    rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
+                  >
+                    <InputNumber placeholder='גיל הילד' style={{ width: '100%' }} autoComplete='off' />
+                  </Form.Item>
+                </Form.Item>
+              ))}
+            </Row>
           );
         }}
       </Form.List>
