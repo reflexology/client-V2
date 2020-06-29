@@ -20,6 +20,19 @@ const accessToken = 'accessToken';
 
 const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
 
+const parseJwt = (token: string) => {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split('')
+      .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+      .join('')
+  );
+
+  return JSON.parse(jsonPayload);
+};
+
 const AuthService = {
   login(credentials: Credentials) {
     return HttpService.post<Tokens>(baseEndPoint + '/user/login', credentials);
@@ -52,11 +65,8 @@ const AuthService = {
   },
 
   getAccessTokenData() {
-    try {
-      return JSON.parse(atob(this.getAccessToken()!?.split('.')[1])) as AccessToken;
-    } catch (e) {
-      return null;
-    }
+    const token = this.getAccessToken();
+    return token ? (parseJwt(token) as AccessToken) : null;
   }
 };
 
