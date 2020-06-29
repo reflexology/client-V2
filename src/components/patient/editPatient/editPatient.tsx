@@ -14,16 +14,19 @@ import PatientForm from '../patientForm/patientForm';
 interface EditPatientProps extends RouteComponentProps<{ patientId: string }, any, Patient> {}
 
 const EditPatient: React.FC<EditPatientProps> = props => {
-  const getPatient = (patient: Patient): Patient => ({
-    ...patient,
-    birthday: patient?.birthday ? moment(patient.birthday).format(DATE_FORMAT).toString() : undefined
-  });
+  const getPatient = (patient: Patient): Patient | null =>
+    patient
+      ? {
+          ...patient,
+          birthday: patient.birthday ? moment(patient.birthday).format(DATE_FORMAT).toString() : undefined
+        }
+      : null;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState('');
   const [buttonClicked, setButtonClicked] = useState('');
-  const [patient, setPatient] = useState<Patient>(getPatient(props.location.state));
+  const [patient, setPatient] = useState<Patient | null>(getPatient(props.location.state));
 
   useEffect(() => {
     if (!patient) {
@@ -46,7 +49,7 @@ const EditPatient: React.FC<EditPatientProps> = props => {
     PatientService.editPatient(props.match.params.patientId, values)
       .then(() => {
         if (buttonClicked === Dictionary.patientForm.saveAndAddTreatment) {
-          props.history.push(routes.addTreatment.format(patient._id));
+          props.history.push(routes.addTreatment.format(patient!._id));
         } else props.history.push(routes.patients);
       })
       .catch(err => {
@@ -68,7 +71,7 @@ const EditPatient: React.FC<EditPatientProps> = props => {
               <h2>{Dictionary.editPatient.header}</h2>
             </div>
             <PatientForm
-              initialValues={patient}
+              initialValues={patient!}
               isLoading={isSubmitting}
               onSubmit={handleSubmit}
               error={error}
