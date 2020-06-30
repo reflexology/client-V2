@@ -1,11 +1,20 @@
 name: CI
 on: [push]
 jobs:
-  lighthouseci:
+  lhci:
+    name: Lighthouse
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - run: yarn install && npm install -g @lhci/cli@0.4.x
-      - run: yarn build
-      - run: lhci autorun --upload.target=temporary-public-storage
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: yarn install, build
+        run: |
+          yarn install
+          yarn run build
+      - name: run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.4.x
+          lhci autorun
