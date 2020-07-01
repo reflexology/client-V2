@@ -1,5 +1,6 @@
-import { Col, message, Row, Spin } from 'antd';
+import { Col, Row } from 'antd';
 import { routes } from 'components/router/routes';
+import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
 import moment from 'moment';
@@ -23,21 +24,18 @@ const EditPatient: React.FC<EditPatientProps> = props => {
       : null;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState('');
   const [patient, setPatient] = useState<Patient | null>(getPatient(props.location.state));
 
+  const { patients, setCurrentPatientById, currentPatient, setPatient: editPatient } = usePatients();
+
   useEffect(() => {
-    if (!patient) {
-      setIsFetching(true);
-      PatientService.getPatient(props.match.params.patientId)
-        .then(res => setPatient(getPatient(res)))
-        .catch(() => {
-          message.error(Dictionary.generalErrorAndRefresh);
-        })
-        .finally(() => setIsFetching(false));
-    }
-  }, []);
+    if (patients.length > 0) setCurrentPatientById(props.match.params.patientId);
+  }, [patients, props.match.params.patientId, setCurrentPatientById]);
+
+  useEffect(() => {
+    if (currentPatient && !patient) setPatient(currentPatient);
+  }, [currentPatient, patient]);
 
   const handleSubmit = (values: Patient, navigateToAddTreatment: boolean) => {
     if (isSubmitting) return;
@@ -46,7 +44,8 @@ const EditPatient: React.FC<EditPatientProps> = props => {
     setError('');
 
     PatientService.editPatient(props.match.params.patientId, values)
-      .then(() => {
+      .then(patient => {
+        editPatient(patient);
         if (navigateToAddTreatment) {
           props.history.push(routes.addTreatment.format(patient!._id));
         } else props.history.push(routes.patients);
@@ -57,19 +56,19 @@ const EditPatient: React.FC<EditPatientProps> = props => {
       });
   };
 
+  console.log('render');
+
   return (
-    <Spin spinning={isFetching}>
-      <Row justify='center' className='add-patient-container'>
-        <Col span={10}>
-          <div className='add-patient-card'>
-            <div className='add-patient-h2-wrapper'>
-              <h2>{Dictionary.editPatient.header}</h2>
-            </div>
-            <PatientForm initialValues={patient!} isLoading={isSubmitting} onSubmit={handleSubmit} error={error} />
+    <Row justify='center' className='add-patient-container'>
+      <Col span={10}>
+        <div className='add-patient-card'>
+          <div className='add-patient-h2-wrapper'>
+            <h2>{Dictionary.editPatient.header}</h2>
           </div>
-        </Col>
-      </Row>
-    </Spin>
+          <PatientForm initialValues={patient!} isLoading={isSubmitting} onSubmit={handleSubmit} error={error} />
+        </div>
+      </Col>
+    </Row>
   );
 };
 

@@ -2,6 +2,7 @@ import './addPatient.scss';
 
 import { Col, Row } from 'antd';
 import { routes } from 'components/router/routes';
+import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
 import React, { useState } from 'react';
@@ -17,6 +18,7 @@ const AddPatient: React.FC<Props> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
+  const { addPatient } = usePatients();
   const handleSubmit = (values: any, navigateToAddTreatment: boolean) => {
     if (isSubmitting) return;
 
@@ -26,6 +28,7 @@ const AddPatient: React.FC<Props> = props => {
     values.childrenAges = values.childrenAges?.filter((childAge: number) => !!childAge);
     PatientService.addPatient(values)
       .then(patient => {
+        addPatient(patient);
         if (navigateToAddTreatment) props.history.push(routes.addTreatment.format(patient._id));
         else props.history.push(routes.patients);
       })
