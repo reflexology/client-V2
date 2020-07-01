@@ -16,9 +16,8 @@ interface Props extends RouteComponentProps {}
 const AddPatient: React.FC<Props> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [buttonClicked, setButtonClicked] = useState('');
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: any, navigateToAddTreatment: boolean) => {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
@@ -27,8 +26,7 @@ const AddPatient: React.FC<Props> = props => {
     values.childrenAges = values.childrenAges?.filter((childAge: number) => !!childAge);
     PatientService.addPatient(values)
       .then(patient => {
-        if (buttonClicked === Dictionary.patientForm.saveAndAddTreatment)
-          props.history.push(routes.addTreatment.format(patient._id));
+        if (navigateToAddTreatment) props.history.push(routes.addTreatment.format(patient._id));
         else props.history.push(routes.patients);
       })
       .catch(err => {
@@ -37,8 +35,6 @@ const AddPatient: React.FC<Props> = props => {
       });
   };
 
-  const handleButtonClick = (buttonClicked: string) => setButtonClicked(buttonClicked);
-
   return (
     <Row justify='center' className='add-patient-container'>
       <Col span={10}>
@@ -46,12 +42,7 @@ const AddPatient: React.FC<Props> = props => {
           <div className='add-patient-h2-wrapper'>
             <h2>{Dictionary.addPatient.header}</h2>
           </div>
-          <PatientForm
-            isLoading={isSubmitting}
-            onSubmit={handleSubmit}
-            error={error}
-            onButtonClick={handleButtonClick}
-          />
+          <PatientForm isLoading={isSubmitting} onSubmit={handleSubmit} error={error} />
         </div>
       </Col>
     </Row>

@@ -1,15 +1,14 @@
 import './patientForm.scss';
 
-import { Alert, Button, Form, Input, InputNumber, Radio, Row, Select } from 'antd';
+import { Alert, Button, Form, Input, InputNumber, Radio, Row, Select, Space, Typography } from 'antd';
 import Dictionary from 'dictionary/dictionary';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactInputMask from 'react-input-mask';
 import CommonService from 'services/commonService';
 import PatientService, { Patient } from 'services/patientService';
 
 interface PatientFormProps {
-  onSubmit: (values: any) => void;
-  onButtonClick: (buttonClicked: string) => void;
+  onSubmit: (values: any, navigateToAddTreatment: boolean) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Patient;
@@ -19,11 +18,17 @@ const emailRegex = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^
 
 const PatientForm: React.FC<PatientFormProps> = props => {
   const [form] = Form.useForm();
+  const [navigateToAddTreatment, setNavigateToAddTreatment] = useState(false);
 
   useEffect(() => form.resetFields(), [props.initialValues]);
 
   return (
-    <Form noValidate form={form} initialValues={props.initialValues} onFinish={props.onSubmit}>
+    <Form
+      noValidate
+      form={form}
+      initialValues={props.initialValues}
+      onFinish={values => props.onSubmit(values, navigateToAddTreatment)}
+    >
       <Form.Item
         name='lastName'
         hasFeedback
@@ -149,29 +154,23 @@ const PatientForm: React.FC<PatientFormProps> = props => {
 
       {props.error && <Alert message={props.error} type='error' showIcon />}
 
-      <Row justify='space-around'>
-        <Form.Item>
-          <Button
-            block
-            loading={props.isLoading}
-            type='primary'
-            htmlType='submit'
-            onClick={() => props.onButtonClick(Dictionary.patientForm.save)}
-          >
+      <Row justify='center'>
+        <Space size='large' align='center'>
+          <Button loading={!navigateToAddTreatment && props.isLoading} type='primary' htmlType='submit'>
             {Dictionary.patientForm.save}
           </Button>
-        </Form.Item>
-        <Form.Item>
+          <Typography>או</Typography>
           <Button
-            block
-            loading={props.isLoading}
+            loading={navigateToAddTreatment && props.isLoading}
             type='primary'
-            htmlType='submit'
-            onClick={() => props.onButtonClick(Dictionary.patientForm.saveAndAddTreatment)}
+            onClick={() => {
+              setNavigateToAddTreatment(true);
+              form.submit();
+            }}
           >
             {Dictionary.patientForm.saveAndAddTreatment}
           </Button>
-        </Form.Item>
+        </Space>
       </Row>
     </Form>
   );
