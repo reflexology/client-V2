@@ -83,6 +83,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
       columns={columns}
       dataSource={transactions}
       scroll={{ x: 'max-content' }}
+      showSorterTooltip={false}
     />
   );
 };

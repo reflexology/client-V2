@@ -131,6 +131,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       pagination={{ pageSize: 7, showSizeChanger: false }}
       onRow={record => ({ onClick: () => history.push(routes.treatments.format(record._id)) })}
       loading={props.isFetching}
+      showSorterTooltip={false}
       columns={columns}
       dataSource={props.patients}
       scroll={{ x: 'max-content' }}
