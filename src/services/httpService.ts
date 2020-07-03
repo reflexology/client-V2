@@ -5,6 +5,8 @@ import history from 'utils/history';
 
 import AuthService from './authService';
 
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_API + '/api';
+
 const HttpService = {
   async get<T = any>(url: string, config?: AxiosRequestConfig) {
     const res = await axios.get<T>(url, { ...config });

@@ -20,19 +20,17 @@ export interface Report {
   netAmount: number;
 }
 
-const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
-
 const TransactionService = {
   getTransactions() {
-    return HttpService.get<Transaction[]>(baseEndPoint + '/incomeAndExpenditure');
+    return HttpService.get<Transaction[]>('/incomeAndExpenditure');
   },
   getTransaction(transactionId: string) {
-    return HttpService.get<Transaction>(baseEndPoint + '/incomeAndExpenditure' + transactionId);
+    return HttpService.get<Transaction>('/incomeAndExpenditure' + transactionId);
   },
   addTransaction(transaction: Transaction) {
     if (transaction.transactionType === 'Expenditure') transaction.amount = -1 * transaction.amount;
 
-    return HttpService.post<Transaction>(baseEndPoint + '/incomeAndExpenditure', transaction);
+    return HttpService.post<Transaction>('/incomeAndExpenditure', transaction);
   },
   getTransactionOptions() {
     return [
@@ -42,7 +40,7 @@ const TransactionService = {
   },
   getReport(startDate: moment.Moment, endDate: moment.Moment) {
     return HttpService.get<Report>(
-      baseEndPoint + '/incomeAndExpenditure/report?startDate=' + startDate.toDate() + '&endDate=' + endDate.toDate()
+      '/incomeAndExpenditure/report?startDate=' + startDate.toDate() + '&endDate=' + endDate.toDate()
     );
   }
 };

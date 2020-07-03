@@ -29,22 +29,18 @@ export enum PatientType {
   InDebt = 'showInDebt'
 }
 
-const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
-
 const PatientService = {
   getPatients(inCredit?: boolean, inDebt?: boolean) {
-    return HttpService.get<Patient[]>(
-      `${baseEndPoint}/patient${inCredit ? '?inCredit=true' : ''}${inDebt ? '?inDebt=true' : ''}`
-    );
+    return HttpService.get<Patient[]>(`/patient${inCredit ? '?inCredit=true' : ''}${inDebt ? '?inDebt=true' : ''}`);
   },
   getPatient(patientId: string) {
-    return HttpService.get<Patient>(baseEndPoint + '/patient/' + patientId);
+    return HttpService.get<Patient>('/patient/' + patientId);
   },
   addPatient(patient: Patient) {
-    return HttpService.post<Patient>(baseEndPoint + '/patient', patient);
+    return HttpService.post<Patient>('/patient', patient);
   },
   editPatient(patientId: string, patient: Patient) {
-    return HttpService.patch<Patient>(baseEndPoint + '/patient/' + patientId, patient);
+    return HttpService.patch<Patient>('/patient/' + patientId, patient);
   },
   getMaritalStatusOptions(isMale: boolean) {
     const maritalStatuses = isMale ? Dictionary.MaritalStatusForMale : Dictionary.MaritalStatusForFemale;
