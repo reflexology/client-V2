@@ -97,12 +97,14 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
         />
 
         <DatePicker
+          showToday={false}
           format={DATE_FORMAT}
           placeholder={Dictionary.patientContainer.fromLastTreatment}
           onChange={date => setFilter({ ...filter, endDate: date as moment.Moment })}
         />
 
         <DatePicker
+          showToday={false}
           format={DATE_FORMAT}
           placeholder={Dictionary.patientContainer.toLastTreatment}
           onChange={date => setFilter({ ...filter, startDate: date as moment.Moment })}
