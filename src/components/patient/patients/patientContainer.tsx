@@ -17,8 +17,6 @@ import TableUtils from 'utils/tableUtils';
 import PatientInCreditOrDebt from './patientInCreditOrDebt';
 import PatientsTable from './patientsTable';
 
-const tableUtils = new TableUtils<Patient>();
-
 interface PatientContainerProps extends RouteComponentProps {}
 
 interface Filters {
@@ -62,13 +60,14 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
 
     if (filter.search)
       filteredPatients = filteredPatients.filter(patient =>
-        tableUtils.filter(patient, filter.search, [
-          '_id',
-          'maritalStatus',
-          'createdAt',
-          'createdBy',
-          'childrenAges',
-          'profession'
+        TableUtils.filter(patient, filter.search, [
+          'firstName',
+          'lastName',
+          'momName',
+          'calculatedAge',
+          'phone',
+          'email',
+          'lastTreatment'
         ])
       );
 

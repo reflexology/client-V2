@@ -10,8 +10,6 @@ import TableUtils from 'utils/tableUtils';
 
 import TransactionsTable from './transactionsTable';
 
-const tableUtils = new TableUtils<Transaction>();
-
 interface TransactionContainerProps extends RouteComponentProps {}
 
 const TransactionContainer: React.FC<TransactionContainerProps> = props => {
@@ -31,7 +29,7 @@ const TransactionContainer: React.FC<TransactionContainerProps> = props => {
   const filterTransactions = (search: string) =>
     setFilteredTransactions(
       transactions.filter(transaction =>
-        tableUtils.filter(transaction, search, ['_id', 'isFromTreatment', 'transactionType', 'treatmentId'])
+        TableUtils.filter(transaction, search, ['description', 'note', 'amount', 'createdAt'])
       )
     );
 

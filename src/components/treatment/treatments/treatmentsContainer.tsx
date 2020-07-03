@@ -11,8 +11,6 @@ import TableUtils from 'utils/tableUtils';
 
 import TreatmentsTable from './treatmentsTable';
 
-const tableUtils = new TableUtils<Treatment>();
-
 interface TreatmentsContainerProps extends RouteComponentProps<{ patientId: string }> {}
 
 const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
@@ -39,7 +37,18 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
   useEffect(() => setFilteredTreatments(Treatments), [Treatments]);
 
   const filterTreatments = (search: string) =>
-    setFilteredTreatments(Treatments.filter(Treatment => tableUtils.filter(Treatment, search, ['_id'])));
+    setFilteredTreatments(
+      Treatments.filter(Treatment =>
+        TableUtils.filter(Treatment, search, [
+          'treatmentDate',
+          'treatmentNumber',
+          'visitReason',
+          'findings',
+          'recommendations',
+          'reminders'
+        ])
+      )
+    );
 
   return (
     <div className='Treatments-container'>
