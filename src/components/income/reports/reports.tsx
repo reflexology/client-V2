@@ -48,12 +48,14 @@ const Reports: React.FC<ReportsProps> = () => {
           />
           <Descriptions title={Dictionary.report.title} layout='vertical'>
             <Descriptions.Item label={Dictionary.report.income}>
-              <div className='income'>{report?.income}</div>
+              <div className='ltr income'>{report?.income}</div>
             </Descriptions.Item>
             <Descriptions.Item label={Dictionary.report.expenditure}>
-              <div className={report?.expenditure === 0 ? '' : 'expenditure'}>{report?.expenditure}</div>
+              <div className={`ltr${report?.expenditure === 0 ? '' : ' expenditure'}`}>{report?.expenditure}</div>
             </Descriptions.Item>
-            <Descriptions.Item label={Dictionary.report.netAmount}>{report?.netAmount}</Descriptions.Item>
+            <Descriptions.Item label={Dictionary.report.netAmount}>
+              <div className='ltr'>{report?.netAmount}</div>
+            </Descriptions.Item>
             <Descriptions.Item label={Dictionary.report.startDate}>{startDate?.format(DATE_FORMAT)}</Descriptions.Item>
             <Descriptions.Item label={Dictionary.report.endDate}>{endDate?.format(DATE_FORMAT)}</Descriptions.Item>
           </Descriptions>
