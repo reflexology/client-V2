@@ -33,18 +33,20 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
       .finally(() => setIsFetching(false));
   }, []);
 
-  const handleSubmit = (values: any, newDiagnoses: string[]) => {
+  const handleSubmit = async (values: Treatment, newDiagnoses: string[], files: File[]) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
     setError('');
-
-    TreatmentService.addTreatment(props.match.params.patientId, values)
-      .then(() => props.history.push(routes.patients))
-      .catch(err => {
-        setError(CommonService.getErrorMessage(err));
-        setIsSubmitting(false);
-      });
-
+    try {
+      const fileResponse = await TreatmentService.addFileToTreatment(files);
+      const fileObj = fileResponse.map(file => ({ key: file.key, name: file.originalname, location: file.location }));
+      values.files = fileObj;
+      await TreatmentService.addTreatment(props.match.params.patientId, values);
+    } catch (error) {
+      setError(CommonService.getErrorMessage(error));
+      setIsSubmitting(false);
+    }
+    props.history.push(routes.patients);
     if (newDiagnoses?.length > 0)
       DiagnosisService.addDiagnoses(newDiagnoses).catch(() => message.error(Dictionary.cantSaveDiagnosesError));
   };

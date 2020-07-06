@@ -4,6 +4,29 @@ import moment from 'moment';
 
 import HttpService from './httpService';
 
+export interface Metadata {
+  ext: string;
+  mimetype: string;
+}
+
+export interface FileResponse {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  size: number;
+  bucket: string;
+  key: string;
+  acl: string;
+  contentType: string;
+  contentDisposition?: any;
+  storageClass: string;
+  serverSideEncryption?: any;
+  metadata: Metadata;
+  location: string;
+  etag: string;
+}
+
 export interface Treatment {
   _id: string;
   treatmentDate?: Date | moment.Moment;
@@ -22,6 +45,11 @@ export interface Treatment {
   diagnoses: string[];
   bloodTests: BloodTest[];
   treatmentType: TreatmentType;
+  files: {
+    key: string;
+    name: string;
+    location: string;
+  }[];
 }
 
 export interface BloodTest {
@@ -59,6 +87,12 @@ const TreatmentService = {
   },
   editTreatment(treatmentId: string, treatment: Treatment) {
     return HttpService.patch<Treatment>(baseEndPoint + '/treatment/' + treatmentId, treatment);
+  },
+  addFileToTreatment(files: File[]) {
+    const formData = new FormData();
+    files.forEach((file, index) => formData.append('file-' + index, file));
+
+    return HttpService.postFormData<FileResponse[]>(baseEndPoint + '/file/multiple', formData);
   },
 
   getGeneralFields(): TreatmentFields[] {
