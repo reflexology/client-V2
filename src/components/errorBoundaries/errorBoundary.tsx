@@ -1,6 +1,7 @@
-import { Button, Result } from 'antd';
-import Dictionary from 'dictionary/dictionary';
 import React, { ErrorInfo } from 'react';
+import { Button, Result } from 'antd';
+
+import Dictionary from 'dictionary/dictionary';
 
 export interface ErrorBoundaryState {
   hasError: boolean;

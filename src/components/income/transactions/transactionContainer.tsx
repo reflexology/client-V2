@@ -1,13 +1,13 @@
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
+
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import TransactionService, { Transaction } from 'services/transactionService';
 import TableUtils from 'utils/tableUtils';
-
 import TransactionsTable from './transactionsTable';
 
 interface TransactionContainerProps extends RouteComponentProps {}

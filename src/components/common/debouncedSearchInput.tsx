@@ -1,9 +1,10 @@
+import React, { useState } from 'react';
 import { Input } from 'antd';
 import { SearchProps } from 'antd/lib/input/Search';
+
 import Dictionary from 'dictionary/dictionary';
 import useDebounce from 'hooks/useDebounce';
 import useDidUpdateEffect from 'hooks/useDidUpdateEffect';
-import React, { useState } from 'react';
 
 interface DebouncedSearchInputProps extends SearchProps {
   onDebounced: (searchQuery: string) => void;

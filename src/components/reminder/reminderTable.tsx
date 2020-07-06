@@ -1,9 +1,10 @@
-import { Table } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
-import { routes } from 'components/router/routes';
-import Dictionary from 'dictionary/dictionary';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Table } from 'antd';
+import { ColumnsType } from 'antd/lib/table';
+
+import { routes } from 'components/router/routes';
+import Dictionary from 'dictionary/dictionary';
 import { Reminder } from 'services/reminderService';
 import TableUtils, { WithKey } from 'utils/tableUtils';
 

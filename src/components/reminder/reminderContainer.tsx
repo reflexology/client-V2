@@ -1,10 +1,10 @@
+import React, { useEffect, useState } from 'react';
 import { Radio, Space } from 'antd';
+
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import Dictionary from 'dictionary/dictionary';
-import React, { useEffect, useState } from 'react';
 import ReminderService, { Reminder } from 'services/reminderService';
 import TableUtils from 'utils/tableUtils';
-
 import ReminderTable from './reminderTable';
 
 interface ReminderContainerProps {}

@@ -1,3 +1,6 @@
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+
 import AddTransaction from 'components/income/addTransaction/addTransaction';
 import Reports from 'components/income/reports/reports';
 import TransactionContainer from 'components/income/transactions/transactionContainer';
@@ -9,9 +12,6 @@ import AddTreatment from 'components/treatment/addTreatment/addTreatment';
 import EditTreatment from 'components/treatment/editTreatment/editTreatment';
 import TreatmentData from 'components/treatment/treatment/treatment';
 import TreatmentsContainer from 'components/treatment/treatments/treatmentsContainer';
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-
 import Login from '../login/login';
 import NotFound from '../notFound/notFound';
 import ProtectedRoute from './protectedRoute';

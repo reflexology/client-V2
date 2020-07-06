@@ -1,21 +1,21 @@
-import './patient.scss';
-
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, DatePicker, message, Space } from 'antd';
+import moment, { Moment } from 'moment';
+
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import useDidUpdateEffect from 'hooks/useDidUpdateEffect';
-import moment, { Moment } from 'moment';
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import PatientService, { Patient, PatientType } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import TableUtils from 'utils/tableUtils';
-
 import PatientInCreditOrDebt from './patientInCreditOrDebt';
 import PatientsTable from './patientsTable';
+
+import './patient.scss';
 
 interface PatientContainerProps extends RouteComponentProps {}
 

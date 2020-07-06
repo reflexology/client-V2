@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+
 import PatientService, { Patient } from 'services/patientService';
 
 type PatientsContextType = {

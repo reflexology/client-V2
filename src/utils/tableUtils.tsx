@@ -1,7 +1,7 @@
-import { ColumnType } from 'antd/lib/table';
-import moment from 'moment';
 import React from 'react';
 import Highlighter from 'react-highlight-words';
+import { ColumnType } from 'antd/lib/table';
+import moment from 'moment';
 
 import { DATE_FORMAT } from './constants';
 

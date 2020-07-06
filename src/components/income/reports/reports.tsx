@@ -1,12 +1,13 @@
-import './reports.scss';
-
+import React, { useEffect, useState } from 'react';
 import { Col, DatePicker, Descriptions, message, Row } from 'antd';
+import moment from 'moment';
+
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
 import TransactionService, { Report } from 'services/transactionService';
 import { DATE_FORMAT } from 'utils/constants';
+
+import './reports.scss';
 
 export interface ReportsProps {}
 

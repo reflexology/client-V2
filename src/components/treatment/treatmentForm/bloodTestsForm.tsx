@@ -1,7 +1,8 @@
+import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Card, Checkbox, Col, Form, Input, InputNumber, Row } from 'antd';
+
 import Dictionary from 'dictionary/dictionary';
-import React from 'react';
 import TreatmentService from 'services/treatmentService';
 
 interface BloodTestsFormProps {}

@@ -1,7 +1,7 @@
-import { mount } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import renderer from 'react-test-renderer';
+import { mount } from 'enzyme';
 
 import ErrorBoundary, { ErrorBoundaryState } from '../errorBoundary';
 

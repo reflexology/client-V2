@@ -1,9 +1,10 @@
+import React from 'react';
 import { Button, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+
 import CurrentPatient from 'components/common/currentPatient';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import React from 'react';
 import { Patient } from 'services/patientService';
 import { Treatment } from 'services/treatmentService';
 import history from 'utils/history';

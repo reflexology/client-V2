@@ -1,6 +1,6 @@
-import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
 
+import Dictionary from 'dictionary/dictionary';
 import HttpService from './httpService';
 
 export interface Transaction {

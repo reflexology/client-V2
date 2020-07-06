@@ -1,8 +1,8 @@
-import { PatientsProvider } from 'contexts/patientsContexts';
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import AuthService from 'services/authService';
 
+import { PatientsProvider } from 'contexts/patientsContexts';
+import AuthService from 'services/authService';
 import { routes } from './routes';
 
 const ProtectedRoute = ({ component: Component, render, ...rest }: RouteProps) => {

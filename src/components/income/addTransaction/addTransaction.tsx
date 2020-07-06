@@ -1,15 +1,15 @@
-import './addTransaction.scss';
-
+import React, { useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'antd';
+
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
-import React, { useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import CommonService from 'services/commonService';
 import TransactionService from 'services/transactionService';
-
 import TransactionForm from '../transactionForm/transactionForm';
+
+import './addTransaction.scss';
 
 interface Props extends RouteComponentProps {}
 

@@ -1,14 +1,14 @@
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, message, Space } from 'antd';
+
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TableUtils from 'utils/tableUtils';
-
 import TreatmentsTable from './treatmentsTable';
 
 interface TreatmentsContainerProps extends RouteComponentProps<{ patientId: string }> {}

@@ -1,13 +1,13 @@
-import { message, Spin } from 'antd';
-import { routes } from 'components/router/routes';
-import Dictionary from 'dictionary/dictionary';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { message, Spin } from 'antd';
+import moment from 'moment';
+
+import { routes } from 'components/router/routes';
+import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
-
 import TreatmentForm from '../treatmentForm/treatmentForm';
 
 interface AddTreatmentProps extends RouteComponentProps<{ patientId: string }> {}

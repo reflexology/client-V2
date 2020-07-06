@@ -1,8 +1,9 @@
+import React from 'react';
 import { Form, InputNumber, Radio, Select } from 'antd';
 import { FormInstance } from 'antd/lib/form';
+
 import FormCard from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
-import React from 'react';
 import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
 
 interface StepOneProps {

@@ -1,14 +1,15 @@
-import './transaction.scss';
-
-import { Table } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
-import { routes } from 'components/router/routes';
-import Dictionary from 'dictionary/dictionary';
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 import { useHistory } from 'react-router-dom';
+import { Table } from 'antd';
+import { ColumnsType } from 'antd/lib/table';
+
+import { routes } from 'components/router/routes';
+import Dictionary from 'dictionary/dictionary';
 import { Transaction } from 'services/transactionService';
 import TableUtils, { WithKey } from 'utils/tableUtils';
+
+import './transaction.scss';
 
 interface TransactionsTableProps {
   isFetching: boolean;

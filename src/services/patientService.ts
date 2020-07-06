@@ -1,5 +1,4 @@
 import Dictionary from 'dictionary/dictionary';
-
 import HttpService from './httpService';
 
 export interface Patient {

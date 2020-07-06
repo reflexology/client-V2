@@ -1,7 +1,7 @@
-import { Field, InputType } from 'components/common/formCard';
-import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
 
+import { Field, InputType } from 'components/common/formCard';
+import Dictionary from 'dictionary/dictionary';
 import HttpService from './httpService';
 
 export interface Treatment {

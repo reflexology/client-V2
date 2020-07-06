@@ -1,9 +1,10 @@
+import React from 'react';
 import { Button, DatePicker, Form, Row } from 'antd';
 import { FormInstance } from 'antd/lib/form';
+import moment from 'moment';
+
 import FormCard from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
-import moment from 'moment';
-import React from 'react';
 import TreatmentService from 'services/treatmentService';
 import { DATE_FORMAT } from 'utils/constants';
 
