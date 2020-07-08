@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Form, message, Row, Space, Steps, Upload } from 'antd';
-import { UploadFile } from 'antd/lib/upload/interface';
+import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 
 import Dictionary from 'dictionary/dictionary';
 import DiagnosisService from 'services/diagnosesService';
@@ -72,9 +72,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     );
   };
 
-  const onUpload = ({ fileList: newFileList }: any) => {
-    setFileList(newFileList);
-  };
+  const onUpload = ({ fileList }: UploadChangeParam) => setFileList(fileList);
 
   return (
     <Form

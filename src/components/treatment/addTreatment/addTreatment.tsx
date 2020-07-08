@@ -9,6 +9,7 @@ import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TreatmentForm from '../treatmentForm/treatmentForm';
+import FileService from 'services/fileService';
 
 interface AddTreatmentProps extends RouteComponentProps<{ patientId: string }> {}
 
@@ -37,18 +38,19 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
     if (isSubmitting) return;
     setIsSubmitting(true);
     setError('');
+
     try {
-      const fileResponse = await TreatmentService.addFileToTreatment(files);
-      const fileObj = fileResponse.map(file => ({ key: file.key, name: file.originalname, location: file.location }));
-      values.files = fileObj;
+      if (newDiagnoses?.length > 0)
+        DiagnosisService.addDiagnoses(newDiagnoses).catch(() => message.error(Dictionary.cantSaveDiagnosesError));
+
+      const fileResponse = await FileService.upload(files);
+      values.files = fileResponse.map(file => ({ key: file.key, name: file.originalname, location: file.location }));
       await TreatmentService.addTreatment(props.match.params.patientId, values);
+      props.history.push(routes.patients);
     } catch (error) {
       setError(CommonService.getErrorMessage(error));
       setIsSubmitting(false);
     }
-    props.history.push(routes.patients);
-    if (newDiagnoses?.length > 0)
-      DiagnosisService.addDiagnoses(newDiagnoses).catch(() => message.error(Dictionary.cantSaveDiagnosesError));
   };
 
   return (

@@ -4,29 +4,6 @@ import { Field, InputType } from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
 import HttpService from './httpService';
 
-export interface Metadata {
-  ext: string;
-  mimetype: string;
-}
-
-export interface FileResponse {
-  fieldname: string;
-  originalname: string;
-  encoding: string;
-  mimetype: string;
-  size: number;
-  bucket: string;
-  key: string;
-  acl: string;
-  contentType: string;
-  contentDisposition?: any;
-  storageClass: string;
-  serverSideEncryption?: any;
-  metadata: Metadata;
-  location: string;
-  etag: string;
-}
-
 export interface Treatment {
   _id: string;
   treatmentDate?: Date | moment.Moment;
@@ -85,12 +62,6 @@ const TreatmentService = {
   },
   editTreatment(treatmentId: string, treatment: Treatment) {
     return HttpService.patch<Treatment>('/treatment/' + treatmentId, treatment);
-  },
-  addFileToTreatment(files: File[]) {
-    const formData = new FormData();
-    files.forEach((file, index) => formData.append('file-' + index, file));
-
-    return HttpService.postFormData<FileResponse[]>(baseEndPoint + '/file/multiple', formData);
   },
 
   getGeneralFields(): TreatmentFields[] {
