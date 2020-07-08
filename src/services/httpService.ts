@@ -1,9 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
+
 import { routes } from 'components/router/routes';
 import history from 'utils/history';
-
 import AuthService from './authService';
+
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_API + '/api';
 
 const HttpService = {
   async get<T = any>(url: string, config?: AxiosRequestConfig) {

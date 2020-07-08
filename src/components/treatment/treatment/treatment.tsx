@@ -1,7 +1,8 @@
-import { Descriptions } from 'antd';
-import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { Descriptions } from 'antd';
+
+import Dictionary from 'dictionary/dictionary';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 
 interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, any, Treatment> {}

@@ -1,7 +1,8 @@
+import React from 'react';
 import { DownOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu } from 'antd';
+
 import Dictionary from 'dictionary/dictionary';
-import React from 'react';
 import { PatientType } from 'services/patientService';
 
 interface PatientInCreditOrDebtProps {

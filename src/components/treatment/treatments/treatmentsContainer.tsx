@@ -1,17 +1,15 @@
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, message, Space } from 'antd';
+
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TableUtils from 'utils/tableUtils';
-
 import TreatmentsTable from './treatmentsTable';
-
-const tableUtils = new TableUtils<Treatment>();
 
 interface TreatmentsContainerProps extends RouteComponentProps<{ patientId: string }> {}
 
@@ -39,7 +37,18 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
   useEffect(() => setFilteredTreatments(Treatments), [Treatments]);
 
   const filterTreatments = (search: string) =>
-    setFilteredTreatments(Treatments.filter(Treatment => tableUtils.filter(Treatment, search, ['_id'])));
+    setFilteredTreatments(
+      Treatments.filter(Treatment =>
+        TableUtils.filter(Treatment, search, [
+          'treatmentDate',
+          'treatmentNumber',
+          'visitReason',
+          'findings',
+          'recommendations',
+          'reminders'
+        ])
+      )
+    );
 
   return (
     <div className='Treatments-container'>

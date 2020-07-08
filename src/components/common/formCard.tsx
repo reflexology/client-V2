@@ -1,6 +1,7 @@
+import React from 'react';
 import { Card, Col, DatePicker, Form, Input, InputNumber, Row } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import React from 'react';
+
 import { DATE_FORMAT, DATE_TIME_FORMAT } from 'utils/constants';
 
 export enum InputType {

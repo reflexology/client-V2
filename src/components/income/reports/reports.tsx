@@ -1,12 +1,13 @@
-import './reports.scss';
-
+import React, { useEffect, useState } from 'react';
 import { Col, DatePicker, Descriptions, message, Row } from 'antd';
+import moment from 'moment';
+
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
 import TransactionService, { Report } from 'services/transactionService';
 import { DATE_FORMAT } from 'utils/constants';
+
+import './reports.scss';
 
 export interface ReportsProps {}
 
@@ -48,12 +49,14 @@ const Reports: React.FC<ReportsProps> = () => {
           />
           <Descriptions title={Dictionary.report.title} layout='vertical'>
             <Descriptions.Item label={Dictionary.report.income}>
-              <div className='income'>{report?.income}</div>
+              <div className='ltr income'>{report?.income}</div>
             </Descriptions.Item>
             <Descriptions.Item label={Dictionary.report.expenditure}>
-              <div className={report?.expenditure === 0 ? '' : 'expenditure'}>{report?.expenditure}</div>
+              <div className={`ltr${report?.expenditure === 0 ? '' : ' expenditure'}`}>{report?.expenditure}</div>
             </Descriptions.Item>
-            <Descriptions.Item label={Dictionary.report.netAmount}>{report?.netAmount}</Descriptions.Item>
+            <Descriptions.Item label={Dictionary.report.netAmount}>
+              <div className='ltr'>{report?.netAmount}</div>
+            </Descriptions.Item>
             <Descriptions.Item label={Dictionary.report.startDate}>{startDate?.format(DATE_FORMAT)}</Descriptions.Item>
             <Descriptions.Item label={Dictionary.report.endDate}>{endDate?.format(DATE_FORMAT)}</Descriptions.Item>
           </Descriptions>

@@ -1,23 +1,21 @@
-import './patient.scss';
-
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, DatePicker, message, Space } from 'antd';
+import moment, { Moment } from 'moment';
+
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import useDidUpdateEffect from 'hooks/useDidUpdateEffect';
-import moment, { Moment } from 'moment';
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import PatientService, { Patient, PatientType } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import TableUtils from 'utils/tableUtils';
-
 import PatientInCreditOrDebt from './patientInCreditOrDebt';
 import PatientsTable from './patientsTable';
 
-const tableUtils = new TableUtils<Patient>();
+import './patient.scss';
 
 interface PatientContainerProps extends RouteComponentProps {}
 
@@ -62,13 +60,14 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
 
     if (filter.search)
       filteredPatients = filteredPatients.filter(patient =>
-        tableUtils.filter(patient, filter.search, [
-          '_id',
-          'maritalStatus',
-          'createdAt',
-          'createdBy',
-          'childrenAges',
-          'profession'
+        TableUtils.filter(patient, filter.search, [
+          'firstName',
+          'lastName',
+          'momName',
+          'calculatedAge',
+          'phone',
+          'email',
+          'lastTreatment'
         ])
       );
 
@@ -97,12 +96,14 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
         />
 
         <DatePicker
+          showToday={false}
           format={DATE_FORMAT}
           placeholder={Dictionary.patientContainer.fromLastTreatment}
           onChange={date => setFilter({ ...filter, endDate: date as moment.Moment })}
         />
 
         <DatePicker
+          showToday={false}
           format={DATE_FORMAT}
           placeholder={Dictionary.patientContainer.toLastTreatment}
           onChange={date => setFilter({ ...filter, startDate: date as moment.Moment })}

@@ -1,3 +1,5 @@
+import React from 'react';
+import Highlighter from 'react-highlight-words';
 import { ColumnType } from 'antd/lib/table';
 import moment from 'moment';
 
@@ -7,36 +9,59 @@ export type WithKey<T> = T & {
   key: string;
 };
 
+export type ColumnConfig<T> = ColumnType<T> & {
+  formatHighlighter?: (value: any) => string; // TODO add type to value
+};
+
 class TableUtils<T extends { [key: string]: any }> {
-  formats = [moment.ISO_8601, DATE_FORMAT];
+  constructor(private textToHighlight: string) {}
 
-  getColumn = (title: string, dataIndex: string): ColumnType<T> => ({
-    title,
-    dataIndex,
-    key: dataIndex
-  });
+  static formats = [moment.ISO_8601, DATE_FORMAT];
 
-  getStringColumn = (title: string, dataIndex: keyof T, rest?: ColumnType<T>): ColumnType<T> => ({
-    ...this.getColumn(title, dataIndex as string),
+  getColumn = (title: string, dataIndex: string, columnConfig?: ColumnConfig<T>): ColumnType<T> => {
+    const column: ColumnType<T> = {
+      title,
+      dataIndex,
+      key: dataIndex,
+      ...columnConfig
+    };
+
+    if (!columnConfig?.render)
+      column.render = (text: string | number /* is it always string? */) => {
+        return text ? (
+          <Highlighter
+            highlightClassName='highlighted-text'
+            searchWords={[this.textToHighlight]}
+            autoEscape
+            textToHighlight={
+              columnConfig?.formatHighlighter ? columnConfig.formatHighlighter(text) : text.toString() || ''
+            }
+          />
+        ) : null;
+      };
+
+    return column;
+  };
+
+  getStringColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T>): ColumnType<T> => ({
     sorter: (a: any, b: any) => a[dataIndex]?.localeCompare(b[dataIndex], 'he'),
     sortDirections: ['descend', 'ascend'],
-    ...rest
+    ...this.getColumn(title, dataIndex as string, columnConfig)
   });
 
-  getBooleanColumn = (title: string, dataIndex: keyof T, rest?: ColumnType<T>): ColumnType<T> => ({
-    ...this.getColumn(title, dataIndex as string),
+  getBooleanColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T>): ColumnType<T> => ({
     sorter: (a: any, b: any) => (!!a[dataIndex] ? 1 : -1),
-    sortDirections: ['descend', 'ascend']
+    sortDirections: ['descend', 'ascend'],
+    ...this.getColumn(title, dataIndex as string, columnConfig)
   });
 
-  getNumberColumn = (title: string, dataIndex: keyof T, rest?: ColumnType<T>): ColumnType<T> => ({
-    ...this.getColumn(title, dataIndex as string),
+  getNumberColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T>): ColumnType<T> => ({
     sorter: (a: any, b: any) => (!a[dataIndex] ? -1 : a[dataIndex] - b[dataIndex]),
-    sortDirections: ['descend', 'ascend']
+    sortDirections: ['descend', 'ascend'],
+    ...this.getColumn(title, dataIndex as string, columnConfig)
   });
 
-  getDateColumn = (title: string, dataIndex: keyof T, rest?: ColumnType<T>): ColumnType<T> => ({
-    ...this.getColumn(title, dataIndex as string),
+  getDateColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T>): ColumnType<T> => ({
     sorter: (a, b) => {
       if (!a[dataIndex]) return -1;
       if (!b[dataIndex]) return 1;
@@ -44,15 +69,23 @@ class TableUtils<T extends { [key: string]: any }> {
       else if (new Date(a[dataIndex] as any) < new Date(b[dataIndex] as any)) return -1;
       else return 0;
     },
-    sortDirections: ['descend', 'ascend']
+    sortDirections: ['descend', 'ascend'],
+    ...this.getColumn(title, dataIndex as string, {
+      formatHighlighter: date => moment(date).format(DATE_FORMAT),
+      ...columnConfig
+    })
   });
 
-  filter = (obj: T, searchQuery: string, excludedFields: (keyof T)[]): boolean => {
+  static filter = <T extends Record<string, any>>(
+    obj: T,
+    searchQuery: string,
+    fieldsToFilter: (keyof T)[]
+  ): boolean => {
     for (const name in obj) {
-      if (excludedFields.includes(name)) continue;
-      if (Array.isArray(obj[name])) return this.filter(obj[name][0], searchQuery, excludedFields);
+      if (!fieldsToFilter.includes(name)) continue;
+      if (Array.isArray(obj[name])) return TableUtils.filter<T>(obj[name][0], searchQuery, fieldsToFilter);
 
-      const date = moment(obj[name], this.formats, true);
+      const date = moment(obj[name], TableUtils.formats, true);
 
       if (date.isValid()) {
         const formattedDate = date.format(DATE_FORMAT);

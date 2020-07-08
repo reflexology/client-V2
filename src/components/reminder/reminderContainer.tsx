@@ -1,15 +1,13 @@
+import React, { useEffect, useState } from 'react';
 import { Radio, Space } from 'antd';
+
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import Dictionary from 'dictionary/dictionary';
-import React, { useEffect, useState } from 'react';
 import ReminderService, { Reminder } from 'services/reminderService';
 import TableUtils from 'utils/tableUtils';
-
 import ReminderTable from './reminderTable';
 
 interface ReminderContainerProps {}
-
-const tableUtils = new TableUtils<Reminder>();
 
 const ReminderContainer: React.FC<ReminderContainerProps> = () => {
   const [reminders, setReminders] = useState<Reminder[]>([]);
@@ -27,7 +25,11 @@ const ReminderContainer: React.FC<ReminderContainerProps> = () => {
   useEffect(() => setFilteredReminders(reminders), [reminders]);
 
   const filterPatients = (search: string) =>
-    setFilteredReminders(reminders.filter(patient => tableUtils.filter(patient, search, ['treatmentId'])));
+    setFilteredReminders(
+      reminders.filter(patient =>
+        TableUtils.filter(patient, search, ['firstName', 'lastName', 'reminders', 'reminderDate'])
+      )
+    );
 
   return (
     <div className='reminders-container'>

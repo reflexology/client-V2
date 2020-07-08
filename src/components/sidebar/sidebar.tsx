@@ -1,5 +1,5 @@
-import './sidebar.scss';
-
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   BellOutlined,
   DollarCircleOutlined,
@@ -8,13 +8,13 @@ import {
   TeamOutlined
 } from '@ant-design/icons';
 import { Avatar, Layout, Menu, Popover } from 'antd';
+
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import AuthService from 'services/authService';
-
 import UserPopoverContent from './userPopoverContent';
+
+import './sidebar.scss';
 
 const { Header, Content, Sider } = Layout;
 

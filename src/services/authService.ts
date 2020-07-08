@@ -18,8 +18,6 @@ export interface Credentials {
 const refreshToken = 'refreshToken';
 const accessToken = 'accessToken';
 
-const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
-
 const parseJwt = (token: string) => {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -35,11 +33,11 @@ const parseJwt = (token: string) => {
 
 const AuthService = {
   login(credentials: Credentials) {
-    return HttpService.post<Tokens>(baseEndPoint + '/user/login', credentials);
+    return HttpService.post<Tokens>('/user/login', credentials);
   },
 
   refreshToken(refreshToken: string) {
-    return HttpService.post<Tokens>(baseEndPoint + '/auth/refreshToken', { refreshToken });
+    return HttpService.post<Tokens>('/auth/refreshToken', { refreshToken });
   },
 
   storeTokens(tokens: Tokens) {

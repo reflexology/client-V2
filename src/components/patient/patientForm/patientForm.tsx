@@ -1,11 +1,12 @@
-import './patientForm.scss';
-
-import { Alert, Button, Form, Input, InputNumber, Radio, Row, Select, Space, Typography } from 'antd';
-import Dictionary from 'dictionary/dictionary';
 import React, { useEffect, useState } from 'react';
 import ReactInputMask from 'react-input-mask';
+import { Alert, Button, Form, Input, InputNumber, Radio, Row, Select, Space, Typography } from 'antd';
+
+import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
 import PatientService, { Patient } from 'services/patientService';
+
+import './patientForm.scss';
 
 interface PatientFormProps {
   onSubmit: (values: any, navigateToAddTreatment: boolean) => void;

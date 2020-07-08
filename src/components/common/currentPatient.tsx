@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Patient } from 'services/patientService';
 
 interface CurrentPatientProps {

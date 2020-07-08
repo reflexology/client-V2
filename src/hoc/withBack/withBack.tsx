@@ -1,9 +1,10 @@
-import './withBack.scss';
-
-import { PageHeader } from 'antd';
-import Dictionary from 'dictionary/dictionary';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { PageHeader } from 'antd';
+
+import Dictionary from 'dictionary/dictionary';
+
+import './withBack.scss';
 
 interface WithBackProps extends RouteComponentProps {}
 

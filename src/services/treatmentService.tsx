@@ -1,7 +1,7 @@
-import { Field, InputType } from 'components/common/formCard';
-import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
 
+import { Field, InputType } from 'components/common/formCard';
+import Dictionary from 'dictionary/dictionary';
 import HttpService from './httpService';
 
 export interface Metadata {
@@ -68,25 +68,23 @@ export interface TreatmentFields {
   inputType: InputType;
 }
 
-const baseEndPoint = process.env.REACT_APP_SERVER_API + '/api';
-
 const TreatmentService = {
   getTreatmentsByPatientId(patientId: string) {
-    return HttpService.get<Treatment[]>(baseEndPoint + '/treatment/byPatientId/' + patientId);
+    return HttpService.get<Treatment[]>('/treatment/byPatientId/' + patientId);
   },
   getLastTreatment(patientId: string) {
     return HttpService.get<{ balance: number; lastTreatment: Treatment }>(
-      baseEndPoint + '/treatment/lastTreatment/byPatientId/' + patientId
+      '/treatment/lastTreatment/byPatientId/' + patientId
     );
   },
   getTreatmentById(patientId: string) {
-    return HttpService.get<Treatment>(baseEndPoint + '/treatment/' + patientId);
+    return HttpService.get<Treatment>('/treatment/' + patientId);
   },
   addTreatment(patientId: string, treatment: Treatment) {
-    return HttpService.post<Treatment>(baseEndPoint + '/treatment/patient/' + patientId, treatment);
+    return HttpService.post<Treatment>('/treatment/patient/' + patientId, treatment);
   },
   editTreatment(treatmentId: string, treatment: Treatment) {
-    return HttpService.patch<Treatment>(baseEndPoint + '/treatment/' + treatmentId, treatment);
+    return HttpService.patch<Treatment>('/treatment/' + treatmentId, treatment);
   },
   addFileToTreatment(files: File[]) {
     const formData = new FormData();

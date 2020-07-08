@@ -1,10 +1,11 @@
+import React, { useEffect } from 'react';
 import { Alert, Button, DatePicker, Form, Input, InputNumber, Radio, Row } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import Dictionary from 'dictionary/dictionary';
 import moment from 'moment';
-import React, { useEffect } from 'react';
+
+import Dictionary from 'dictionary/dictionary';
 import TransactionService, { Transaction } from 'services/transactionService';
-import { DATE_FORMAT } from 'utils/constants';
+import { DATE_TIME_FORMAT } from 'utils/constants';
 
 export interface TransactionFormProps {
   onSubmit: (values: any) => void;
@@ -56,11 +57,11 @@ const TransactionForm: React.SFC<TransactionFormProps> = props => {
           </Radio.Group>
         </Form.Item>
       </Row>
-      <Form.Item name='createdAt' hasFeedback>
+      <Form.Item name='createdAt'>
         <DatePicker
           showTime
           defaultValue={moment()}
-          format={DATE_FORMAT}
+          format={DATE_TIME_FORMAT}
           placeholder={Dictionary.transactionForm.createdAt}
         />
       </Form.Item>

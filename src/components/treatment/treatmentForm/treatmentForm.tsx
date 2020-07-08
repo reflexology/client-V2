@@ -1,15 +1,15 @@
-import './treatmentForm.scss';
-
+import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Form, message, Row, Space, Steps, Upload } from 'antd';
 import { UploadFile } from 'antd/lib/upload/interface';
+
 import Dictionary from 'dictionary/dictionary';
-import React, { useEffect, useState } from 'react';
 import DiagnosisService from 'services/diagnosesService';
 import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
-
 import BloodTestsForm from './bloodTestsForm';
 import ReminderStep from './reminderStep';
 import StepOne from './stepOne';
+
+import './treatmentForm.scss';
 
 interface TreatmentFormProps {
   onSubmit: (values: any, newDiagnoses: string[], files: File[]) => void;

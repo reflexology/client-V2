@@ -1,16 +1,14 @@
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
+
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import TransactionService, { Transaction } from 'services/transactionService';
 import TableUtils from 'utils/tableUtils';
-
 import TransactionsTable from './transactionsTable';
-
-const tableUtils = new TableUtils<Transaction>();
 
 interface TransactionContainerProps extends RouteComponentProps {}
 
@@ -31,7 +29,7 @@ const TransactionContainer: React.FC<TransactionContainerProps> = props => {
   const filterTransactions = (search: string) =>
     setFilteredTransactions(
       transactions.filter(transaction =>
-        tableUtils.filter(transaction, search, ['_id', 'isFromTreatment', 'transactionType', 'treatmentId'])
+        TableUtils.filter(transaction, search, ['description', 'note', 'amount', 'createdAt'])
       )
     );
 

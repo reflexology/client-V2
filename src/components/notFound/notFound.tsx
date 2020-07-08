@@ -1,7 +1,8 @@
-import { Button, Result } from 'antd';
-import Dictionary from 'dictionary/dictionary';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { Button, Result } from 'antd';
+
+import Dictionary from 'dictionary/dictionary';
 
 interface Props extends RouteComponentProps {}
 
