@@ -7,9 +7,9 @@ import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
+import FileService from 'services/fileService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TreatmentForm from '../treatmentForm/treatmentForm';
-import FileService from 'services/fileService';
 
 interface AddTreatmentProps extends RouteComponentProps<{ patientId: string }> {}
 

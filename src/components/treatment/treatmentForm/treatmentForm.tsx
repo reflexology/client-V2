@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Form, message, Row, Space, Steps, Upload } from 'antd';
-import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
+import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
 
 import Dictionary from 'dictionary/dictionary';
 import DiagnosisService from 'services/diagnosesService';
