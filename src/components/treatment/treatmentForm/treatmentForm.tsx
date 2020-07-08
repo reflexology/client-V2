@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Col, Form, message, Row, Space, Steps } from 'antd';
+import { Alert, Button, Col, Form, message, Row, Space, Steps, Upload } from 'antd';
+import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
 
 import Dictionary from 'dictionary/dictionary';
 import DiagnosisService from 'services/diagnosesService';
@@ -11,7 +12,7 @@ import StepOne from './stepOne';
 import './treatmentForm.scss';
 
 interface TreatmentFormProps {
-  onSubmit: (values: any, newDiagnoses: string[]) => void;
+  onSubmit: (values: any, newDiagnoses: string[], files: File[]) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Partial<Treatment>;
@@ -31,6 +32,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
   const [treatmentType, setTreatmentType] = useState(props.initialValues?.treatmentType || TreatmentType.Reflexology);
   const [currentStep, setCurrentStep] = useState(0);
+  const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
 
   const isReflexology = treatmentType === TreatmentType.Reflexology;
   const isDiet = treatmentType === TreatmentType.Diet;
@@ -63,8 +65,14 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     const values = { ...(form.getFieldsValue(true) as Treatment) };
     values.bloodTests = values.bloodTests.filter(bloodTest => !!bloodTest.value);
     const newDiagnoses = values.diagnoses?.filter(diagnosis => !diagnoses?.includes(diagnosis));
-    props.onSubmit(values, newDiagnoses);
+    props.onSubmit(
+      values,
+      newDiagnoses,
+      fileList.map(file => file.originFileObj as File)
+    );
   };
+
+  const onUpload = ({ fileList }: UploadChangeParam) => setFileList(fileList);
 
   return (
     <Form
@@ -81,7 +89,6 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
       <Row>
         <Col span={4}>
           <h2 style={{ marginBottom: '20px' }}>{Dictionary.addTreatment.header}</h2>
-
           <Steps current={currentStep} onChange={stepNumber => setCurrentStep(stepNumber)} direction='vertical'>
             <Steps.Step title='כללי' />
             <Steps.Step title='בדיקות דם' />
@@ -93,6 +100,9 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
               </>
             )}
           </Steps>
+          <Upload listType='picture-card' fileList={fileList} onChange={onUpload}>
+            {fileList.length < 5 && '+ Upload'}
+          </Upload>
           <Button loading={props.isLoading} type='primary' htmlType='submit'>
             {Dictionary.treatmentForm.save}
           </Button>

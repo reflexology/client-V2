@@ -19,6 +19,15 @@ const HttpService = {
     return res.data;
   },
 
+  async postFormData<T = any>(url: string, formData?: FormData, config?: AxiosRequestConfig) {
+    return this.post<T>(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      ...config
+    });
+  },
+
   async put<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
     const res = await axios.put<T>(url, data, { ...config });
     return res.data;

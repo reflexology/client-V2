@@ -5,6 +5,7 @@
     "Formik",
     "Sider",
     "antd",
-    "debounced"
+    "debounced",
+    "originalname"
   ]
 }

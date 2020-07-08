@@ -7,6 +7,7 @@ import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
+import FileService from 'services/fileService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TreatmentForm from '../treatmentForm/treatmentForm';
 
@@ -33,20 +34,23 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
       .finally(() => setIsFetching(false));
   }, []);
 
-  const handleSubmit = (values: any, newDiagnoses: string[]) => {
+  const handleSubmit = async (values: Treatment, newDiagnoses: string[], files: File[]) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
     setError('');
 
-    TreatmentService.addTreatment(props.match.params.patientId, values)
-      .then(() => props.history.push(routes.patients))
-      .catch(err => {
-        setError(CommonService.getErrorMessage(err));
-        setIsSubmitting(false);
-      });
+    try {
+      if (newDiagnoses?.length > 0)
+        DiagnosisService.addDiagnoses(newDiagnoses).catch(() => message.error(Dictionary.cantSaveDiagnosesError));
 
-    if (newDiagnoses?.length > 0)
-      DiagnosisService.addDiagnoses(newDiagnoses).catch(() => message.error(Dictionary.cantSaveDiagnosesError));
+      const fileResponse = await FileService.upload(files);
+      values.files = fileResponse.map(file => ({ key: file.key, name: file.originalname, location: file.location }));
+      await TreatmentService.addTreatment(props.match.params.patientId, values);
+      props.history.push(routes.patients);
+    } catch (error) {
+      setError(CommonService.getErrorMessage(error));
+      setIsSubmitting(false);
+    }
   };
 
   return (
