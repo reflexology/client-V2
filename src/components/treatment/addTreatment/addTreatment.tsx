@@ -18,6 +18,7 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
   const [balance, setBalance] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -43,8 +44,12 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
       if (newDiagnoses?.length > 0)
         DiagnosisService.addDiagnoses(newDiagnoses).catch(() => message.error(Dictionary.cantSaveDiagnosesError));
 
-      const fileResponse = await FileService.uploadMultiple(files);
-      values.files = fileResponse.map(file => ({ key: file.key, name: file.originalname, location: file.location }));
+      if (files) {
+        setIsUploading(true);
+        const fileResponse = await FileService.uploadMultiple(files);
+        values.files = fileResponse.map(file => ({ key: file.key, name: file.originalname, location: file.location }));
+        setIsUploading(false);
+      }
       await TreatmentService.addTreatment(props.match.params.patientId, values);
       props.history.push(routes.patients);
     } catch (error) {
@@ -56,6 +61,7 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
   return (
     <Spin spinning={isFetching}>
       <TreatmentForm
+        isUploading={isUploading}
         initialValues={initialValues}
         isLoading={isSubmitting}
         onSubmit={handleSubmit}

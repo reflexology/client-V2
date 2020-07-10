@@ -18,6 +18,7 @@ interface TreatmentFormProps {
   isLoading: boolean;
   initialValues?: Partial<Treatment>;
   balance?: number;
+  isUploading?: boolean;
 }
 
 const keyUp = 38;
@@ -37,6 +38,12 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
 
   const isReflexology = treatmentType === TreatmentType.Reflexology;
   const isDiet = treatmentType === TreatmentType.Diet;
+
+  const saveButtonText = props.isUploading
+    ? Dictionary.treatmentForm.uploadingFiles
+    : props.isLoading
+    ? Dictionary.treatmentForm.addingTreatment
+    : Dictionary.treatmentForm.save;
 
   useEffect(() => {
     document.addEventListener('keydown', onKeydown);
@@ -99,7 +106,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
             <DragAndDrop files={files} onChange={setFiles} />
           </div>
           <Button loading={props.isLoading} type='primary' htmlType='submit'>
-            {Dictionary.treatmentForm.save}
+            {saveButtonText}
           </Button>
         </Col>
         <Col span={20}>
@@ -128,7 +135,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
                 </Button>
               ) : (
                 <Button loading={props.isLoading} type='primary' onClick={form.submit}>
-                  {Dictionary.treatmentForm.save}
+                  {saveButtonText}
                 </Button>
               )}
             </Space>
