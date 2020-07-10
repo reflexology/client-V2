@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Col, Form, message, Row, Space, Steps, Upload } from 'antd';
-import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
+import { Alert, Button, Col, Form, message, Row, Space, Steps } from 'antd';
+import { RcFile } from 'antd/lib/upload/interface';
 
+import DragAndDrop from 'components/common/dragAndDrop';
 import Dictionary from 'dictionary/dictionary';
 import DiagnosisService from 'services/diagnosesService';
 import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
@@ -32,7 +33,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
   const [treatmentType, setTreatmentType] = useState(props.initialValues?.treatmentType || TreatmentType.Reflexology);
   const [currentStep, setCurrentStep] = useState(0);
-  const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
+  const [files, setFiles] = useState<RcFile[]>([]);
 
   const isReflexology = treatmentType === TreatmentType.Reflexology;
   const isDiet = treatmentType === TreatmentType.Diet;
@@ -65,14 +66,8 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     const values = { ...(form.getFieldsValue(true) as Treatment) };
     values.bloodTests = values.bloodTests.filter(bloodTest => !!bloodTest.value);
     const newDiagnoses = values.diagnoses?.filter(diagnosis => !diagnoses?.includes(diagnosis));
-    props.onSubmit(
-      values,
-      newDiagnoses,
-      fileList.map(file => file.originFileObj as File)
-    );
+    props.onSubmit(values, newDiagnoses, files);
   };
-
-  const onUpload = ({ fileList }: UploadChangeParam) => setFileList(fileList);
 
   return (
     <Form
@@ -100,9 +95,9 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
               </>
             )}
           </Steps>
-          <Upload listType='picture-card' fileList={fileList} onChange={onUpload}>
-            {fileList.length < 5 && '+ Upload'}
-          </Upload>
+          <div>
+            <DragAndDrop files={files} onChange={setFiles} />
+          </div>
           <Button loading={props.isLoading} type='primary' htmlType='submit'>
             {Dictionary.treatmentForm.save}
           </Button>

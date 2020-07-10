@@ -24,12 +24,20 @@ export interface FileResponse {
 }
 
 const FileService = {
-  upload(files: File[]) {
+  async upload(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    await HttpService.postFormData<FileResponse[]>('/file', formData);
+    return 'er';
+  },
+  uploadMultiple(files: File[]) {
     const formData = new FormData();
     files.forEach((file, index) => formData.append('file-' + index, file));
 
     return HttpService.postFormData<FileResponse[]>('/file/multiple', formData);
-  }
+  },
+  delete() {}
 };
 
 export default FileService;
