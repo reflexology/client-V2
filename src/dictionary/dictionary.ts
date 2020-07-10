@@ -82,6 +82,8 @@ const Dictionary = {
   },
   treatmentForm: {
     save: 'שמור',
+    uploadingFiles: 'מעלה קבצים',
+    addingTreatment: 'שומר טיפול',
     next: 'הבא',
     previous: 'הקודם',
     treatmentType: 'סוג טיפול',
