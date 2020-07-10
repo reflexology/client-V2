@@ -13,7 +13,7 @@ import StepOne from './stepOne';
 import './treatmentForm.scss';
 
 interface TreatmentFormProps {
-  onSubmit: (values: any, newDiagnoses: string[], files: File[]) => void;
+  onSubmit: (values: any, newDiagnoses: string[], files: RcFile[]) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Partial<Treatment>;
@@ -34,7 +34,12 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
   const [treatmentType, setTreatmentType] = useState(props.initialValues?.treatmentType || TreatmentType.Reflexology);
   const [currentStep, setCurrentStep] = useState(0);
-  const [files, setFiles] = useState<RcFile[]>([]);
+  console.log(props.initialValues?.files);
+
+  const [files, setFiles] = useState<RcFile[]>(
+    //@ts-ignore
+    props.initialValues?.files?.map(file => ({ ...file, uid: file.key })) || []
+  );
 
   const isReflexology = treatmentType === TreatmentType.Reflexology;
   const isDiet = treatmentType === TreatmentType.Diet;

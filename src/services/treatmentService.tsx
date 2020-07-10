@@ -22,11 +22,13 @@ export interface Treatment {
   diagnoses: string[];
   bloodTests: BloodTest[];
   treatmentType: TreatmentType;
-  files: {
-    key: string;
-    name: string;
-    location: string;
-  }[];
+  files: TreatmentFile[];
+}
+
+export interface TreatmentFile {
+  key: string;
+  name: string;
+  location: string;
 }
 
 export interface BloodTest {

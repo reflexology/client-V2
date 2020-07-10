@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { message, Spin } from 'antd';
+import { RcFile } from 'antd/es/upload/interface';
 import moment from 'moment';
 
 import { routes } from 'components/router/routes';
@@ -35,7 +36,7 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
       .finally(() => setIsFetching(false));
   }, []);
 
-  const handleSubmit = async (values: Treatment, newDiagnoses: string[], files: File[]) => {
+  const handleSubmit = async (values: Treatment, newDiagnoses: string[], files: RcFile[]) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
     setError('');
