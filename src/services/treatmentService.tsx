@@ -33,7 +33,7 @@ export interface TreatmentFile {
 
 export interface BloodTest {
   name: string;
-  value: string | number;
+  value: string | number | null;
   isImportant: boolean;
 }
 
@@ -123,7 +123,7 @@ const TreatmentService = {
     ];
   },
 
-  getBloodTests() {
+  getBloodTests(): BloodTest[] {
     return [
       { name: 'glucose', value: null, isImportant: false },
       { name: 'creatinine', value: null, isImportant: false },

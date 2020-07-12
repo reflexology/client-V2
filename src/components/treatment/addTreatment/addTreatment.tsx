@@ -5,6 +5,7 @@ import { RcFile } from 'antd/es/upload/interface';
 import moment from 'moment';
 
 import { routes } from 'components/router/routes';
+import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
@@ -21,9 +22,11 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
   const [isFetching, setIsFetching] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
+  const { fetchPatients } = usePatients();
+  const patientId = props.match.params.patientId;
 
   useEffect(() => {
-    TreatmentService.getLastTreatment(props.match.params.patientId)
+    TreatmentService.getLastTreatment(patientId)
       .then(({ lastTreatment, balance }) => {
         setInitialValues({
           treatmentNumber: (lastTreatment?.treatmentNumber || 0) + 1,
@@ -45,14 +48,16 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
       if (newDiagnoses?.length > 0)
         DiagnosisService.addDiagnoses(newDiagnoses).catch(() => message.error(Dictionary.cantSaveDiagnosesError));
 
-      if (files) {
+      if (files?.length > 0) {
         setIsUploading(true);
         const fileResponse = await FileService.uploadMultiple(files);
         values.files = fileResponse.map(file => ({ key: file.key, name: file.originalname, location: file.location }));
         setIsUploading(false);
       }
-      await TreatmentService.addTreatment(props.match.params.patientId, values);
-      props.history.push(routes.patients);
+      await TreatmentService.addTreatment(patientId, values);
+
+      props.history.push(routes.treatments.format(patientId));
+      fetchPatients();
     } catch (error) {
       setError(CommonService.getErrorMessage(error));
       setIsSubmitting(false);

@@ -4,6 +4,7 @@ import { RcFile } from 'antd/lib/upload/interface';
 
 import DragAndDrop from 'components/common/dragAndDrop';
 import Dictionary from 'dictionary/dictionary';
+import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
 import BloodTestsForm from './bloodTestsForm';
@@ -26,7 +27,7 @@ const keyDown = 40;
 
 const treatmentTypesStepCount: Record<TreatmentType, number> = {
   [TreatmentType.Reflexology]: 3,
-  [TreatmentType.Diet]: 6
+  [TreatmentType.Diet]: 3
 };
 
 const TreatmentForm: React.FC<TreatmentFormProps> = props => {
@@ -42,7 +43,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   );
 
   const isReflexology = treatmentType === TreatmentType.Reflexology;
-  const isDiet = treatmentType === TreatmentType.Diet;
+  // const isDiet = treatmentType === TreatmentType.Diet;
 
   const saveButtonText = props.isUploading
     ? Dictionary.treatmentForm.uploadingFiles
@@ -65,7 +66,15 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   };
 
   useEffect(() => {
-    if (props.initialValues) form.setFieldsValue(props.initialValues);
+    if (props.initialValues)
+      form.setFieldsValue({
+        ...props.initialValues,
+        bloodTests: CommonService.mergeArraysByKey(
+          TreatmentService.getBloodTests(),
+          props.initialValues?.bloodTests || [],
+          'name'
+        )
+      });
   }, [props.initialValues]);
 
   useEffect(() => {
@@ -79,6 +88,26 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     values.bloodTests = values.bloodTests.filter(bloodTest => !!bloodTest.value);
     const newDiagnoses = values.diagnoses?.filter(diagnosis => !diagnoses?.includes(diagnosis));
     props.onSubmit(values, newDiagnoses, files);
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <StepOne
+            balance={props.balance}
+            initialValues={props.initialValues}
+            diagnoses={diagnoses}
+            form={form}
+            isReflexology={isReflexology}
+            setTreatmentType={setTreatmentType}
+          />
+        );
+      case 1:
+        return <BloodTestsForm />;
+      case 2:
+        return <ReminderStep form={form} />;
+    }
   };
 
   return (
@@ -100,12 +129,6 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
             <Steps.Step title='כללי' />
             <Steps.Step title='בדיקות דם' />
             <Steps.Step title='תזכורת' />
-            {isDiet && (
-              <>
-                <Steps.Step title='המשך תשאול' />
-                <Steps.Step title='תזונה' />
-              </>
-            )}
           </Steps>
           <div>
             <DragAndDrop files={files} onChange={setFiles} />
@@ -116,18 +139,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
         </Col>
         <Col span={20}>
           <div className='treatment-form'>
-            {currentStep === 0 && (
-              <StepOne
-                balance={props.balance}
-                initialValues={props.initialValues}
-                diagnoses={diagnoses}
-                form={form}
-                isReflexology={isReflexology}
-                setTreatmentType={setTreatmentType}
-              />
-            )}
-            {currentStep === 1 && <BloodTestsForm />}
-            {currentStep === 2 && <ReminderStep form={form} />}
+            {renderStep()}
             {props.error && <Alert message={props.error} type='error' showIcon />}
           </div>
 

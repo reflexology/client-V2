@@ -20,6 +20,13 @@ const CommonService = {
     const diff = this.getDurationFromNow(utcDate);
 
     return diff.isValid() && !utcDate.isAfter(moment()) ? diff.years() + '.' + diff.months() : '';
+  },
+
+  mergeArraysByKey<T>(arr: T[], arr2: T[], key: keyof T) {
+    return arr.map(item => ({
+      ...item,
+      ...arr2.find(item2 => item[key] === item2[key] && item)
+    }));
   }
 };
 

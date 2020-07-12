@@ -11,6 +11,7 @@ type PatientsContextType = {
   addPatient: (patient: Patient) => void;
   setPatient: (patient: Patient) => void;
   setCurrentPatientById: (patientId: string) => void;
+  fetchPatients: () => Promise<void>;
 };
 
 export const PatientsContext = React.createContext<PatientsContextType>(undefined!);
@@ -37,15 +38,16 @@ export const PatientsProvider: React.FC = props => {
     [patients]
   );
 
+  const fetchPatients = useCallback(() => PatientService.getPatients().then(setPatients), []);
+
   useEffect(() => {
-    PatientService.getPatients()
-      .then(setPatients)
-      .finally(() => setIsDataFetchedOnce(true));
+    fetchPatients().finally(() => setIsDataFetchedOnce(true));
   }, []);
 
   return (
     <PatientsContext.Provider
       value={{
+        fetchPatients,
         patients,
         setPatients,
         isDataFetchedOnce,

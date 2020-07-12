@@ -16,7 +16,7 @@ import TreatmentForm from '../treatmentForm/treatmentForm';
 interface EditTreatmentProps extends RouteComponentProps<{ treatmentId: string }, any, Treatment> {}
 
 const EditTreatment: React.FC<EditTreatmentProps> = props => {
-  const { currentPatient } = usePatients();
+  const { currentPatient, setCurrentPatientById } = usePatients();
 
   const [treatment, setTreatment] = useState<Treatment>(props.location.state);
 
@@ -25,10 +25,17 @@ const EditTreatment: React.FC<EditTreatmentProps> = props => {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
 
+  const treatmentId = props.match.params.treatmentId;
+
   useEffect(() => {
-    TreatmentService.getTreatmentById(props.match.params.treatmentId)
+    TreatmentService.getTreatmentById(treatmentId)
       .then(treatment => setTreatment(treatment))
       .finally(() => setIsFetching(false));
+  }, []);
+
+  useEffect(() => {
+    debugger;
+    if (!currentPatient) setCurrentPatientById(treatmentId);
   }, []);
 
   const handleSubmit = async (values: Treatment, newDiagnoses: string[], files: RcFile[]) => {
@@ -56,8 +63,6 @@ const EditTreatment: React.FC<EditTreatmentProps> = props => {
       await TreatmentService.editTreatment(props.match.params.treatmentId, values);
       props.history.push(routes.treatments.format(currentPatient!._id));
     } catch (error) {
-      console.log(error);
-
       setError(CommonService.getErrorMessage(error));
       setIsSubmitting(false);
     }
