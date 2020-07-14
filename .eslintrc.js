@@ -18,26 +18,26 @@ module.exports = {
     // 'import/first': 'error',
     // 'import/newline-after-import': 'error',
     // 'import/no-duplicates': 'error'
-  },
-  overrides: [
-    {
-      files: ['*.tsx', '*.ts'],
-      rules: {
-        'simple-import-sort/sort': [
-          'error',
-          {
-            groups: [
-              // Packages. `react` related packages come first.
-              // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
-              ['^react', '^@?\\w'],
-              // Absolute imports and Relative imports.
-              [`^(${folders.join('|')})(/.*|$)`, '^\\.'],
-              // for scss imports.
-              ['^[^.]']
-            ]
-          }
-        ]
-      }
-    }
-  ]
+  }
+  // overrides: [
+  //   {
+  //     files: ['*.tsx', '*.ts'],
+  //     rules: {
+  //       'simple-import-sort/sort': [
+  //         'error',
+  //         {
+  //           groups: [
+  //             // Packages. `react` related packages come first.
+  //             // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+  //             ['^react', '^@?\\w'],
+  //             // Absolute imports and Relative imports.
+  //             [`^(${folders.join('|')})(/.*|$)`, '^\\.'],
+  //             // for scss imports.
+  //             ['^[^.]']
+  //           ]
+  //         }
+  //       ]
+  //     }
+  //   }
+  // ]
 };
