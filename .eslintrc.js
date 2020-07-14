@@ -1,23 +1,23 @@
-const fs = require('fs');
+// const fs = require('fs');
 
-const folders = fs
-  .readdirSync('src', { withFileTypes: true })
-  .filter(dirent => dirent.isDirectory())
-  .map(dirent => dirent.name);
+// const folders = fs
+//   .readdirSync('src', { withFileTypes: true })
+//   .filter(dirent => dirent.isDirectory())
+//   .map(dirent => dirent.name);
 
 module.exports = {
   extends: ['react-app', 'plugin:prettier/recommended'],
-  plugins: ['simple-import-sort'],
+  // plugins: ['simple-import-sort'],
   rules: {
     semi: ['error', 'always'],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
     'react-hooks/exhaustive-deps': 'off',
-    'no-extend-native': 'off',
-    'simple-import-sort/sort': 'error',
-    'sort-imports': 'off',
-    'import/first': 'error',
-    'import/newline-after-import': 'error',
-    'import/no-duplicates': 'error'
+    'no-extend-native': 'off'
+    // 'simple-import-sort/sort': 'error',
+    // 'sort-imports': 'off',
+    // 'import/first': 'error',
+    // 'import/newline-after-import': 'error',
+    // 'import/no-duplicates': 'error'
   },
   overrides: [
     {
