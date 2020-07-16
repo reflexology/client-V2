@@ -9,14 +9,14 @@ export type WithKey<T> = T & {
   key: string;
 };
 
-export type ColumnConfig<T> = ColumnType<T> & {
-  formatHighlighter?: (value: any) => string; // TODO add type to value
+export type ColumnConfig<T, Type> = ColumnType<T> & {
+  formatHighlighter?: (value: Type) => string;
 };
 
-class TableUtils<T extends { [key: string]: any }> {
+class TableUtils<T extends Record<string, any>> {
   constructor(private textToHighlight: string) {}
 
-  getColumn = (title: string, dataIndex: string, columnConfig?: ColumnConfig<T>): ColumnType<T> => {
+  getColumn = (title: string, dataIndex: string, columnConfig?: ColumnConfig<T, any>): ColumnType<T> => {
     const column: ColumnType<T> = {
       title,
       dataIndex,
@@ -25,7 +25,7 @@ class TableUtils<T extends { [key: string]: any }> {
     };
 
     if (!columnConfig?.render)
-      column.render = (text: string | number /* is it always string? */) => {
+      column.render = (text: string | number) => {
         return text ? (
           <Highlighter
             highlightClassName='highlighted-text'
@@ -41,30 +41,30 @@ class TableUtils<T extends { [key: string]: any }> {
     return column;
   };
 
-  getStringColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T>): ColumnType<T> => ({
-    sorter: (a: any, b: any) => a[dataIndex]?.localeCompare(b[dataIndex], 'he'),
+  getStringColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T, string>): ColumnType<T> => ({
+    sorter: (a, b) => (a[dataIndex] as string)?.localeCompare(b[dataIndex], 'he'),
     sortDirections: ['descend', 'ascend'],
     ...this.getColumn(title, dataIndex as string, columnConfig)
   });
 
-  getBooleanColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T>): ColumnType<T> => ({
-    sorter: (a: any, b: any) => (!!a[dataIndex] ? 1 : -1),
+  getBooleanColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T, boolean>): ColumnType<T> => ({
+    sorter: (a, b) => (!!a[dataIndex] ? 1 : -1),
     sortDirections: ['descend', 'ascend'],
     ...this.getColumn(title, dataIndex as string, columnConfig)
   });
 
-  getNumberColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T>): ColumnType<T> => ({
-    sorter: (a: any, b: any) => (!a[dataIndex] ? -1 : a[dataIndex] - b[dataIndex]),
+  getNumberColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T, number>): ColumnType<T> => ({
+    sorter: (a, b) => (!a[dataIndex] ? -1 : a[dataIndex] - b[dataIndex]),
     sortDirections: ['descend', 'ascend'],
     ...this.getColumn(title, dataIndex as string, columnConfig)
   });
 
-  getDateColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T>): ColumnType<T> => ({
+  getDateColumn = (title: string, dataIndex: keyof T, columnConfig?: ColumnConfig<T, string>): ColumnType<T> => ({
     sorter: (a, b) => {
       if (!a[dataIndex]) return -1;
       if (!b[dataIndex]) return 1;
-      if (new Date(a[dataIndex] as any) > new Date(b[dataIndex] as any)) return 1;
-      else if (new Date(a[dataIndex] as any) < new Date(b[dataIndex] as any)) return -1;
+      if (new Date(a[dataIndex]) > new Date(b[dataIndex])) return 1;
+      else if (new Date(a[dataIndex]) < new Date(b[dataIndex])) return -1;
       else return 0;
     },
     sortDirections: ['descend', 'ascend'],
@@ -81,7 +81,7 @@ class TableUtils<T extends { [key: string]: any }> {
   ): boolean => {
     for (const name in obj) {
       if (!fieldsToFilter.includes(name)) continue;
-      if (Array.isArray(obj[name])) return TableUtils.filter<T>(obj[name][0], searchQuery, fieldsToFilter);
+      if (Array.isArray(obj[name])) return TableUtils.filter<T>(obj[name][0], searchQuery, fieldsToFilter); // TODO return value
 
       const date = moment(obj[name], VALID_DATE_FORMATS, true);
 
@@ -89,7 +89,6 @@ class TableUtils<T extends { [key: string]: any }> {
         const formattedDate = date.format(DATE_FORMAT);
 
         if (formattedDate.toString().includes(searchQuery)) return true;
-        else continue;
       } else if (obj[name]?.toString().toLowerCase().includes(searchQuery.toLowerCase())) return true;
     }
     return false;
