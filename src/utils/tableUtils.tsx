@@ -3,7 +3,7 @@ import Highlighter from 'react-highlight-words';
 import { ColumnType } from 'antd/lib/table';
 import moment from 'moment';
 
-import { DATE_FORMAT } from './constants';
+import { DATE_FORMAT, VALID_DATE_FORMATS } from './constants';
 
 export type WithKey<T> = T & {
   key: string;
@@ -15,8 +15,6 @@ export type ColumnConfig<T> = ColumnType<T> & {
 
 class TableUtils<T extends { [key: string]: any }> {
   constructor(private textToHighlight: string) {}
-
-  static formats = [moment.ISO_8601, DATE_FORMAT];
 
   getColumn = (title: string, dataIndex: string, columnConfig?: ColumnConfig<T>): ColumnType<T> => {
     const column: ColumnType<T> = {
@@ -85,7 +83,7 @@ class TableUtils<T extends { [key: string]: any }> {
       if (!fieldsToFilter.includes(name)) continue;
       if (Array.isArray(obj[name])) return TableUtils.filter<T>(obj[name][0], searchQuery, fieldsToFilter);
 
-      const date = moment(obj[name], TableUtils.formats, true);
+      const date = moment(obj[name], VALID_DATE_FORMATS, true);
 
       if (date.isValid()) {
         const formattedDate = date.format(DATE_FORMAT);
