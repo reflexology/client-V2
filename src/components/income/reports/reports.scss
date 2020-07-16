@@ -3,12 +3,6 @@
 .report-container {
   .report-card {
     @extend .card;
-
-    .report-h2-wrapper {
-      @extend .header-wrapper;
-
-      margin-bottom: 15px;
-    }
   }
 }
 

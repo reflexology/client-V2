@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Col, DatePicker, Descriptions, message, Row } from 'antd';
+import { Col, DatePicker, Descriptions, message, Row, Space } from 'antd';
 import moment from 'moment';
 
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
 import TransactionService, { Report } from 'services/transactionService';
-import { DATE_FORMAT } from 'utils/constants';
+import { DATE_FORMAT, MONTH_FORMAT } from 'utils/constants';
 
 import './reports.scss';
 
@@ -13,53 +13,48 @@ export interface ReportsProps {}
 
 const Reports: React.FC<ReportsProps> = () => {
   const [report, setReport] = useState<Report>();
-  const [startDate, setStartDate] = useState(moment().subtract(1, 'month').add(1, 'day'));
-  const [endDate, setEndDate] = useState(moment());
+  const [month, setMonth] = useState<moment.Moment>(moment());
 
-  useEffect(() => getReport(), [startDate, endDate]);
+  useEffect(() => {
+    getReport();
+  }, [month]);
 
-  const getReport = () => {
-    if (startDate && endDate)
-      TransactionService.getReport(startDate, endDate)
-        .then(setReport)
-        .catch(() => message.error(Dictionary.generalErrorAndRefresh));
-  };
-
-  const handleChange = (dates: any, dateStrings: [string, string]) => {
-    setStartDate(dates?.[0]);
-    setEndDate(dates?.[1]);
-  };
+  const getReport = () =>
+    TransactionService.getReport(month.clone().startOf('month'), month.clone().endOf('month'))
+      .then(setReport)
+      .catch(() => message.error(Dictionary.generalErrorAndRefresh));
 
   return (
     <Row justify='center' className='report-container'>
-      <Col span={10}>
+      <Col span={12}>
         <div className='report-card'>
-          <div className='report-h2-wrapper'>
+          <Space direction='vertical'>
             <h2>{Dictionary.report.header}</h2>
-          </div>
-          <DatePicker.RangePicker
-            ranges={{
-              [Dictionary.report.thisMonth]: [moment().startOf('month'), moment().endOf('month')]
-            }}
-            onChange={handleChange}
-            value={[startDate, endDate]}
-            defaultPickerValue={[moment(), moment()]}
-            allowClear={false}
-            format={DATE_FORMAT}
-          />
-          <Descriptions title={Dictionary.report.title} layout='vertical'>
-            <Descriptions.Item label={Dictionary.report.income}>
-              <div className='ltr income'>{report?.income}</div>
-            </Descriptions.Item>
-            <Descriptions.Item label={Dictionary.report.expenditure}>
-              <div className={`ltr${report?.expenditure === 0 ? '' : ' expenditure'}`}>{report?.expenditure}</div>
-            </Descriptions.Item>
-            <Descriptions.Item label={Dictionary.report.netAmount}>
-              <div className='ltr'>{report?.netAmount}</div>
-            </Descriptions.Item>
-            <Descriptions.Item label={Dictionary.report.startDate}>{startDate?.format(DATE_FORMAT)}</Descriptions.Item>
-            <Descriptions.Item label={Dictionary.report.endDate}>{endDate?.format(DATE_FORMAT)}</Descriptions.Item>
-          </Descriptions>
+            <DatePicker
+              picker='month'
+              onChange={date => setMonth(date!)}
+              value={month}
+              allowClear={false}
+              format={MONTH_FORMAT}
+            />
+            <Descriptions /*title={Dictionary.report.title}*/ layout='vertical'>
+              <Descriptions.Item label={Dictionary.report.income}>
+                <div className='ltr income'>{report?.income}</div>
+              </Descriptions.Item>
+              <Descriptions.Item label={Dictionary.report.expenditure}>
+                <div className={`ltr${report?.expenditure === 0 ? '' : ' expenditure'}`}>{report?.expenditure}</div>
+              </Descriptions.Item>
+              <Descriptions.Item label={Dictionary.report.netAmount}>
+                <div className='ltr'>{report?.netAmount}</div>
+              </Descriptions.Item>
+              <Descriptions.Item label={Dictionary.report.startDate}>
+                {month.clone().startOf('month').format(DATE_FORMAT)}
+              </Descriptions.Item>
+              <Descriptions.Item label={Dictionary.report.endDate}>
+                {month.clone().endOf('month').format(DATE_FORMAT)}
+              </Descriptions.Item>
+            </Descriptions>
+          </Space>
         </div>
       </Col>
     </Row>
