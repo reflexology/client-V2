@@ -14,7 +14,7 @@ import StepOne from './stepOne';
 import './treatmentForm.scss';
 
 interface TreatmentFormProps {
-  onSubmit: (values: any, newDiagnoses: string[], files: RcFile[]) => void;
+  onSubmit: (values: Treatment, newDiagnoses: string[], files: RcFile[]) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Partial<Treatment>;

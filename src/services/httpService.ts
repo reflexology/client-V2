@@ -8,18 +8,18 @@ import AuthService from './authService';
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_API + '/api';
 
 const HttpService = {
-  async get<T = any>(url: string, config?: AxiosRequestConfig) {
+  async get<T>(url: string, config?: AxiosRequestConfig) {
     const res = await axios.get<T>(url, { ...config });
     return res.data;
   },
 
-  async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+  async post<T>(url: string, data?: any, config?: AxiosRequestConfig) {
     const res = await axios.post<T>(url, data, { ...config });
 
     return res.data;
   },
 
-  async postFormData<T = any>(url: string, formData?: FormData, config?: AxiosRequestConfig) {
+  async postFormData<T>(url: string, formData?: FormData, config?: AxiosRequestConfig) {
     return this.post<T>(url, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -28,17 +28,17 @@ const HttpService = {
     });
   },
 
-  async put<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+  async put<T>(url: string, data?: any, config?: AxiosRequestConfig) {
     const res = await axios.put<T>(url, data, { ...config });
     return res.data;
   },
 
-  async patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+  async patch<T>(url: string, data?: any, config?: AxiosRequestConfig) {
     const res = await axios.patch<T>(url, data, { ...config });
     return res.data;
   },
 
-  async delete<T = any>(url: string, config?: AxiosRequestConfig) {
+  async delete<T>(url: string, config?: AxiosRequestConfig) {
     const res = await axios.delete<T>(url, { ...config });
     return res.data;
   }

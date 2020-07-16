@@ -6,7 +6,7 @@ import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
 import CommonService from 'services/commonService';
-import TransactionService from 'services/transactionService';
+import TransactionService, { Transaction } from 'services/transactionService';
 import TransactionForm from '../transactionForm/transactionForm';
 
 import './addTransaction.scss';
@@ -17,7 +17,7 @@ const AddTransaction: React.FC<Props> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: Transaction) => {
     if (isSubmitting) return;
 
     setIsSubmitting(true);

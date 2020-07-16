@@ -9,7 +9,7 @@ import PatientService, { Patient } from 'services/patientService';
 import './patientForm.scss';
 
 interface PatientFormProps {
-  onSubmit: (values: any, navigateToAddTreatment: boolean) => void;
+  onSubmit: (values: Patient, navigateToAddTreatment: boolean) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Patient;
@@ -28,7 +28,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
       noValidate
       form={form}
       initialValues={props.initialValues}
-      onFinish={values => props.onSubmit(values, navigateToAddTreatment)}
+      onFinish={values => props.onSubmit(values as Patient, navigateToAddTreatment)}
     >
       <Form.Item
         name='lastName'
@@ -64,7 +64,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
           mask='99/99/9999'
           placeholder={Dictionary.patientForm.birthday}
         >
-          {(inputProps: any) => <Input {...inputProps} />}
+          {(inputProps: HTMLInputElement) => <Input {...(inputProps as any)} />}
         </ReactInputMask>
       </Form.Item>
 

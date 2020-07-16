@@ -9,7 +9,7 @@ import CommonService from 'services/commonService';
 
 import './login.scss';
 
-interface Props extends RouteComponentProps<any, any, { from: string }> {}
+interface Props extends RouteComponentProps<never, never, { from: string }> {}
 
 interface LoginForm {
   username: string;
@@ -20,7 +20,7 @@ const Login: React.FC<Props> = props => {
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState('');
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: LoginForm) => {
     setIsFetching(true);
 
     AuthService.login(values)
@@ -43,7 +43,7 @@ const Login: React.FC<Props> = props => {
             <h2>{Dictionary.login.header}</h2>
           </div>
 
-          <Form onFinish={onFinish} size='large'>
+          <Form onFinish={values => onFinish(values as LoginForm)} size='large'>
             <Form.Item name='username' rules={[{ required: true, message: Dictionary.login.usernameRequiredMessage }]}>
               <Input autoFocus placeholder={Dictionary.login.username} />
             </Form.Item>

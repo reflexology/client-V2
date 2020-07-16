@@ -7,7 +7,7 @@ import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
 import CommonService from 'services/commonService';
-import PatientService from 'services/patientService';
+import PatientService, { Patient } from 'services/patientService';
 import PatientForm from '../patientForm/patientForm';
 
 import './addPatient.scss';
@@ -19,13 +19,13 @@ const AddPatient: React.FC<Props> = props => {
   const [error, setError] = useState('');
 
   const { addPatient } = usePatients();
-  const handleSubmit = (values: any, navigateToAddTreatment: boolean) => {
+  const handleSubmit = (values: Patient, navigateToAddTreatment: boolean) => {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
     setError('');
 
-    values.childrenAges = values.childrenAges?.filter((childAge: number) => !!childAge);
+    values.childrenAges = values.childrenAges?.filter(childAge => !!childAge);
     PatientService.addPatient(values)
       .then(patient => {
         addPatient(patient);

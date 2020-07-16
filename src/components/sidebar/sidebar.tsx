@@ -25,7 +25,7 @@ const Sidebar: React.FC<any> = props => {
   const location = useLocation();
 
   const [selectedPage, setSelectedPage] = useState(
-    Object.values(routes).includes(location.pathname as any) ? location.pathname : routes.patients
+    Object.values(routes).includes(location.pathname as routes) ? location.pathname : routes.patients
   );
 
   const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
@@ -78,7 +78,7 @@ const Sidebar: React.FC<any> = props => {
       </Layout>
     </Layout>
   ) : (
-    (props.children as any)
+    props.children
   );
 };
 

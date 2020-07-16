@@ -7,7 +7,7 @@ import Dictionary from 'dictionary/dictionary';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import { DATE_FORMAT, VALID_DATE_FORMATS } from 'utils/constants';
 
-interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, any, Treatment> {}
+interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 
 const TreatmentData: React.FC<TreatmentProps> = props => {
   const [treatment, setTreatment] = useState<Treatment>(props.location.state);

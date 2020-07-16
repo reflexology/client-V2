@@ -12,7 +12,7 @@ import PatientService, { Patient } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import PatientForm from '../patientForm/patientForm';
 
-interface EditPatientProps extends RouteComponentProps<{ patientId: string }, any, Patient> {}
+interface EditPatientProps extends RouteComponentProps<{ patientId: string }, never, Patient> {}
 
 const EditPatient: React.FC<EditPatientProps> = props => {
   const getPatient = (patient: Patient): Patient | null =>

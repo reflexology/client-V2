@@ -8,7 +8,7 @@ import TransactionService, { Transaction } from 'services/transactionService';
 import { DATE_TIME_FORMAT } from 'utils/constants';
 
 export interface TransactionFormProps {
-  onSubmit: (values: any) => void;
+  onSubmit: (values: Transaction) => void;
   error: string;
   isLoading: boolean;
   initialValues?: Partial<Transaction>;
@@ -19,7 +19,7 @@ const TransactionForm: React.SFC<TransactionFormProps> = props => {
 
   useEffect(() => form.resetFields(), [props.initialValues]);
   return (
-    <Form form={form} initialValues={props.initialValues} onFinish={props.onSubmit}>
+    <Form form={form} initialValues={props.initialValues} onFinish={values => props.onSubmit(values as Transaction)}>
       <Form.Item
         name='description'
         hasFeedback

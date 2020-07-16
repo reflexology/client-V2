@@ -13,7 +13,7 @@ import FileService from 'services/fileService';
 import TreatmentService, { Treatment, TreatmentFile } from 'services/treatmentService';
 import TreatmentForm from '../treatmentForm/treatmentForm';
 
-interface EditTreatmentProps extends RouteComponentProps<{ treatmentId: string }, any, Treatment> {}
+interface EditTreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 
 const EditTreatment: React.FC<EditTreatmentProps> = props => {
   const { currentPatient, setCurrentPatientById } = usePatients();
