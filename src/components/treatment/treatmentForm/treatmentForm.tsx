@@ -35,7 +35,6 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
   const [treatmentType, setTreatmentType] = useState(props.initialValues?.treatmentType || TreatmentType.Reflexology);
   const [currentStep, setCurrentStep] = useState(0);
-  console.log(props.initialValues?.files);
 
   const [files, setFiles] = useState<RcFile[]>(
     //@ts-ignore
