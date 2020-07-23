@@ -1,0 +1,80 @@
+@import '../../styles/variables';
+
+.topbar-container.header {
+  align-items: center;
+  display: flex;
+  height: $header-height;
+  justify-content: space-between;
+  padding: 0;
+
+  .right {
+    .trigger {
+      color: #fff;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 64px;
+      padding: 0 24px;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #1890ff;
+      }
+    }
+  }
+
+  .left {
+    align-items: center;
+    display: flex;
+    padding: 0 20px;
+
+    .badge {
+      font-size: 16px;
+    }
+
+    .reminder-icon {
+      color: #fff;
+      padding: 4px;
+    }
+
+    .header-user-avatar {
+      background-color: #487dae;
+      cursor: pointer;
+    }
+  }
+
+  .action {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: $header-height;
+    padding: 0 12px;
+    transition: all 0.3s;
+
+    > span {
+      color: #fff;
+    }
+
+    &:hover {
+      background: #1890ff;
+    }
+
+    &.ant-dropdown-open {
+      background: #1890ff;
+    }
+  }
+}
+
+.reminder-popover {
+  position: relative;
+  width: 336px;
+}
+
+.avatar-dropdown {
+  .account {
+    .avatar {
+      background: #ffffffd9;
+      color: #1890ff;
+      margin: 20px 0 20px 8px;
+    }
+  }
+}
