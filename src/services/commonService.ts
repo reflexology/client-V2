@@ -27,7 +27,11 @@ const CommonService = {
       ...item,
       ...arr2.find(item2 => item[key] === item2[key] && item)
     }));
-  }
+  },
+
+  isEmpty: (obj: any) => [Object, Array].includes((obj || {}).constructor) && !Object.entries(obj || {}).length,
+
+  isNotEmpty: (obj: any) => !CommonService.isEmpty(obj)
 };
 
 String.prototype.format = function (...values) {
