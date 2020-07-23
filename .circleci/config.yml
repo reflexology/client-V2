@@ -9,7 +9,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: yarn install
+            - run: yarn install --frozen-lockfile
             - run:
                 name: 'Lint'
                 command: yarn run lint
