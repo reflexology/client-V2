@@ -7,14 +7,15 @@ import {
   MenuUnfoldOutlined,
   TeamOutlined
 } from '@ant-design/icons';
-import { Avatar, Layout, Menu, Popover } from 'antd';
-
+import { Avatar, Layout, Menu, Popover, List, Tabs, Badge } from 'antd';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import AuthService from 'services/authService';
 import UserPopoverContent from './userPopoverContent';
+import HeaderDropdown from '../headerDropdown/headerDropdown';
 
 import './sidebar.scss';
+import ReminderService, { Reminder } from 'services/reminderService';
 
 const { Header, Content, Sider } = Layout;
 
@@ -23,15 +24,59 @@ const collapsedKey = 'sidePanel';
 const Sidebar: React.FC<any> = props => {
   const history = useHistory();
   const location = useLocation();
-
+  const [reminders, setReminders] = useState<Reminder[]>([]);
+  const [filteredReminders, setFilteredReminders] = useState<Reminder[]>([]);
+  const [showNew, setShowNew] = useState(true);
+  const [isFetching, setIsFetching] = useState(true);
   const [selectedPage, setSelectedPage] = useState(
-    Object.values(routes).includes(location.pathname as routes) ? location.pathname : routes.patients
+    Object.values(routes).includes(location.pathname as any) ? location.pathname : routes.patients
   );
-
   const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
   const toggle = () => setCollapsed(!collapsed);
 
   useEffect(() => localStorage.setItem(collapsedKey, collapsed ? 'collapsed' : 'expanded'), [collapsed]);
+
+  useEffect(() => {
+    ReminderService.getReminders(showNew)
+      .then(setReminders)
+      .finally(() => setIsFetching(false));
+  }, [showNew]);
+
+  useEffect(() => setFilteredReminders(reminders), [reminders]);
+
+  const changeShowNewReminders = () => {
+    setShowNew(!showNew);
+  };
+
+  const remindersMenu = (
+    <List>
+      {reminders.map(r => {
+        return <List.Item key={r.treatmentId}>{r.reminders}</List.Item>;
+      })}
+    </List>
+  );
+
+  const getNotificationBox = (): React.ReactNode => {
+    return (
+      <>
+        <Tabs defaultActiveKey='1' onChange={changeShowNewReminders} className='reminders-tabs'>
+          <Tabs.TabPane tab='תזכורות חדשות' key='1'>
+            {remindersMenu}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab='כל התזכורות' key='2'>
+            {remindersMenu}
+          </Tabs.TabPane>
+        </Tabs>
+      </>
+    );
+  };
+  const [visible, setVisible] = useState<boolean>(false);
+  const notificationBox = getNotificationBox();
+  const trigger = (
+    <Badge count='2' style={{ boxShadow: 'none' }} className='badge'>
+      <BellOutlined className='reminder-icon' />
+    </Badge>
+  );
 
   return AuthService.isAuthorized() ? (
     <Layout className='layout-container'>
@@ -65,6 +110,16 @@ const Sidebar: React.FC<any> = props => {
               className: 'trigger',
               onClick: toggle
             })}
+            <HeaderDropdown
+              placement='bottomRight'
+              overlay={notificationBox}
+              overlayClassName='reminder-popover'
+              trigger={['click']}
+              visible={visible}
+              onVisibleChange={setVisible}
+            >
+              {trigger}
+            </HeaderDropdown>
           </div>
           <div className='left'>
             <Popover placement='bottomLeft' content={<UserPopoverContent />} trigger='click'>
@@ -78,7 +133,7 @@ const Sidebar: React.FC<any> = props => {
       </Layout>
     </Layout>
   ) : (
-    props.children
+    (props.children as any)
   );
 };
 
