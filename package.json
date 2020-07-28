@@ -5,6 +5,7 @@
   "main": "index.tsx",
   "license": "MIT",
   "dependencies": {
+    "@types/react-virtualized": "^9.21.10",
     "antd": "4.4.3",
     "axios": "^0.19.2",
     "axios-auth-refresh": "2.2.8",
