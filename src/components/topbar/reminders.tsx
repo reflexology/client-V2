@@ -7,7 +7,7 @@ import Dictionary from 'dictionary/dictionary';
 import { useHistory } from 'react-router-dom';
 import { routes } from 'components/router/routes';
 import { DATE_FORMAT } from 'utils/constants';
-import { AutoSizer, List as VList, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
+import { VariableSizeList as VList } from 'react-window';
 import moment from 'moment';
 
 interface IRemindersProps {}
@@ -22,14 +22,11 @@ const Reminders: React.FC<IRemindersProps> = () => {
   const [remindersType, setRemindersType] = useState(ReminderType.New);
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [isFetching, setIsFetching] = useState(true);
-  const cache = React.useRef(
-    new CellMeasurerCache({
-      fixedWidth: true,
-      defaultHeight: 100
-    })
-  );
 
   const history = useHistory();
+
+  const basicRowHeight = 70;
+  const descriptionLineHeight = 18;
 
   useEffect(() => {
     ReminderService.getReminders(remindersType === ReminderType.New)
@@ -42,45 +39,49 @@ const Reminders: React.FC<IRemindersProps> = () => {
     setVisible(false);
   };
 
-  const remindersMenu = (
-    <div style={{ width: '100%', height: '100vh' }}>
-      <AutoSizer>
-        {({ width, height }) => (
-          <VList
-            width={width}
-            height={height}
-            rowHeight={cache.current.rowHeight}
-            deferredMeasurementCache={cache.current}
-            rowCount={reminders.length}
-            rowRenderer={({ key, index, style, parent }) => {
-              const reminder = reminders[index];
+  const rowHeights = reminders.map(
+    reminder => basicRowHeight + (reminder.reminders ? (reminder.reminders.length / 50 + 1) * descriptionLineHeight : 0)
+  );
 
-              return (
-                <CellMeasurer key={key} cache={cache.current} parent={parent} columnIndex={0} rowIndex={index}>
-                  <List.Item onClick={() => handleItemClick(reminder)} className='item' style={style}>
-                    <List.Item.Meta
-                      className='meta'
-                      title={<div className='title'>{reminder.firstName + ' ' + reminder.lastName}</div>}
-                      description={
-                        <div>
-                          <div className='description'>{reminder.reminders}</div>
-                          <div className='date'>{moment(reminder.reminderDate).format(DATE_FORMAT)}</div>
-                        </div>
-                      }
-                    />
-                  </List.Item>
-                </CellMeasurer>
-              );
-            }}
-          />
-        )}
-      </AutoSizer>
-    </div>
+  console.log(rowHeights);
+
+  const getRowHeight = (index: number) => rowHeights[index];
+
+  const remindersMenu = (
+    <List<Reminder> dataSource={reminders}>
+      <VList
+        direction='rtl'
+        className='list'
+        height={400}
+        width='100%'
+        itemCount={reminders.length}
+        itemSize={getRowHeight}
+      >
+        {({ index, style }) => {
+          const reminder = reminders[index];
+
+          return (
+            <List.Item onClick={() => handleItemClick(reminder)} className='item' style={style}>
+              <List.Item.Meta
+                className='meta'
+                title={<div className='title'>{reminder.firstName + ' ' + reminder.lastName}</div>}
+                description={
+                  <div>
+                    <div className='description'>{reminder.reminders}</div>
+                    <div className='date'>{moment(reminder.reminderDate).format(DATE_FORMAT)}</div>
+                  </div>
+                }
+              />
+            </List.Item>
+          );
+        }}
+      </VList>
+    </List>
   );
 
   const renderRemindersCount = (tab: ReminderType) => (tab === remindersType ? ` (${reminders.length})` : '');
 
-  const getNotificationBox = () => {
+  const renderTabs = () => {
     return (
       <Spin spinning={isFetching} delay={300}>
         <Tabs centered onChange={key => setRemindersType(key as ReminderType)} className='reminders-tabs'>
@@ -100,12 +101,12 @@ const Reminders: React.FC<IRemindersProps> = () => {
       </Spin>
     );
   };
-  const notificationBox = getNotificationBox();
+
   return (
     <span className='reminders'>
       <HeaderDropdown
         placement='bottomRight'
-        overlay={notificationBox}
+        overlay={renderTabs()}
         overlayClassName='reminder-popover'
         trigger={['click']}
         visible={visible}
