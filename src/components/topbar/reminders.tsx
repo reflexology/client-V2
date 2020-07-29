@@ -43,7 +43,7 @@ const Reminders: React.FC<IRemindersProps> = () => {
   };
 
   const remindersMenu = (
-    <div style={{ width: '100%', height: '100vh' }}>
+    <div style={{ width: '100%', height: '60vh' }}>
       <AutoSizer>
         {({ width, height }) => (
           <VList
