@@ -22,6 +22,7 @@ const Reminders: React.FC<IRemindersProps> = () => {
   const [remindersType, setRemindersType] = useState(ReminderType.New);
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [newRemindersCount, setNewRemindersCount] = useState(0);
 
   const history = useHistory();
 
@@ -29,8 +30,15 @@ const Reminders: React.FC<IRemindersProps> = () => {
   const descriptionLineHeight = 18;
 
   useEffect(() => {
+    if (reminders) setReminders([]);
+
+    if (!isFetching) setIsFetching(true);
+
     ReminderService.getReminders(remindersType === ReminderType.New)
-      .then(setReminders)
+      .then(reminders => {
+        setReminders(reminders);
+        if (remindersType === ReminderType.New) setNewRemindersCount(reminders.length);
+      })
       .finally(() => setIsFetching(false));
   }, [remindersType]);
 
@@ -43,48 +51,56 @@ const Reminders: React.FC<IRemindersProps> = () => {
     reminder => basicRowHeight + (reminder.reminders ? (reminder.reminders.length / 50 + 1) * descriptionLineHeight : 0)
   );
 
-  console.log(rowHeights);
-
   const getRowHeight = (index: number) => rowHeights[index];
 
   const remindersMenu = (
-    <List<Reminder> dataSource={reminders}>
-      <VList
-        direction='rtl'
-        className='list'
-        height={400}
-        width='100%'
-        itemCount={reminders.length}
-        itemSize={getRowHeight}
-      >
-        {({ index, style }) => {
-          const reminder = reminders[index];
+    <Spin spinning={isFetching}>
+      <List<Reminder> dataSource={reminders}>
+        <VList
+          direction='rtl'
+          className='list'
+          height={400}
+          width='100%'
+          itemCount={reminders.length}
+          itemSize={getRowHeight}
+        >
+          {({ index, style }) => {
+            const reminder = reminders[index];
 
-          return (
-            <List.Item onClick={() => handleItemClick(reminder)} className='item' style={style}>
-              <List.Item.Meta
-                className='meta'
-                title={<div className='title'>{reminder.firstName + ' ' + reminder.lastName}</div>}
-                description={
-                  <div>
-                    <div className='description'>{reminder.reminders}</div>
-                    <div className='date'>{moment(reminder.reminderDate).format(DATE_FORMAT)}</div>
-                  </div>
-                }
-              />
-            </List.Item>
-          );
-        }}
-      </VList>
-    </List>
+            return (
+              <List.Item onClick={() => handleItemClick(reminder)} className='item' style={style}>
+                <List.Item.Meta
+                  className='meta'
+                  title={<div className='title'>{reminder.firstName + ' ' + reminder.lastName}</div>}
+                  description={
+                    <div>
+                      <div className='description'>{reminder.reminders}</div>
+                      <div className='date'>{moment(reminder.reminderDate).format(DATE_FORMAT)}</div>
+                    </div>
+                  }
+                />
+              </List.Item>
+            );
+          }}
+        </VList>
+      </List>
+    </Spin>
   );
 
-  const renderRemindersCount = (tab: ReminderType) => (tab === remindersType ? ` (${reminders.length})` : '');
+  const renderRemindersCount = (tab: ReminderType) =>
+    tab === remindersType && !isFetching ? ` (${reminders.length})` : '';
 
   const renderTabs = () => {
     return (
-      <Spin spinning={isFetching} delay={300}>
-        <Tabs centered onChange={key => setRemindersType(key as ReminderType)} className='reminders-tabs'>
+      <div>
+        <Tabs
+          defaultActiveKey={ReminderType.New}
+          centered
+          onChange={key => {
+            setRemindersType(key as ReminderType);
+            setIsFetching(true);
+          }}
+        >
           <Tabs.TabPane
             tab={Dictionary.reminders.showNew + renderRemindersCount(ReminderType.New)}
             key={ReminderType.New}
@@ -98,7 +114,7 @@ const Reminders: React.FC<IRemindersProps> = () => {
             <List>{remindersMenu}</List>
           </Tabs.TabPane>
         </Tabs>
-      </Spin>
+      </div>
     );
   };
 
@@ -113,7 +129,7 @@ const Reminders: React.FC<IRemindersProps> = () => {
         onVisibleChange={setVisible}
       >
         <span className='action'>
-          <Badge count='2' style={{ boxShadow: 'none' }} className='badge'>
+          <Badge count={newRemindersCount} style={{ boxShadow: 'none' }} className='badge'>
             <BellOutlined className='reminder-icon' />
           </Badge>
         </span>
