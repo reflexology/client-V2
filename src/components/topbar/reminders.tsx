@@ -84,6 +84,9 @@ const Reminders: React.FC<IRemindersProps> = () => {
           )}
         </VList>
       </List>
+      <div className='bottom-bar'>
+        <div onClick={() => {}}>{Dictionary.reminders.markAllAsRead}</div>
+      </div>
     </Spin>
   );
 

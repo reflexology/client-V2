@@ -159,7 +159,8 @@ const Dictionary = {
     reminder: 'תזכורת',
     date: 'תאריך',
     showNew: 'תזכורות חדשות',
-    showAll: 'כל התזכורות'
+    showAll: 'כל התזכורות',
+    markAllAsRead: 'סמן הכל כהושלם'
   },
   serverErrors: {
     err_username_required: 'שם משתמש חסר',
