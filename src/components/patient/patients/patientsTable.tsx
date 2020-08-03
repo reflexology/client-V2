@@ -57,7 +57,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
     tableUtils.getDateColumn(Dictionary.patientForm.lastTreatment, 'lastTreatment'),
     tableUtils.getColumn(Dictionary.patientForm.diagnoses, 'diagnoses', {
       filters: diagnoses?.map(diagnosis => ({ value: diagnosis, text: diagnosis })),
-      onFilter: (value, record) => record.diagnoses?.indexOf(value.toString()) === 0,
+      onFilter: (value, record) => !!record.diagnoses?.includes(value.toString()),
       render: (diagnoses: string[]) => (
         <div className='diagnoses-container'>
           {diagnoses?.map(diagnosis => (
