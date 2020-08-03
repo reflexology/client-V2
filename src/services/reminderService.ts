@@ -17,6 +17,10 @@ const ReminderService = {
       ...reminder,
       name: `${reminder.firstName} ${reminder.lastName}`
     }));
+  },
+
+  updateReminder(treatmentId: string, reminder: Reminder) {
+    return HttpService.patch('/reminder/' + treatmentId, reminder);
   }
 };
 

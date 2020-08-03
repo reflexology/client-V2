@@ -7,7 +7,6 @@ import TransactionContainer from 'components/income/transactions/transactionCont
 import AddPatient from 'components/patient/addPatient/addPatient';
 import EditPatient from 'components/patient/editPatient/editPatient';
 import PatientContainer from 'components/patient/patients/patientContainer';
-import ReminderContainer from 'components/reminder/reminderContainer';
 import AddTreatment from 'components/treatment/addTreatment/addTreatment';
 import EditTreatment from 'components/treatment/editTreatment/editTreatment';
 import TreatmentData from 'components/treatment/treatment/treatment';
@@ -27,8 +26,7 @@ export enum routes {
   treatments = '/treatments/{0}',
   treatment = '/treatment/{0}',
   addTransaction = '/add-transaction',
-  reports = '/reports',
-  reminders = '/reminders'
+  reports = '/reports'
 }
 
 const Routes: React.FC = () => {
@@ -44,7 +42,6 @@ const Routes: React.FC = () => {
       <ProtectedRoute exact path={routes.treatment.format(':treatmentId')} component={TreatmentData} />
       <ProtectedRoute exact path={routes.addTransaction} component={AddTransaction} />
       <ProtectedRoute exact path={routes.reports} component={Reports} />
-      <ProtectedRoute exact path={routes.reminders} component={ReminderContainer} />
       <Route path={routes.login} component={Login} />
       <ProtectedRoute exact path='/' component={PatientContainer} />
       <Route component={NotFound} />
