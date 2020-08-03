@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { BellOutlined } from '@ant-design/icons';
 import { Badge, List, Tabs, Spin } from 'antd';
 import HeaderDropdown from '../headerDropdown/headerDropdown';
-import ReminderService, { Reminder } from 'services/reminderService';
+import ReminderService, { Reminder as ReminderInterface } from 'services/reminderService';
 import Dictionary from 'dictionary/dictionary';
 import { useHistory } from 'react-router-dom';
 import { routes } from 'components/router/routes';
-import { DATE_FORMAT } from 'utils/constants';
 import { VariableSizeList as VList } from 'react-window';
-import moment from 'moment';
+import Reminder from './reminder';
 
 interface IRemindersProps {}
 
@@ -20,7 +19,7 @@ enum ReminderType {
 const Reminders: React.FC<IRemindersProps> = () => {
   const [visible, setVisible] = useState(false);
   const [remindersType, setRemindersType] = useState(ReminderType.New);
-  const [reminders, setReminders] = useState<Reminder[]>([]);
+  const [reminders, setReminders] = useState<ReminderInterface[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [newRemindersCount, setNewRemindersCount] = useState(0);
 
@@ -30,6 +29,14 @@ const Reminders: React.FC<IRemindersProps> = () => {
   const descriptionLineHeight = 18;
 
   useEffect(() => {
+    if (remindersType === ReminderType.All) setRemindersType(ReminderType.New);
+  }, [visible]);
+
+  useEffect(() => {
+    fetchReminders();
+  }, [remindersType]);
+
+  const fetchReminders = () => {
     if (reminders) setReminders([]);
 
     if (!isFetching) setIsFetching(true);
@@ -40,9 +47,9 @@ const Reminders: React.FC<IRemindersProps> = () => {
         if (remindersType === ReminderType.New) setNewRemindersCount(reminders.length);
       })
       .finally(() => setIsFetching(false));
-  }, [remindersType]);
+  };
 
-  const handleItemClick = (reminder: Reminder) => {
+  const handleReminderClick = (reminder: ReminderInterface) => {
     history.push(routes.treatment.format(reminder.treatmentId));
     setVisible(false);
   };
@@ -53,9 +60,12 @@ const Reminders: React.FC<IRemindersProps> = () => {
 
   const getRowHeight = (index: number) => rowHeights[index];
 
+  const renderRemindersCount = (tab: ReminderType) =>
+    tab === remindersType && !isFetching ? ` (${reminders.length})` : '';
+
   const remindersMenu = (
     <Spin spinning={isFetching}>
-      <List<Reminder> dataSource={reminders}>
+      <List<ReminderInterface> dataSource={reminders}>
         <VList
           direction='rtl'
           className='list'
@@ -64,59 +74,44 @@ const Reminders: React.FC<IRemindersProps> = () => {
           itemCount={reminders.length}
           itemSize={getRowHeight}
         >
-          {({ index, style }) => {
-            const reminder = reminders[index];
-
-            return (
-              <List.Item onClick={() => handleItemClick(reminder)} className='item' style={style}>
-                <List.Item.Meta
-                  className='meta'
-                  title={<div className='title'>{reminder.firstName + ' ' + reminder.lastName}</div>}
-                  description={
-                    <div>
-                      <div className='description'>{reminder.reminders}</div>
-                      <div className='date'>{moment(reminder.reminderDate).format(DATE_FORMAT)}</div>
-                    </div>
-                  }
-                />
-              </List.Item>
-            );
-          }}
+          {({ index, style }) => (
+            <Reminder
+              updateReminders={fetchReminders}
+              reminder={reminders[index]}
+              listItemStyle={style}
+              onClick={handleReminderClick}
+            />
+          )}
         </VList>
       </List>
     </Spin>
   );
 
-  const renderRemindersCount = (tab: ReminderType) =>
-    tab === remindersType && !isFetching ? ` (${reminders.length})` : '';
-
-  const renderTabs = () => {
-    return (
-      <div>
-        <Tabs
-          defaultActiveKey={ReminderType.New}
-          centered
-          onChange={key => {
-            setRemindersType(key as ReminderType);
-            setIsFetching(true);
-          }}
+  const renderTabs = () => (
+    <div>
+      <Tabs
+        defaultActiveKey={ReminderType.New}
+        centered
+        onChange={key => {
+          setRemindersType(key as ReminderType);
+          setIsFetching(true);
+        }}
+      >
+        <Tabs.TabPane
+          tab={Dictionary.reminders.showNew + renderRemindersCount(ReminderType.New)}
+          key={ReminderType.New}
         >
-          <Tabs.TabPane
-            tab={Dictionary.reminders.showNew + renderRemindersCount(ReminderType.New)}
-            key={ReminderType.New}
-          >
-            <List>{remindersMenu}</List>
-          </Tabs.TabPane>
-          <Tabs.TabPane
-            tab={Dictionary.reminders.showAll + renderRemindersCount(ReminderType.All)}
-            key={ReminderType.All}
-          >
-            <List>{remindersMenu}</List>
-          </Tabs.TabPane>
-        </Tabs>
-      </div>
-    );
-  };
+          <List>{remindersMenu}</List>
+        </Tabs.TabPane>
+        <Tabs.TabPane
+          tab={Dictionary.reminders.showAll + renderRemindersCount(ReminderType.All)}
+          key={ReminderType.All}
+        >
+          <List>{remindersMenu}</List>
+        </Tabs.TabPane>
+      </Tabs>
+    </div>
+  );
 
   return (
     <span className='reminders'>
