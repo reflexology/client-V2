@@ -11,8 +11,8 @@
 
   .logo {
     background: rgba(255, 255, 255, 0.2);
-    height: 32px;
-    margin: 16px;
+    height: $logo-height;
+    margin: ($header-height - $logo-height) / 2;
   }
 
   .ant-menu-item:first-child {
