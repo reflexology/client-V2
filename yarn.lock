@@ -13214,6 +13214,16 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
+mobx-react-lite@^3.0.0-beta.1:
+  version "3.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-3.0.0-beta.1.tgz#e5f7522525748f88bbf33e4ba9a4fa07f19432dc"
+  integrity sha512-SIAa6oxGVHfYydCo/iNq/r8AEmwRcyjXcq94bSDUy69pfFlzVbAxVPFY5Cp3G0JwciMSFeEuomGrP8noQaSzPw==
+
+mobx@^6.0.0-rc.8:
+  version "6.0.0-rc.8"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-6.0.0-rc.8.tgz#cfc7481507867673c537667ff2e915683892cbac"
+  integrity sha512-ygzXG0GU15hLG0NvztxveM8Uave5xbnn7fVus0ig0HFi+PWXTUFwIimA6eZRVBj5xYqHNmgRVc4ky/MDRlERgQ==
+
 module-definition@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/module-definition/-/module-definition-3.3.0.tgz#aae06d68c99c5f93841e59b8a4469b974956d4d4"

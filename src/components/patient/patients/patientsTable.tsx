@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
 import { Button, message, Table, Tag, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
+import { observer } from 'mobx-react-lite';
 
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
@@ -11,6 +12,7 @@ import DiagnosisService from 'services/diagnosesService';
 import { Patient } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import TableUtils, { WithKey } from 'utils/tableUtils';
+import { StoreContext } from 'contexts/storeContext';
 
 interface PatientsTableProps {
   isFetching: boolean;
@@ -18,9 +20,12 @@ interface PatientsTableProps {
   searchText: string;
 }
 
-const PatientsTable: React.FC<PatientsTableProps> = props => {
+const PatientsTable: React.FC<PatientsTableProps> = observer(props => {
   const history = useHistory<Patient>();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
+  const rootStore = useContext(StoreContext);
+
+  console.log(rootStore.patientStore.testArray);
 
   useEffect(() => {
     DiagnosisService.getDiagnoses()
@@ -108,6 +113,6 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
       rowClassName='clickable'
     />
   );
-};
+});
 
 export default React.memo(PatientsTable);
