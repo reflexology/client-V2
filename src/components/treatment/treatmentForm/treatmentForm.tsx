@@ -36,6 +36,8 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const [treatmentType, setTreatmentType] = useState(props.initialValues?.treatmentType || TreatmentType.Reflexology);
   const [currentStep, setCurrentStep] = useState(0);
 
+  useEffect(() => {}, [currentStep]);
+
   const [files, setFiles] = useState<RcFile[]>(
     //@ts-ignore
     props.initialValues?.files?.map(file => ({ ...file, uid: file.key })) || []

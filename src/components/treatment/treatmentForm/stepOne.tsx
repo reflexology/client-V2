@@ -104,8 +104,8 @@ const StepOne: React.FC<StepOneProps> = props => {
             fields={TreatmentService.getFields(TreatmentService.getDietFields(), getCustomFields)}
           />
           <FormCard
-            title='צריכה של חומרי גרוי וכמויות ביום'
-            fields={TreatmentService.getFields(TreatmentService.getStimulants(), getCustomFields)}
+            title='תזונה'
+            fields={TreatmentService.getFields(TreatmentService.getNewDietFields(), getCustomFields)}
           />
         </>
       )}

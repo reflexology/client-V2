@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { Field, InputType } from 'components/common/formCard';
+import { Field, InputType, Width } from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
 import HttpService from './httpService';
 
@@ -45,6 +45,7 @@ export enum TreatmentType {
 export interface TreatmentFields {
   name: keyof typeof Dictionary.treatmentForm;
   inputType: InputType;
+  width?: Width;
 }
 
 const TreatmentService = {
@@ -71,10 +72,10 @@ const TreatmentService = {
       { name: 'treatmentDate', inputType: InputType.DateTimePicker },
       { name: 'treatmentNumber', inputType: InputType.FormItem },
       { name: 'referredBy', inputType: InputType.Input },
-      { name: 'visitReason', inputType: InputType.TextArea },
+      { name: 'visitReason', inputType: InputType.TextArea, width: 3 },
+      { name: 'findings', inputType: InputType.TextArea, width: 3 },
+      { name: 'recommendations', inputType: InputType.TextArea, width: 3 },
       { name: 'diagnoses', inputType: InputType.FormItem },
-      { name: 'findings', inputType: InputType.TextArea },
-      { name: 'recommendations', inputType: InputType.TextArea },
       { name: 'treatmentPrice', inputType: InputType.FormItem },
       { name: 'paidPrice', inputType: InputType.InputNumber }
     ];
@@ -82,37 +83,39 @@ const TreatmentService = {
 
   getDietFields(): TreatmentFields[] {
     return [
-      { name: 'mainComplaint', inputType: InputType.TextArea },
-      { name: 'secondaryComplaint', inputType: InputType.TextArea },
-      { name: 'medicalPast', inputType: InputType.TextArea },
-      { name: 'drugsAndSupplements', inputType: InputType.TextArea },
+      { name: 'mainComplaint', inputType: InputType.TextArea, width: 3 },
+      { name: 'medicalPast', inputType: InputType.TextArea, width: 3 },
+      { name: 'drugsAndSupplements', inputType: InputType.TextArea, width: 3 },
       { name: 'height', inputType: InputType.InputNumber },
       { name: 'weight', inputType: InputType.InputNumber },
-      { name: 'additionalTreatments', inputType: InputType.TextArea },
-      { name: 'familyMedicalHistory', inputType: InputType.TextArea },
-      { name: 'sleep', inputType: InputType.TextArea },
+      { name: 'additionalTreatments', inputType: InputType.TextArea, width: 3 },
+      { name: 'familyMedicalHistory', inputType: InputType.TextArea, width: 3 },
+      { name: 'sleep', inputType: InputType.TextArea, width: 3 },
       { name: 'howWakeUp', inputType: InputType.TextArea },
       { name: 'appetite', inputType: InputType.TextArea },
-      { name: 'thirst', inputType: InputType.TextArea }
+      { name: 'thirst', inputType: InputType.TextArea },
+      { name: 'stimulants', inputType: InputType.TextArea, width: 3 },
+
+      // new
+      { name: 'defecation', inputType: InputType.TextArea },
+      { name: 'urine', inputType: InputType.TextArea },
+      { name: 'sweat', inputType: InputType.TextArea },
+      { name: 'women', inputType: InputType.TextArea },
+      { name: 'exercise', inputType: InputType.TextArea }
     ];
   },
 
-  getStimulants(): TreatmentFields[] {
+  getNewDietFields(): TreatmentFields[] {
     return [
-      { name: 'coffee', inputType: InputType.Input },
-      { name: 'softDrinks', inputType: InputType.Input },
-      { name: 'salt', inputType: InputType.Input },
-      { name: 'spices', inputType: InputType.Input },
-      { name: 'spicy', inputType: InputType.Input },
-      { name: 'sweets', inputType: InputType.Input },
-      { name: 'snacks', inputType: InputType.Input },
-      { name: 'alcohol', inputType: InputType.Input },
-      { name: 'drugs', inputType: InputType.Input },
-      { name: 'cleaners', inputType: InputType.Input },
-      { name: 'screenTime', inputType: InputType.Input },
-      { name: 'pollutedAir', inputType: InputType.Input },
-      { name: 'smoking', inputType: InputType.Input },
-      { name: 'cosmetics', inputType: InputType.Input }
+      // new
+      { name: 'diet', inputType: InputType.TextArea, width: 3 },
+      { name: 'snacks', inputType: InputType.TextArea },
+      { name: 'crisisHour', inputType: InputType.TextArea },
+      { name: 'notLikeToEat', inputType: InputType.TextArea },
+      { name: 'blenderExists', inputType: InputType.CheckBox },
+      { name: 'juicerExists', inputType: InputType.CheckBox },
+      { name: 'dietRecommendations', inputType: InputType.TextArea, width: 3 },
+      { name: 'menu', inputType: InputType.TextArea, width: 3 }
     ];
   },
 
@@ -155,7 +158,8 @@ const TreatmentService = {
       placeholder:
         Dictionary.treatmentForm[(field.name + 'Placeholder') as keyof typeof Dictionary.treatmentForm] || undefined,
       extra: Dictionary.treatmentForm[(field.name + 'Extra') as keyof typeof Dictionary.treatmentForm] || undefined,
-      formItem: field.inputType === InputType.FormItem ? getCustomFields(field.name) : undefined
+      formItem: field.inputType === InputType.FormItem ? getCustomFields(field.name) : undefined,
+      width: field.width
     }));
   }
 };

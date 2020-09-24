@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Col, DatePicker, Form, Input, InputNumber, Row } from 'antd';
+import { Card, Col, DatePicker, Form, Input, InputNumber, Row, Checkbox } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 
 import { DATE_FORMAT, DATE_TIME_FORMAT } from 'utils/constants';
@@ -10,13 +10,17 @@ export enum InputType {
   InputNumber,
   DatePicker,
   DateTimePicker,
-  FormItem
+  FormItem,
+  CheckBox
 }
+
+export type Width = 1 | 2 | 3;
 
 export interface Field {
   name: string;
   inputType: InputType;
   label: string;
+  width?: Width;
   placeholder?: string;
   extra?: string;
   formItem?: React.ReactElement;
@@ -40,6 +44,8 @@ const FormCard: React.FC<FormCardProps> = props => {
         return <DatePicker format={DATE_FORMAT} style={{ width: '100%' }} />;
       case InputType.DateTimePicker:
         return <DatePicker showTime format={DATE_TIME_FORMAT} style={{ width: '100%' }} />;
+      case InputType.CheckBox:
+        return <Checkbox style={{ width: '100%' }} />;
     }
   };
 
@@ -47,11 +53,17 @@ const FormCard: React.FC<FormCardProps> = props => {
     <Card title={props.title} bordered={false} className='form-card'>
       <Row gutter={16}>
         {props.fields.map(field => (
-          <Col key={field.name} lg={8} md={12} sm={24}>
+          <Col key={field.name} lg={(field.width || 1) * 8} md={field.width || 0 > 1 ? 24 : 12} sm={24}>
             {field.inputType === InputType.FormItem ? (
               field.formItem
             ) : (
-              <Form.Item key={field.name} name={field.name} label={field.label} extra={field.extra} hasFeedback>
+              <Form.Item
+                key={field.name}
+                name={field.name}
+                label={field.label}
+                extra={<div style={{ whiteSpace: 'pre-wrap' }}>{field.extra}</div>}
+                hasFeedback={field.inputType !== InputType.CheckBox}
+              >
                 {renderField(field)}
               </Form.Item>
             )}

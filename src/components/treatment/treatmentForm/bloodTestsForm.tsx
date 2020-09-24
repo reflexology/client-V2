@@ -19,7 +19,7 @@ const BloodTestsForm: React.FC<BloodTestsFormProps> = props => {
               {fields.map((field, index) => (
                 <Col key={field.name} lg={12} md={12} sm={24}>
                   <Row gutter={16} key={field.key}>
-                    <Col span={5}>
+                    <Col style={{ padding: '0' }} xl={6} lg={8}>
                       {index < originalBloodTestsCount ? (
                         <Form.Item shouldUpdate noStyle>
                           {({ getFieldValue }) => <div>{getFieldValue('bloodTests')[field.key].name}</div>}
@@ -30,7 +30,7 @@ const BloodTestsForm: React.FC<BloodTestsFormProps> = props => {
                         </Form.Item>
                       )}
                     </Col>
-                    <Col span={13}>
+                    <Col xl={12} lg={10}>
                       <Form.Item name={[field.name, 'value']} fieldKey={[field.fieldKey, 'value']}>
                         <InputNumber style={{ width: '100%' }} autoComplete='off' />
                       </Form.Item>
