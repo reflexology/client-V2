@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Descriptions } from 'antd';
+import { Button, Descriptions } from 'antd';
 import moment from 'moment';
 
 import Dictionary from 'dictionary/dictionary';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import { DATE_FORMAT, VALID_DATE_FORMATS } from 'utils/constants';
 import CommonService from 'services/commonService';
+import history from 'utils/history';
+import { routes } from 'components/router/routes';
 
 interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 
@@ -25,7 +27,17 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
   };
 
   return treatment ? (
-    <Descriptions title='טיפול'>
+    <Descriptions
+      title='טיפול'
+      extra={
+        <Button
+          onClick={() => history.push(routes.editTreatment.format(props.match?.params.treatmentId), treatment)}
+          type='primary'
+        >
+          ערוך
+        </Button>
+      }
+    >
       {Object.entries(treatment)
         .filter(
           ([key, value]) =>
@@ -36,6 +48,13 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
             {renderValue(value)}
           </Descriptions.Item>
         ))}
+      <Descriptions.Item label={'בדיקות דם'}>
+        {treatment.bloodTests.map(bloodTest => (
+          <div key={bloodTest.name} style={{ color: bloodTest.isImportant ? 'red' : 'black' }}>
+            {bloodTest.name}: {bloodTest.value}
+          </div>
+        ))}
+      </Descriptions.Item>
     </Descriptions>
   ) : null;
 };
