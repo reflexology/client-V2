@@ -15,18 +15,18 @@ interface PatientFormProps {
   initialValues?: Patient;
 }
 
-const emailRegex = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-
 const PatientForm: React.FC<PatientFormProps> = props => {
   const [form] = Form.useForm();
   const [navigateToAddTreatment, setNavigateToAddTreatment] = useState(false);
+  const [isBirthdayValid, setIsBirthdayValid] = useState(true);
 
   useEffect(() => form.resetFields(), [props.initialValues]);
 
   return (
     <Form
-      noValidate
       form={form}
+      noValidate
+      scrollToFirstError
       initialValues={props.initialValues}
       onFinish={values => props.onSubmit(values as Patient, navigateToAddTreatment)}
     >
@@ -54,10 +54,18 @@ const PatientForm: React.FC<PatientFormProps> = props => {
         <Input autoComplete='off' placeholder={Dictionary.patientForm.profession} />
       </Form.Item>
 
-      <Form.Item name='birthday' hasFeedback>
+      <Form.Item
+        name='birthday'
+        validateStatus={isBirthdayValid ? '' : 'error'}
+        help={isBirthdayValid ? null : Dictionary.patientForm.birthdayInvalid}
+        hasFeedback
+      >
         <ReactInputMask
           onBlur={e => {
             const age = CommonService.convertDateToAge(e.target.value);
+            if (!age && e.target.value) setIsBirthdayValid(false);
+            else if (!isBirthdayValid) setIsBirthdayValid(true);
+
             form.setFieldsValue({ age });
           }}
           className='ltr text-right'
@@ -76,7 +84,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
         <Input autoComplete='off' type='tel' placeholder={Dictionary.patientForm.phone} />
       </Form.Item>
 
-      <Form.Item name='email' hasFeedback rules={[{ pattern: emailRegex, message: Dictionary.patientForm.wrongEmail }]}>
+      <Form.Item name='email' hasFeedback rules={[{ type: 'email', message: Dictionary.patientForm.wrongEmail }]}>
         <Input autoComplete='off' type='email' placeholder={Dictionary.patientForm.email} />
       </Form.Item>
 
@@ -84,7 +92,6 @@ const PatientForm: React.FC<PatientFormProps> = props => {
         <Form.Item
           name='childrenCount'
           hasFeedback
-          style={{ display: 'inline-block' }}
           rules={[{ type: 'number', min: 0, max: 20, message: Dictionary.patientForm.minChildrenCount }]}
         >
           <InputNumber
@@ -102,7 +109,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
           />
         </Form.Item>
 
-        <Form.Item style={{ display: 'inline-block' }} name='gender' label={Dictionary.patientForm.gender}>
+        <Form.Item name='gender' label={Dictionary.patientForm.gender}>
           <Radio.Group>
             {PatientService.getGenderOptions().map(genderType => (
               <Radio key={genderType.value} value={genderType.value}>

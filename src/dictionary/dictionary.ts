@@ -44,6 +44,7 @@ const Dictionary = {
     minChildrenCount: 'ערך שגוי',
     firstNameRequired: 'חובה למלא שם פרטי',
     lastNameRequired: 'חובה למלא שם משפחה',
+    birthdayInvalid: 'ערך שגוי',
     save: 'שמור',
     saveAndAddTreatment: 'שמור והוסף טיפול'
   },
