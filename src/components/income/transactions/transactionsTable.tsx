@@ -24,7 +24,9 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
   const tableUtils = new TableUtils<Transaction>(props.searchText);
 
   const columns: ColumnsType<Transaction> = [
-    tableUtils.getStringColumn(Dictionary.transactionForm.description, 'description'),
+    tableUtils.getStringColumn(Dictionary.transactionForm.description, 'description', {
+      render: text => (text === 'treatment' ? 'טיפול' : text)
+    }),
     tableUtils.getStringColumn(Dictionary.transactionForm.note, 'note'),
     tableUtils.getNumberColumn(Dictionary.transactionForm.amount, 'amount', {
       render(text: number, record) {

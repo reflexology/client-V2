@@ -21,6 +21,10 @@ const ReminderService = {
 
   updateReminder(treatmentId: string, reminder: Reminder) {
     return HttpService.patch('/reminder/' + treatmentId, reminder);
+  },
+
+  markAllRemindersAsCompleted(treatmentIds: string[]) {
+    return HttpService.patch('/reminder/multiple', treatmentIds);
   }
 };
 
