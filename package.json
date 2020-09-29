@@ -14,7 +14,8 @@
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "react-window": "^1.8.5"
+    "react-window": "^1.8.5",
+    "recoil": "^0.0.13"
   },
   "scripts": {
     "lint": "yarn lint:script && yarn lint:style",

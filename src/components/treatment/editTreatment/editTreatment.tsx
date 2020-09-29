@@ -3,20 +3,21 @@ import { RouteComponentProps } from 'react-router-dom';
 import { message, Spin } from 'antd';
 import { RcFile } from 'antd/lib/upload';
 import moment from 'moment';
+import { useRecoilState } from 'recoil';
 
 import { routes } from 'components/router/routes';
-import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import FileService from 'services/fileService';
 import TreatmentService, { Treatment, TreatmentFile } from 'services/treatmentService';
 import TreatmentForm from '../treatmentForm/treatmentForm';
+import { currentPatientAtom } from 'atoms/patientAtoms';
 
 interface EditTreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 
 const EditTreatment: React.FC<EditTreatmentProps> = props => {
-  const { currentPatient, setCurrentPatientById } = usePatients();
+  const [currentPatient, setCurrentPatient] = useRecoilState(currentPatientAtom);
 
   const [treatment, setTreatment] = useState<Treatment>(props.location.state);
 
@@ -34,8 +35,7 @@ const EditTreatment: React.FC<EditTreatmentProps> = props => {
   }, []);
 
   useEffect(() => {
-    debugger;
-    if (!currentPatient) setCurrentPatientById(treatmentId);
+    // if (!currentPatient) setCurrentPatient(treatmentId);//TODO
   }, []);
 
   const handleSubmit = async (values: Treatment, newDiagnoses: string[], files: RcFile[]) => {

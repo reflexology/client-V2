@@ -3,12 +3,12 @@ import { RouteComponentProps } from 'react-router-dom';
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, DatePicker, message, Space } from 'antd';
 import moment, { Moment } from 'moment';
+import { useRecoilState } from 'recoil';
 
+import { patientsAtom } from 'atoms/patientAtoms';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
-import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
-import useDidUpdateEffect from 'hooks/useDidUpdateEffect';
 import PatientService, { Patient, PatientType } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import TableUtils from 'utils/tableUtils';
@@ -26,7 +26,7 @@ interface Filters {
 }
 
 const PatientContainer: React.FC<PatientContainerProps> = props => {
-  const { patients, setPatients, isDataFetchedOnce } = usePatients();
+  const [patients, setPatients] = useRecoilState(patientsAtom);
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
   const [isSelectPatientTypeLoading, setIsSelectPatientTypeLoading] = useState(false);
   const [patientsInDebtOrCredit, setPatientsInDebtOrCredit] = useState(PatientType.AllPatients);
@@ -36,7 +36,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
     search: ''
   });
 
-  useDidUpdateEffect(() => {
+  useEffect(() => {
     setIsSelectPatientTypeLoading(true);
     PatientService.getPatients(
       patientsInDebtOrCredit === PatientType.InCredit,
@@ -111,7 +111,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
       </Space>
       <PatientsTable
         searchText={filter.search}
-        isFetching={!isDataFetchedOnce}
+        isFetching={false} // todo
         patients={filteredPatients.map(patient => ({ ...patient, key: patient._id }))}
       />
     </div>

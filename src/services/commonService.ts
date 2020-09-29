@@ -31,7 +31,13 @@ const CommonService = {
 
   isEmpty: (obj: any) => [Object, Array].includes((obj || {}).constructor) && !Object.entries(obj || {}).length,
 
-  isNotEmpty: (obj: any) => !CommonService.isEmpty(obj)
+  isNotEmpty: (obj: any) => !CommonService.isEmpty(obj),
+
+  replaceItemAtIndex: <T>(arr: T[], index: number, newValue: T) => [
+    ...arr.slice(0, index),
+    newValue,
+    ...arr.slice(index + 1)
+  ]
 };
 
 String.prototype.format = function (...values) {

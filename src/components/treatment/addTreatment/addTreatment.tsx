@@ -5,13 +5,15 @@ import { RcFile } from 'antd/es/upload/interface';
 import moment from 'moment';
 
 import { routes } from 'components/router/routes';
-import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import FileService from 'services/fileService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TreatmentForm from '../treatmentForm/treatmentForm';
+import { useSetRecoilState } from 'recoil';
+import { patientsAtom } from 'atoms/patientAtoms';
+import PatientService from 'services/patientService';
 
 interface AddTreatmentProps extends RouteComponentProps<{ patientId: string }> {}
 
@@ -22,7 +24,7 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
   const [isFetching, setIsFetching] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
-  const { fetchPatients } = usePatients();
+  const setPatients = useSetRecoilState(patientsAtom);
   const patientId = props.match.params.patientId;
 
   useEffect(() => {
@@ -57,7 +59,7 @@ const AddTreatment: React.FC<AddTreatmentProps> = props => {
       await TreatmentService.addTreatment(patientId, values);
 
       props.history.push(routes.treatments.format(patientId));
-      fetchPatients();
+      PatientService.getPatients().then(setPatients);
     } catch (error) {
       setError(CommonService.getErrorMessage(error));
       setIsSubmitting(false);

@@ -3,7 +3,6 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'antd';
 
 import { routes } from 'components/router/routes';
-import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
 import CommonService from 'services/commonService';
@@ -11,6 +10,8 @@ import PatientService, { Patient } from 'services/patientService';
 import PatientForm from '../patientForm/patientForm';
 
 import './addPatient.scss';
+import { useSetRecoilState } from 'recoil';
+import { patientsAtom } from 'atoms/patientAtoms';
 
 interface Props extends RouteComponentProps {}
 
@@ -18,7 +19,8 @@ const AddPatient: React.FC<Props> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const { addPatient } = usePatients();
+  const setPatientsAtom = useSetRecoilState(patientsAtom);
+
   const handleSubmit = (values: Patient, navigateToAddTreatment: boolean) => {
     if (isSubmitting) return;
 
@@ -28,7 +30,7 @@ const AddPatient: React.FC<Props> = props => {
     values.childrenAges = values.childrenAges?.filter(childAge => !!childAge);
     PatientService.addPatient(values)
       .then(patient => {
-        addPatient(patient);
+        setPatientsAtom(patients => [patient, ...patients]);
         if (navigateToAddTreatment) props.history.push(routes.addTreatment.format(patient._id));
         else props.history.push(routes.patients);
       })
