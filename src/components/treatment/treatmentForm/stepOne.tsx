@@ -94,7 +94,7 @@ const StepOne: React.FC<StepOneProps> = props => {
       </Form.Item>
       <FormCard
         title='כללי'
-        fields={TreatmentService.getFields(TreatmentService.getGeneralFields(), getCustomFields)}
+        fields={TreatmentService.getFields(TreatmentService.getGeneralFields(props.isReflexology), getCustomFields)}
       />
 
       {!props.isReflexology && (

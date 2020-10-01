@@ -25,7 +25,8 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
     tableUtils.getStringColumn(Dictionary.treatmentForm.visitReason, 'visitReason'),
     tableUtils.getStringColumn(Dictionary.treatmentForm.findings, 'findings'),
     tableUtils.getStringColumn(Dictionary.treatmentForm.recommendations, 'recommendations'),
-    tableUtils.getStringColumn(Dictionary.treatmentForm.reminders, 'reminders'),
+    tableUtils.getNumberColumn(Dictionary.treatmentForm.treatmentPrice, 'treatmentPrice'),
+    tableUtils.getNumberColumn(Dictionary.treatmentForm.paidPrice, 'paidPrice'),
     {
       title: 'פעולות',
       key: 'action',

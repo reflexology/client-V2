@@ -67,18 +67,20 @@ const TreatmentService = {
     return HttpService.patch<Treatment>('/treatment/' + treatmentId, treatment);
   },
 
-  getGeneralFields(): TreatmentFields[] {
-    return [
+  getGeneralFields(isReflexology: boolean): TreatmentFields[] {
+    const fields: TreatmentFields[] = [
       { name: 'treatmentDate', inputType: InputType.DateTimePicker },
       { name: 'treatmentNumber', inputType: InputType.FormItem },
       { name: 'referredBy', inputType: InputType.Input },
       { name: 'visitReason', inputType: InputType.TextArea, width: 3 },
       { name: 'findings', inputType: InputType.TextArea, width: 3 },
-      { name: 'recommendations', inputType: InputType.TextArea, width: 3 },
       { name: 'diagnoses', inputType: InputType.FormItem },
       { name: 'treatmentPrice', inputType: InputType.FormItem },
       { name: 'paidPrice', inputType: InputType.InputNumber }
     ];
+    if (isReflexology) fields.push({ name: 'recommendations', inputType: InputType.TextArea, width: 3 });
+
+    return fields;
   },
 
   getDietFields(): TreatmentFields[] {
@@ -100,7 +102,7 @@ const TreatmentService = {
       { name: 'defecation', inputType: InputType.TextArea },
       { name: 'urine', inputType: InputType.TextArea },
       { name: 'sweat', inputType: InputType.TextArea },
-      { name: 'women', inputType: InputType.TextArea },
+      { name: 'women', inputType: InputType.TextArea, width: 3 },
       { name: 'exercise', inputType: InputType.TextArea }
     ];
   },
@@ -114,7 +116,7 @@ const TreatmentService = {
       { name: 'notLikeToEat', inputType: InputType.TextArea },
       { name: 'blenderExists', inputType: InputType.CheckBox },
       { name: 'juicerExists', inputType: InputType.CheckBox },
-      { name: 'dietRecommendations', inputType: InputType.TextArea, width: 3 },
+      { name: 'recommendations', inputType: InputType.TextArea, width: 3 },
       { name: 'menu', inputType: InputType.TextArea, width: 3 }
     ];
   },
@@ -131,7 +133,7 @@ const TreatmentService = {
       { name: 'glucose', value: null, isImportant: false },
       { name: 'creatinine', value: null, isImportant: false },
       { name: 'urea', value: null, isImportant: false },
-      { name: 'uricAei', value: null, isImportant: false },
+      { name: 'uric acid', value: null, isImportant: false },
       { name: 'HDL', value: null, isImportant: false },
       { name: 'LDL', value: null, isImportant: false },
       { name: 'cholesterol', value: null, isImportant: false },
