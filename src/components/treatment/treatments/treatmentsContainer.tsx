@@ -5,11 +5,12 @@ import { Button, message, Space } from 'antd';
 
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
-import usePatients from 'contexts/patientsContexts';
 import Dictionary from 'dictionary/dictionary';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TableUtils from 'utils/tableUtils';
 import TreatmentsTable from './treatmentsTable';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { patientsAtom, currentPatientAtom } from 'atoms/patientAtoms';
 
 interface TreatmentsContainerProps extends RouteComponentProps<{ patientId: string }> {}
 
@@ -19,9 +20,10 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
   const [isFetching, setIsFetching] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { patients, currentPatient, setCurrentPatient } = usePatients();
+  const [currentPatient, setCurrentPatient] = useRecoilState(currentPatientAtom);
+  const patients = useRecoilValue(patientsAtom);
 
-  useEffect(() => setCurrentPatient(patients.find(patient => patient._id === props.match.params.patientId)), [
+  useEffect(() => setCurrentPatient(patients?.find(patient => patient._id === props.match.params.patientId)), [
     patients
   ]);
 

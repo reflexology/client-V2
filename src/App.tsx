@@ -3,6 +3,7 @@ import { Router } from 'react-router-dom';
 import { ConfigProvider, message } from 'antd';
 import heIL from 'antd/es/locale/he_IL';
 import moment from 'moment';
+import { RecoilRoot } from 'recoil';
 
 import ErrorBoundary from 'components/errorBoundaries/errorBoundary';
 import Sidebar from 'components/sidebar/sidebar';
@@ -19,15 +20,17 @@ const App: React.FC = () => {
   const [locale] = useState(heIL);
 
   return (
-    <ConfigProvider direction='rtl' locale={locale}>
+    <RecoilRoot>
       <ErrorBoundary>
-        <Router history={history}>
-          <Sidebar>
-            <Routes></Routes>
-          </Sidebar>
-        </Router>
+        <ConfigProvider direction='rtl' locale={locale}>
+          <Router history={history}>
+            <Sidebar>
+              <Routes></Routes>
+            </Sidebar>
+          </Router>
+        </ConfigProvider>
       </ErrorBoundary>
-    </ConfigProvider>
+    </RecoilRoot>
   );
 };
 
