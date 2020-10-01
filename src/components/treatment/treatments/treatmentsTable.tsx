@@ -45,7 +45,7 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
 
   return (
     <Table<Treatment>
-      title={() => <CurrentPatient patient={props.currentPatient} />}
+      title={() => <CurrentPatient />}
       pagination={{ pageSize: 7, showSizeChanger: false }}
       loading={props.isFetching}
       columns={columns}

@@ -9,6 +9,7 @@ import { DATE_FORMAT, VALID_DATE_FORMATS } from 'utils/constants';
 import CommonService from 'services/commonService';
 import history from 'utils/history';
 import { routes } from 'components/router/routes';
+import CurrentPatient from 'components/common/currentPatient';
 
 interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 
@@ -28,7 +29,12 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
 
   return treatment ? (
     <Descriptions
-      title='טיפול'
+      title={
+        <>
+          <span className='ml-6'>טיפול מספר: {treatment.treatmentNumber}</span>
+          <CurrentPatient />
+        </>
+      }
       extra={
         <Button
           onClick={() => history.push(routes.editTreatment.format(props.match?.params.treatmentId), treatment)}
