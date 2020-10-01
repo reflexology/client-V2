@@ -1,84 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { UserAddOutlined } from '@ant-design/icons';
-import { Button, DatePicker, message, Space } from 'antd';
-import moment, { Moment } from 'moment';
-import { useRecoilState } from 'recoil';
+import { Button, DatePicker, Space } from 'antd';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { patientsAtom } from 'atoms/patientAtoms';
+import { filteredPatientsSelector, patientsFiltersAtom } from 'atoms/patientAtoms';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import PatientService, { Patient, PatientType } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
-import TableUtils from 'utils/tableUtils';
 import PatientInCreditOrDebt from './patientInCreditOrDebt';
 import PatientsTable from './patientsTable';
 
 import './patient.scss';
+import { PatientType } from 'services/patientService';
 
 interface PatientContainerProps extends RouteComponentProps {}
 
-interface Filters {
-  startDate: Moment | null;
-  endDate: moment.Moment | null;
+export type Filters = {
+  startDate: string | undefined;
+  endDate: string | undefined;
   search: string;
-}
+  patientType: PatientType;
+};
 
 const PatientContainer: React.FC<PatientContainerProps> = props => {
-  const [patients, setPatients] = useRecoilState(patientsAtom);
-  const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
-  const [isSelectPatientTypeLoading, setIsSelectPatientTypeLoading] = useState(false);
-  const [patientsInDebtOrCredit, setPatientsInDebtOrCredit] = useState(PatientType.AllPatients);
-  const [filter, setFilter] = useState<Filters>({
-    endDate: null,
-    startDate: null,
-    search: ''
-  });
-
-  useEffect(() => {
-    setIsSelectPatientTypeLoading(true);
-    PatientService.getPatients(
-      patientsInDebtOrCredit === PatientType.InCredit,
-      patientsInDebtOrCredit === PatientType.InDebt
-    )
-      .then(setPatients)
-      .catch(() => {
-        message.error('could not load patients');
-      })
-      .finally(() => setIsSelectPatientTypeLoading(false));
-  }, [patientsInDebtOrCredit]);
-
-  useEffect(() => setFilteredPatients(patients), [patients]);
-
-  useEffect(() => filterPatients(), [filter]);
-
-  const handlePatientTypeChanged = (type: PatientType) => setPatientsInDebtOrCredit(type);
-
-  const filterPatients = () => {
-    let filteredPatients = patients;
-
-    if (filter.search)
-      filteredPatients = filteredPatients.filter(patient =>
-        TableUtils.filter(patient, filter.search, [
-          'firstName',
-          'lastName',
-          'momName',
-          'calculatedAge',
-          'phone',
-          'email',
-          'lastTreatment'
-        ])
-      );
-
-    if (filter.startDate)
-      filteredPatients = filteredPatients.filter(patient => moment(patient.lastTreatment) < filter.startDate!);
-
-    if (filter.endDate)
-      filteredPatients = filteredPatients.filter(patient => moment(patient.lastTreatment) > filter.endDate!);
-
-    setFilteredPatients(filteredPatients);
-  };
+  const filteredPatients = useRecoilValue(filteredPatientsSelector);
+  const [filters, setFilters] = useRecoilState(patientsFiltersAtom);
 
   return (
     <div className='patients-container'>
@@ -87,34 +35,35 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
           {Dictionary.addPatient.header}
         </Button>
 
-        <DebouncedSearchInput onDebounced={text => setFilter({ ...filter, search: text })} delay={250} />
+        <DebouncedSearchInput onDebounced={text => setFilters({ ...filters, search: text })} delay={250} />
 
         <PatientInCreditOrDebt
-          onSelect={handlePatientTypeChanged}
-          patientsInDebtOrCredit={patientsInDebtOrCredit}
-          isLoading={isSelectPatientTypeLoading}
+          onSelect={patientType => setFilters({ ...filters, patientType })}
+          patientsInDebtOrCredit={filters.patientType}
+          isLoading={false}
         />
 
         <DatePicker
           showToday={false}
           format={DATE_FORMAT}
           placeholder={Dictionary.patientContainer.fromLastTreatment}
-          onChange={date => setFilter({ ...filter, endDate: date as moment.Moment })}
+          onChange={date => setFilters({ ...filters, endDate: date?.toString() })}
         />
 
         <DatePicker
           showToday={false}
           format={DATE_FORMAT}
           placeholder={Dictionary.patientContainer.toLastTreatment}
-          onChange={date => setFilter({ ...filter, startDate: date as moment.Moment })}
+          onChange={date => setFilters({ ...filters, startDate: date?.toString() })}
         />
       </Space>
       <PatientsTable
-        searchText={filter.search}
-        isFetching={false} // todo
-        patients={filteredPatients.map(patient => ({ ...patient, key: patient._id }))}
+        searchText={filters.search}
+        isFetching={!filteredPatients}
+        patients={filteredPatients?.map(patient => ({ ...patient, key: patient._id })) || []}
       />
     </div>
   );
 };
+
 export default PatientContainer;

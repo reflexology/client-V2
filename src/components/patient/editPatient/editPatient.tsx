@@ -30,10 +30,8 @@ const EditPatient: React.FC<EditPatientProps> = props => {
   const [currentPatient, setCurrentPatient] = useRecoilState(currentPatientAtom);
   const [patients, setPatients] = useRecoilState(patientsAtom);
 
-  // const { patients, setCurrentPatientById, currentPatient, setPatient: editPatient } = usePatients();
-
   useEffect(() => {
-    if (patients.length > 0) setCurrentPatient(patients.find(patient => patient._id === props.match.params.patientId));
+    if (patients) setCurrentPatient(patients.find(patient => patient._id === props.match.params.patientId));
   }, [patients, props.match.params.patientId]);
 
   useEffect(() => {
@@ -49,8 +47,8 @@ const EditPatient: React.FC<EditPatientProps> = props => {
     PatientService.editPatient(props.match.params.patientId, values)
       .then(patient => {
         setPatients(patients => {
-          const index = patients.findIndex(p => p._id === patient._id);
-          return CommonService.replaceItemAtIndex(patients, index, patient);
+          const index = patients!.findIndex(p => p._id === patient._id);
+          return CommonService.replaceItemAtIndex(patients!, index, patient);
         });
         if (navigateToAddTreatment) {
           props.history.push(routes.addTreatment.format(patient!._id));

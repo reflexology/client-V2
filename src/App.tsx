@@ -21,15 +21,15 @@ const App: React.FC = () => {
 
   return (
     <RecoilRoot>
-      <ConfigProvider direction='rtl' locale={locale}>
-        <ErrorBoundary>
+      <ErrorBoundary>
+        <ConfigProvider direction='rtl' locale={locale}>
           <Router history={history}>
             <Sidebar>
               <Routes></Routes>
             </Sidebar>
           </Router>
-        </ErrorBoundary>
-      </ConfigProvider>
+        </ConfigProvider>
+      </ErrorBoundary>
     </RecoilRoot>
   );
 };

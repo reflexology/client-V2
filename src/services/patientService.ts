@@ -20,6 +20,7 @@ export interface Patient {
   profession: string;
   childrenAges: string[];
   diagnoses?: string[];
+  balance?: number;
 }
 
 export enum PatientType {

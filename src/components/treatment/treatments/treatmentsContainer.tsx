@@ -23,7 +23,7 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
   const [currentPatient, setCurrentPatient] = useRecoilState(currentPatientAtom);
   const patients = useRecoilValue(patientsAtom);
 
-  useEffect(() => setCurrentPatient(patients.find(patient => patient._id === props.match.params.patientId)), [
+  useEffect(() => setCurrentPatient(patients?.find(patient => patient._id === props.match.params.patientId)), [
     patients
   ]);
 

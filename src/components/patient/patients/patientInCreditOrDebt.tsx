@@ -7,7 +7,7 @@ import { PatientType } from 'services/patientService';
 
 interface PatientInCreditOrDebtProps {
   onSelect: (type: PatientType) => void;
-  patientsInDebtOrCredit: string;
+  patientsInDebtOrCredit: PatientType;
   isLoading: boolean;
 }
 
@@ -15,7 +15,7 @@ const PatientInCreditOrDebt: React.FC<PatientInCreditOrDebtProps> = props => {
   const patientsInDebtOrCreditMenu = (
     <Menu>
       {Object.values(PatientType).map(value => (
-        <Menu.Item key={value} onClick={() => props.onSelect(value)}>
+        <Menu.Item key={value} onClick={() => (props.patientsInDebtOrCredit !== value ? props.onSelect(value) : null)}>
           {Dictionary.patientContainer[value]}
         </Menu.Item>
       ))}

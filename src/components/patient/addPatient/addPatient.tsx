@@ -30,7 +30,7 @@ const AddPatient: React.FC<Props> = props => {
     values.childrenAges = values.childrenAges?.filter(childAge => !!childAge);
     PatientService.addPatient(values)
       .then(patient => {
-        setPatientsAtom(patients => [patient, ...patients]);
+        setPatientsAtom(patients => [patient, ...(patients || [])]);
         if (navigateToAddTreatment) props.history.push(routes.addTreatment.format(patient._id));
         else props.history.push(routes.patients);
       })

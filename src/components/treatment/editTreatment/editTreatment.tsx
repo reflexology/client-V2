@@ -17,7 +17,7 @@ import { currentPatientAtom } from 'atoms/patientAtoms';
 interface EditTreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 
 const EditTreatment: React.FC<EditTreatmentProps> = props => {
-  const [currentPatient, setCurrentPatient] = useRecoilState(currentPatientAtom);
+  const [currentPatient] = useRecoilState(currentPatientAtom);
 
   const [treatment, setTreatment] = useState<Treatment>(props.location.state);
 
@@ -35,7 +35,7 @@ const EditTreatment: React.FC<EditTreatmentProps> = props => {
   }, []);
 
   useEffect(() => {
-    // if (!currentPatient) setCurrentPatient(treatmentId);//TODO
+    // if (!currentPatient) setCurrentPatient(treatmentId); //TODO
   }, []);
 
   const handleSubmit = async (values: Treatment, newDiagnoses: string[], files: RcFile[]) => {
