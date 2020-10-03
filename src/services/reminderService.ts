@@ -10,6 +10,11 @@ export interface Reminder {
   reminders: string;
 }
 
+export enum ReminderType {
+  All = 'all',
+  New = 'new'
+}
+
 const ReminderService = {
   async getReminders(isNewReminders?: boolean): Promise<Reminder[]> {
     const reminders = await HttpService.get<Reminder[]>(`/reminder${isNewReminders ? '?isNewReminders=true' : ''}`);

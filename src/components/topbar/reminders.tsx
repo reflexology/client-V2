@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { BellOutlined } from '@ant-design/icons';
-import { Badge, List, Tabs, Spin } from 'antd';
+import { Badge, List, Tabs, Spin, message } from 'antd';
 import HeaderDropdown from '../headerDropdown/headerDropdown';
-import ReminderService, { Reminder as ReminderInterface } from 'services/reminderService';
+import ReminderService, { Reminder as ReminderInterface, ReminderType } from 'services/reminderService';
 import Dictionary from 'dictionary/dictionary';
 import { useHistory } from 'react-router-dom';
 import { routes } from 'components/router/routes';
 import { VariableSizeList as VList } from 'react-window';
 import Reminder from './reminder';
+import { isFetchingRemindersAtom, newRemindersCountAtom, remindersAtom, remindersTypeAtom } from 'atoms/reminderAtoms';
+import { useRecoilState } from 'recoil';
 
 interface IRemindersProps {}
 
-enum ReminderType {
-  All = 'all',
-  New = 'new'
-}
-
 const Reminders: React.FC<IRemindersProps> = () => {
   const [visible, setVisible] = useState(false);
-  const [remindersType, setRemindersType] = useState(ReminderType.New);
-  const [reminders, setReminders] = useState<ReminderInterface[]>([]);
-  const [isFetching, setIsFetching] = useState(true);
-  const [newRemindersCount, setNewRemindersCount] = useState(0);
+
+  const [newRemindersCount, setNewRemindersCount] = useRecoilState(newRemindersCountAtom);
+  const [isFetching, setIsFetching] = useRecoilState(isFetchingRemindersAtom);
+  const [reminders, setReminders] = useRecoilState(remindersAtom);
+  const [remindersType, setRemindersType] = useRecoilState(remindersTypeAtom);
 
   const history = useHistory();
 
@@ -46,6 +44,7 @@ const Reminders: React.FC<IRemindersProps> = () => {
         setReminders(reminders);
         if (remindersType === ReminderType.New) setNewRemindersCount(reminders.length);
       })
+      .catch(err => message.error(err))
       .finally(() => setIsFetching(false));
   };
 
@@ -87,7 +86,10 @@ const Reminders: React.FC<IRemindersProps> = () => {
       <div className='bottom-bar'>
         <div
           onClick={() => {
-            ReminderService.markAllRemindersAsCompleted(reminders.map(reminder => reminder.treatmentId));
+            ReminderService.markAllRemindersAsCompleted(reminders.map(reminder => reminder.treatmentId)).then(() =>
+              fetchReminders()
+            );
+            setIsFetching(true);
           }}
         >
           {Dictionary.reminders.markAllAsRead}
