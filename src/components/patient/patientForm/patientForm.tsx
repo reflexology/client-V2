@@ -50,10 +50,6 @@ const PatientForm: React.FC<PatientFormProps> = props => {
         <Input autoComplete='off' placeholder={Dictionary.patientForm.momName} />
       </Form.Item>
 
-      <Form.Item name='profession' hasFeedback>
-        <Input autoComplete='off' placeholder={Dictionary.patientForm.profession} />
-      </Form.Item>
-
       <Form.Item
         name='birthday'
         validateStatus={isBirthdayValid ? '' : 'error'}

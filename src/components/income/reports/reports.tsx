@@ -26,7 +26,7 @@ const Reports: React.FC<ReportsProps> = () => {
 
   return (
     <Row justify='center' className='report-container'>
-      <Col span={12}>
+      <Col xl={12} md={16} sm={20}>
         <div className='report-card'>
           <Space direction='vertical'>
             <h2>{Dictionary.report.header}</h2>
@@ -39,13 +39,13 @@ const Reports: React.FC<ReportsProps> = () => {
             />
             <Descriptions /*title={Dictionary.report.title}*/ layout='vertical'>
               <Descriptions.Item label={Dictionary.report.income}>
-                <div className='ltr income'>{report?.income}</div>
+                <div className='income'>{report?.income}</div>
               </Descriptions.Item>
               <Descriptions.Item label={Dictionary.report.expenditure}>
-                <div className={`ltr${report?.expenditure === 0 ? '' : ' expenditure'}`}>{report?.expenditure}</div>
+                <div className={`${report?.expenditure === 0 ? '' : ' expenditure'}`}>{report?.expenditure}</div>
               </Descriptions.Item>
               <Descriptions.Item label={Dictionary.report.netAmount}>
-                <div className='ltr'>{report?.netAmount}</div>
+                <div>{report?.netAmount}</div>
               </Descriptions.Item>
               <Descriptions.Item label={Dictionary.report.startDate}>
                 {month.clone().startOf('month').format(DATE_FORMAT)}

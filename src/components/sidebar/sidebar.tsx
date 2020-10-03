@@ -26,7 +26,7 @@ const Sidebar: React.FC<any> = props => {
 
   return AuthService.isAuthorized() ? (
     <Layout className='layout-container'>
-      <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
+      <Layout.Sider trigger={null} collapsible collapsed={collapsed} breakpoint='sm'>
         <div className='logo' />
         <Menu
           theme='dark'

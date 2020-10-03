@@ -76,7 +76,8 @@ const TreatmentService = {
       { name: 'findings', inputType: InputType.TextArea, width: 3 },
       { name: 'diagnoses', inputType: InputType.FormItem },
       { name: 'treatmentPrice', inputType: InputType.FormItem },
-      { name: 'paidPrice', inputType: InputType.InputNumber }
+      { name: 'paidPrice', inputType: InputType.InputNumber },
+      { name: 'profession', inputType: InputType.Input }
     ];
     if (isReflexology) fields.push({ name: 'recommendations', inputType: InputType.TextArea, width: 3 });
 

@@ -26,13 +26,13 @@ const BloodTestsForm: React.FC<BloodTestsFormProps> = props => {
                         </Form.Item>
                       ) : (
                         <Form.Item name={[field.name, 'name']} fieldKey={[field.fieldKey, 'name']}>
-                          <Input autoComplete='off' />
+                          <Input />
                         </Form.Item>
                       )}
                     </Col>
                     <Col xl={12} lg={10}>
                       <Form.Item name={[field.name, 'value']} fieldKey={[field.fieldKey, 'value']}>
-                        <InputNumber style={{ width: '100%' }} autoComplete='off' />
+                        <InputNumber type='number' style={{ width: '100%' }} autoComplete='off' />
                       </Form.Item>
                     </Col>
                     <Col span={6}>
