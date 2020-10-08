@@ -24,6 +24,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
 
   return (
     <Form
+      layout='vertical'
       form={form}
       noValidate
       scrollToFirstError
@@ -33,25 +34,27 @@ const PatientForm: React.FC<PatientFormProps> = props => {
       <Form.Item
         name='lastName'
         hasFeedback
+        label={Dictionary.patientForm.lastName}
         rules={[{ required: true, message: Dictionary.patientForm.lastNameRequired }]}
       >
-        <Input autoFocus autoComplete='off' placeholder={Dictionary.patientForm.lastName} />
+        <Input autoFocus autoComplete='off' />
       </Form.Item>
 
       <Form.Item
         name='firstName'
         hasFeedback
+        label={Dictionary.patientForm.firstName}
         rules={[{ required: true, message: Dictionary.patientForm.firstNameRequired }]}
       >
-        <Input autoComplete='off' placeholder={Dictionary.patientForm.firstName} />
+        <Input autoComplete='off' />
       </Form.Item>
-
-      <Form.Item name='momName' hasFeedback>
-        <Input autoComplete='off' placeholder={Dictionary.patientForm.momName} />
+      <Form.Item name='momName' label={Dictionary.patientForm.momName} hasFeedback>
+        <Input autoComplete='off' />
       </Form.Item>
 
       <Form.Item
         name='birthday'
+        label={Dictionary.patientForm.birthday}
         validateStatus={isBirthdayValid ? '' : 'error'}
         help={isBirthdayValid ? null : Dictionary.patientForm.birthdayInvalid}
         hasFeedback
@@ -66,27 +69,32 @@ const PatientForm: React.FC<PatientFormProps> = props => {
           }}
           className='ltr text-right'
           mask='99/99/9999'
-          placeholder={Dictionary.patientForm.birthday}
         >
           {(inputProps: HTMLInputElement) => <Input {...(inputProps as any)} />}
         </ReactInputMask>
       </Form.Item>
 
-      <Form.Item name='age' hasFeedback>
-        <Input value={30} autoComplete='off' placeholder={Dictionary.patientForm.age} />
+      <Form.Item label={Dictionary.patientForm.age} name='age' hasFeedback>
+        <Input value={30} autoComplete='off' />
       </Form.Item>
 
-      <Form.Item name='phone' hasFeedback>
-        <Input autoComplete='off' type='tel' placeholder={Dictionary.patientForm.phone} />
+      <Form.Item label={Dictionary.patientForm.phone} name='phone' hasFeedback>
+        <Input autoComplete='off' type='tel' />
       </Form.Item>
 
-      <Form.Item name='email' hasFeedback rules={[{ type: 'email', message: Dictionary.patientForm.wrongEmail }]}>
-        <Input autoComplete='off' type='email' placeholder={Dictionary.patientForm.email} />
+      <Form.Item
+        label={Dictionary.patientForm.email}
+        name='email'
+        hasFeedback
+        rules={[{ type: 'email', message: Dictionary.patientForm.wrongEmail }]}
+      >
+        <Input autoComplete='off' type='email' />
       </Form.Item>
 
       <Row justify='space-between'>
         <Form.Item
           name='childrenCount'
+          label={Dictionary.patientForm.childrenCount}
           hasFeedback
           rules={[{ type: 'number', min: 0, max: 20, message: Dictionary.patientForm.minChildrenCount }]}
         >
@@ -101,7 +109,6 @@ const PatientForm: React.FC<PatientFormProps> = props => {
             }}
             style={{ width: '100%' }}
             autoComplete='off'
-            placeholder={Dictionary.patientForm.childrenCount}
           />
         </Form.Item>
 
@@ -144,8 +151,8 @@ const PatientForm: React.FC<PatientFormProps> = props => {
 
       <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}>
         {() => (
-          <Form.Item name='maritalStatus' hasFeedback>
-            <Select placeholder={Dictionary.patientForm.maritalStatus}>
+          <Form.Item label={Dictionary.patientForm.maritalStatus} name='maritalStatus' hasFeedback>
+            <Select>
               {PatientService.getMaritalStatusOptions(form.getFieldValue('gender') === 'Male').map(maritalStatus => (
                 <Select.Option key={maritalStatus.value} value={maritalStatus.value}>
                   {maritalStatus.label}

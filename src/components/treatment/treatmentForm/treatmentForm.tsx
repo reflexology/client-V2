@@ -115,6 +115,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     <Form
       layout='vertical'
       hideRequiredMark
+      scrollToFirstError
       form={form}
       initialValues={{
         treatmentType: TreatmentType.Reflexology,
