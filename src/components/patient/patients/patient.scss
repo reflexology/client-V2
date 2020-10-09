@@ -1,3 +1,5 @@
+@import '../../../styles/colors';
+
 .patients-container {
   height: 100%;
 
@@ -9,6 +11,15 @@
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+
+  .credit {
+    color: $green;
+  }
+
+  .debt {
+    color: $red;
+
   }
 }
 

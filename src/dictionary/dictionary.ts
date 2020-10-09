@@ -24,7 +24,8 @@ const Dictionary = {
     showInCredit: 'לקוחות בזכות',
     showAllPatients: 'כל הלקוחות',
     fromLastTreatment: 'מטיפול אחרון',
-    toLastTreatment: 'עד טיפול אחרון'
+    toLastTreatment: 'עד טיפול אחרון',
+    balance: 'יתרת החוב'
   },
   patientForm: {
     firstName: 'שם פרטי',

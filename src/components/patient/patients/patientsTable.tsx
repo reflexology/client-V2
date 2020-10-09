@@ -68,6 +68,10 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
         </div>
       )
     }),
+    tableUtils.getNumberColumn(Dictionary.patientContainer.balance, 'balance', {
+      render: balance => (balance ? <span className={balance > 0 ? 'credit' : 'debt'}>{balance}</span> : null)
+    }),
+
     {
       title: 'פעולות',
       key: 'action',
