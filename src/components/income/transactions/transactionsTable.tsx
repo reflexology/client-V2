@@ -25,14 +25,14 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
 
   const columns: ColumnsType<Transaction> = [
     tableUtils.getStringColumn(Dictionary.transactionForm.description, 'description', {
-      render: text => (text === 'treatment' ? 'טיפול' : text)
+      render: text => (text === 'treatment' ? <span style={{ fontWeight: 500 }}>טיפול</span> : text)
     }),
     tableUtils.getStringColumn(Dictionary.transactionForm.note, 'note'),
     tableUtils.getNumberColumn(Dictionary.transactionForm.amount, 'amount', {
       render(text: number, record) {
         return {
           props: {
-            className: `amount-${record.isFromTreatment ? 'treatment' : record.amount > 0 ? 'income' : 'expenditure'}`
+            className: `amount-${record.amount > 0 ? 'income' : 'expenditure'}`
           },
           children: (
             <Highlighter

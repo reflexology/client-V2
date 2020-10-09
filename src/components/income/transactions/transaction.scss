@@ -1,13 +1,14 @@
+@import '../../../styles/colors';
+
+
 .amount {
   &-income {
-    color: #008000;
+    color: $green;
+    font-weight: bold;
   }
 
   &-expenditure {
-    color: #f00;
-  }
-
-  &-treatment {
-    color: #00f;
+    color: $red;
+    font-weight: bold;
   }
 }
