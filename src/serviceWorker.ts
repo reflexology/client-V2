@@ -1,6 +1,8 @@
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
+import { message } from 'antd';
+
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
 // will only see deployed updates on subsequent visits to a page, after all the
@@ -77,6 +79,8 @@ function registerValidSW(swUrl: string, config?: Config) {
                   'tabs for this page are closed. See https://cra.link/PWA.'
               );
 
+              message.info('New content is available, please reload the page');
+
               // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
@@ -86,6 +90,7 @@ function registerValidSW(swUrl: string, config?: Config) {
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
               console.log('Content is cached for offline use.');
+              message.info('Content is cached for offline use');
 
               // Execute callback
               if (config && config.onSuccess) {
