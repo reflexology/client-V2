@@ -7,8 +7,7 @@ import TransactionContainer from 'components/income/transactions/transactionCont
 import AddPatient from 'components/patient/addPatient/addPatient';
 import EditPatient from 'components/patient/editPatient/editPatient';
 import PatientContainer from 'components/patient/patients/patientContainer';
-import AddTreatment from 'components/treatment/addTreatment/addTreatment';
-import EditTreatment from 'components/treatment/editTreatment/editTreatment';
+import AddOrEditTreatment from 'components/treatment/addOrEditTreatment/addOrEditTreatment';
 import TreatmentData from 'components/treatment/treatment/treatment';
 import TreatmentsContainer from 'components/treatment/treatments/treatmentsContainer';
 import Login from '../login/login';
@@ -22,7 +21,7 @@ export enum routes {
   patients = '/patients',
   transactions = '/transactions',
   addTreatment = '/add-treatment/{0}',
-  editTreatment = '/edit-treatment/{0}',
+  editTreatment = '/edit-treatment/{0}/{1}',
   treatments = '/treatments/{0}',
   treatment = '/treatment/{0}',
   addTransaction = '/add-transaction',
@@ -36,8 +35,12 @@ const Routes: React.FC = () => {
       <ProtectedRoute exact path={routes.editPatient.format(':patientId')} component={EditPatient} />
       <ProtectedRoute exact path={routes.patients} component={PatientContainer} />
       <ProtectedRoute exact path={routes.transactions} component={TransactionContainer} />
-      <ProtectedRoute exact path={routes.addTreatment.format(':patientId')} component={AddTreatment} />
-      <ProtectedRoute exact path={routes.editTreatment.format(':treatmentId')} component={EditTreatment} />
+      <ProtectedRoute exact path={routes.addTreatment.format(':patientId')} component={AddOrEditTreatment} />
+      <ProtectedRoute
+        exact
+        path={routes.editTreatment.format(':patientId', ':treatmentId')}
+        component={AddOrEditTreatment}
+      />
       <ProtectedRoute exact path={routes.treatments.format(':patientId')} component={TreatmentsContainer} />
       <ProtectedRoute exact path={routes.treatment.format(':treatmentId')} component={TreatmentData} />
       <ProtectedRoute exact path={routes.addTransaction} component={AddTransaction} />

@@ -37,9 +37,9 @@ const StepOne: React.FC<StepOneProps> = props => {
             shouldUpdate={(prevValues, curValues) => prevValues.treatmentNumber !== curValues.treatmentNumber}
           >
             {() => {
+              const treatmentNumber = props.initialValues?.treatmentNumber;
               const isTreatmentNumberChanged =
-                props.initialValues?.treatmentNumber !== props.form.getFieldValue('treatmentNumber');
-
+                treatmentNumber && treatmentNumber !== props.form.getFieldValue('treatmentNumber');
               return (
                 <Form.Item
                   shouldUpdate={(prevValues, curValues) => prevValues.treatmentNumber !== curValues.treatmentNumber}
@@ -49,7 +49,9 @@ const StepOne: React.FC<StepOneProps> = props => {
                   colon={false}
                   validateStatus={isTreatmentNumberChanged ? 'warning' : 'success'}
                   extra={
-                    isTreatmentNumberChanged ? Dictionary.treatmentForm.treatmentNumberChangedWarning.format('1') : ''
+                    isTreatmentNumberChanged
+                      ? Dictionary.treatmentForm.treatmentNumberChangedWarning.format((treatmentNumber! - 1).toString())
+                      : ''
                   }
                   rules={[{ type: 'number', min: 1, required: true }]}
                 >
@@ -113,4 +115,10 @@ const StepOne: React.FC<StepOneProps> = props => {
   );
 };
 
-export default StepOne;
+export default React.memo(
+  StepOne,
+  (prevProps, nextProps) =>
+    JSON.stringify(prevProps.initialValues) === JSON.stringify(nextProps.initialValues) &&
+    JSON.stringify(prevProps.diagnoses) === JSON.stringify(nextProps.diagnoses) &&
+    prevProps.isReflexology === nextProps.isReflexology
+);

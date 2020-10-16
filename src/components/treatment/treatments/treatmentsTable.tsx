@@ -32,9 +32,10 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
       key: 'action',
       render: (text: string, record: Treatment) => (
         <Button
+          disabled={!props.currentPatient?._id}
           onClick={e => {
             e.stopPropagation();
-            history.push(routes.editTreatment.format(record._id), record);
+            history.push(routes.editTreatment.format(props.currentPatient?._id!, record._id), record);
           }}
           type='link'
         >

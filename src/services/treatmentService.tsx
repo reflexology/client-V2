@@ -25,6 +25,12 @@ export interface Treatment {
   files: TreatmentFile[];
 }
 
+export interface Balance {
+  balance: number;
+}
+
+export interface TreatmentAndBalance extends Treatment, Balance {}
+
 export interface TreatmentFile {
   key: string;
   name: string;
@@ -42,7 +48,7 @@ export enum TreatmentType {
   Diet = 'Diet'
 }
 
-export interface TreatmentFields {
+export interface TreatmentFields extends Partial<Field> {
   name: keyof typeof Dictionary.treatmentForm;
   inputType: InputType;
   width?: Width;
@@ -53,9 +59,7 @@ const TreatmentService = {
     return HttpService.get<Treatment[]>('/treatment/byPatientId/' + patientId);
   },
   getLastTreatment(patientId: string) {
-    return HttpService.get<{ balance: number; lastTreatment: Treatment }>(
-      '/treatment/lastTreatment/byPatientId/' + patientId
-    );
+    return HttpService.get<Treatment>('/treatment/lastTreatment/byPatientId/' + patientId);
   },
   getTreatmentById(patientId: string) {
     return HttpService.get<Treatment>('/treatment/' + patientId);
@@ -66,10 +70,19 @@ const TreatmentService = {
   editTreatment(treatmentId: string, treatment: Treatment) {
     return HttpService.patch<Treatment>('/treatment/' + treatmentId, treatment);
   },
+  addOrEditTreatment(patientId: string, treatment: Treatment) {
+    return treatment._id ? this.editTreatment(treatment._id, treatment) : this.addTreatment(patientId, treatment);
+  },
 
   getGeneralFields(isReflexology: boolean): TreatmentFields[] {
     const fields: TreatmentFields[] = [
-      { name: 'treatmentDate', inputType: InputType.DateTimePicker },
+      {
+        name: 'treatmentDate',
+        inputType: InputType.DateTimePicker,
+        formItemProps: {
+          rules: [{ required: true }]
+        }
+      },
       { name: 'treatmentNumber', inputType: InputType.FormItem },
       { name: 'referredBy', inputType: InputType.Input },
       { name: 'visitReason', inputType: InputType.TextArea, width: 3 },

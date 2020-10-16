@@ -3,6 +3,17 @@
 
 $next-prev-container-height: 70px;
 
+
+.right-col {
+  max-height: calc(100vh - #{$content-padding} - #{$header-height});
+  padding-left: $content-padding;
+
+  .steps {
+    margin-bottom: 20px;
+  }
+  
+}
+
 .treatment-form {
   max-height: calc(100vh - #{$content-padding} - #{$header-height} - #{$next-prev-container-height});
   overflow-y: auto;
@@ -11,6 +22,18 @@ $next-prev-container-height: 70px;
     @extend .card;
     margin-bottom: 24px;
   }
+
+  .ant-back-top {
+    bottom: 85px;
+  }
+}
+
+.save-container { 
+  align-items: center;
+  display: flex;
+  height: $next-prev-container-height;
+  justify-content: space-around;
+  margin-top: auto;
 }
 
 .next-prev-container {

@@ -7,7 +7,7 @@ import TreatmentService from 'services/treatmentService';
 
 interface BloodTestsFormProps {}
 
-const BloodTestsForm: React.FC<BloodTestsFormProps> = props => {
+const BloodTestsForm: React.FC<BloodTestsFormProps> = () => {
   const originalBloodTestsCount = TreatmentService.getBloodTests().length;
 
   return (
@@ -61,4 +61,4 @@ const BloodTestsForm: React.FC<BloodTestsFormProps> = props => {
   );
 };
 
-export default BloodTestsForm;
+export default React.memo(BloodTestsForm, () => true);

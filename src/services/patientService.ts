@@ -35,6 +35,9 @@ const PatientService = {
   getPatient(patientId: string) {
     return HttpService.get<Patient>('/patient/' + patientId);
   },
+  getPatientByTreatmentId(treatmentId: string) {
+    return HttpService.get<Patient>('/patient/byTreatmentId/' + treatmentId);
+  },
   addPatient(patient: Patient) {
     return HttpService.post<Patient>('/patient', patient);
   },

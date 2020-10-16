@@ -45,4 +45,4 @@ const ReminderStep: React.FC<ReminderStepProps> = props => {
   );
 };
 
-export default ReminderStep;
+export default React.memo(ReminderStep, () => true);

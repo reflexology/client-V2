@@ -3,6 +3,7 @@ import { Card, Col, DatePicker, Form, Input, InputNumber, Row, Checkbox } from '
 import TextArea from 'antd/lib/input/TextArea';
 
 import { DATE_FORMAT, DATE_TIME_FORMAT } from 'utils/constants';
+import { FormItemProps } from 'antd/lib/form';
 
 export enum InputType {
   Input,
@@ -24,6 +25,7 @@ export interface Field {
   placeholder?: string;
   extra?: string;
   formItem?: React.ReactElement;
+  formItemProps?: FormItemProps;
 }
 
 interface FormCardProps {
@@ -58,6 +60,8 @@ const FormCard: React.FC<FormCardProps> = props => {
               field.formItem
             ) : (
               <Form.Item
+                {...field.formItemProps}
+                valuePropName={field.inputType === InputType.CheckBox ? 'checked' : 'value'}
                 key={field.name}
                 name={field.name}
                 label={field.label}
