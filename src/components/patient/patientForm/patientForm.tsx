@@ -91,37 +91,33 @@ const PatientForm: React.FC<PatientFormProps> = props => {
         <Input autoComplete='off' type='email' />
       </Form.Item>
 
-      <Row justify='space-between'>
-        <Form.Item
-          name='childrenCount'
-          label={Dictionary.patientForm.childrenCount}
-          hasFeedback
-          rules={[{ type: 'number', min: 0, max: 20, message: Dictionary.patientForm.minChildrenCount }]}
-        >
-          <InputNumber
-            onChange={childrenCount => {
-              if (childrenCount !== undefined)
-                form.setFieldsValue({
-                  ...form.getFieldsValue(),
-                  childrenAges:
-                    childrenCount > 0 && childrenCount < 20 ? Array(childrenCount || 0).fill(undefined!) : []
-                });
-            }}
-            style={{ width: '100%' }}
-            autoComplete='off'
-          />
-        </Form.Item>
-
-        <Form.Item name='gender' label={Dictionary.patientForm.gender}>
-          <Radio.Group>
-            {PatientService.getGenderOptions().map(genderType => (
-              <Radio key={genderType.value} value={genderType.value}>
-                {genderType.label}
-              </Radio>
-            ))}
-          </Radio.Group>
-        </Form.Item>
-      </Row>
+      <Form.Item name='gender' label={Dictionary.patientForm.gender}>
+        <Radio.Group>
+          {PatientService.getGenderOptions().map(genderType => (
+            <Radio key={genderType.value} value={genderType.value}>
+              {genderType.label}
+            </Radio>
+          ))}
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item
+        name='childrenCount'
+        label={Dictionary.patientForm.childrenCount}
+        hasFeedback
+        rules={[{ type: 'number', min: 0, max: 20, message: Dictionary.patientForm.minChildrenCount }]}
+      >
+        <InputNumber
+          onChange={childrenCount => {
+            if (childrenCount !== undefined)
+              form.setFieldsValue({
+                ...form.getFieldsValue(),
+                childrenAges: childrenCount > 0 && childrenCount < 20 ? Array(childrenCount || 0).fill(undefined!) : []
+              });
+          }}
+          style={{ width: '100%' }}
+          autoComplete='off'
+        />
+      </Form.Item>
 
       <Form.List name='childrenAges'>
         {fields => {

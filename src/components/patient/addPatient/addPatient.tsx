@@ -42,7 +42,7 @@ const AddPatient: React.FC<Props> = props => {
 
   return (
     <Row justify='center' className='add-patient-container'>
-      <Col span={10}>
+      <Col xl={10} lg={12} md={16} sm={20}>
         <div className='add-patient-card'>
           <div className='add-patient-h2-wrapper'>
             <h2>{Dictionary.addPatient.header}</h2>
