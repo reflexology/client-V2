@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useImperativeHandle, useState } from 'react';
 import { Input } from 'antd';
 import { SearchProps } from 'antd/lib/input/Search';
 
@@ -11,11 +11,21 @@ interface DebouncedSearchInputProps extends SearchProps {
   delay: number;
 }
 
-const DebouncedSearchInput: React.FC<DebouncedSearchInputProps> = ({ onDebounced, delay, ...searchProps }) => {
+export interface DebouncedSearchInputRef {
+  reset: () => void;
+}
+
+const DebouncedSearchInput = React.forwardRef<DebouncedSearchInputRef, DebouncedSearchInputProps>((props, ref) => {
+  const { onDebounced, delay, ...searchProps } = props;
+
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, delay);
 
   useDidUpdateEffect(() => onDebounced(debouncedSearchQuery), [debouncedSearchQuery]);
+
+  useImperativeHandle(ref, () => ({
+    reset: () => setSearchQuery('')
+  }));
 
   return (
     <Input.Search
@@ -26,6 +36,6 @@ const DebouncedSearchInput: React.FC<DebouncedSearchInputProps> = ({ onDebounced
       {...searchProps}
     />
   );
-};
+});
 
 export default DebouncedSearchInput;

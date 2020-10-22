@@ -4,6 +4,13 @@ import TableUtils from 'utils/tableUtils';
 import { Filters } from '../components/patient/patients/patientContainer';
 import moment from 'moment';
 
+export const defaultFilters = {
+  endDate: undefined,
+  startDate: undefined,
+  search: '',
+  patientType: PatientType.AllPatients
+};
+
 export const patientsAtom = atom<Patient[] | null>({
   key: 'patientsAtom',
   default: null
@@ -11,12 +18,7 @@ export const patientsAtom = atom<Patient[] | null>({
 
 export const patientsFiltersAtom = atom<Filters>({
   key: 'patientsFiltersAtom',
-  default: {
-    endDate: undefined,
-    startDate: undefined,
-    search: '',
-    patientType: PatientType.AllPatients
-  }
+  default: defaultFilters
 });
 
 export const currentPatientAtom = atom<Patient | undefined>({
@@ -54,10 +56,10 @@ const filterPatients = (patients: Patient[], filters: Filters) => {
     );
 
   if (filters.startDate)
-    filteredPatients = filteredPatients.filter(patient => moment(patient.lastTreatment) < moment(filters.startDate));
+    filteredPatients = filteredPatients.filter(patient => moment(patient.lastTreatment) > filters.startDate!);
 
   if (filters.endDate)
-    filteredPatients = filteredPatients.filter(patient => moment(patient.lastTreatment) > moment(filters.endDate));
+    filteredPatients = filteredPatients.filter(patient => moment(patient.lastTreatment) < filters.endDate!);
 
   return filteredPatients;
 };

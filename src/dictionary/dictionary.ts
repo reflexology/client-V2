@@ -25,7 +25,8 @@ const Dictionary = {
     showAllPatients: 'כל הלקוחות',
     fromLastTreatment: 'מטיפול אחרון',
     toLastTreatment: 'עד טיפול אחרון',
-    balance: 'יתרת החוב'
+    balance: 'יתרת החוב',
+    resetFilters: 'איפוס'
   },
   patientForm: {
     firstName: 'שם פרטי',
@@ -205,6 +206,7 @@ const Dictionary = {
   female: 'נקבה',
   search: 'חפש..',
   back: 'חזור',
+  edit: 'ערוך',
 
   MaritalStatusForMale: { Married: 'נשוי', Single: 'רווק', Divorced: 'גרוש', Widowed: 'אלמן' },
   MaritalStatusForFemale: { Married: 'נשואה', Single: 'רווקה', Divorced: 'גרושה', Widowed: 'אלמנה' }
