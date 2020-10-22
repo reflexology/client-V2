@@ -9,10 +9,16 @@ import AuthService from 'services/authService';
 import Topbar from 'components/topbar/topbar';
 
 import './sidebar.scss';
+import { SizeType } from 'antd/lib/config-provider/SizeContext';
 
 const collapsedKey = 'sidePanel';
 
-const Sidebar: React.FC<any> = props => {
+interface SidebarProps {
+  setComponentSize: (size: SizeType) => void;
+}
+
+//@ts-ignore
+const Sidebar: React.FC<SidebarProps> = props => {
   const history = useHistory();
   const location = useLocation();
 
@@ -42,6 +48,10 @@ const Sidebar: React.FC<any> = props => {
           <Menu.Item key={routes.transactions} onClick={() => history.push(routes.transactions)}>
             <DollarCircleOutlined />
             <span>{Dictionary.sidebar.incomeAndExpense}</span>
+          </Menu.Item>
+          <Menu.Item key={'test'} onClick={() => props.setComponentSize('large')}>
+            <DollarCircleOutlined />
+            <span>+</span>
           </Menu.Item>
         </Menu>
       </Layout.Sider>
