@@ -9,6 +9,9 @@ import AuthService from 'services/authService';
 import Topbar from 'components/topbar/topbar';
 
 import './sidebar.scss';
+import { patientsAtom } from 'atoms/patientAtoms';
+import { useSetRecoilState } from 'recoil';
+import PatientService from 'services/patientService';
 
 const collapsedKey = 'sidePanel';
 
@@ -22,6 +25,7 @@ const Sidebar: React.FC<any> = props => {
   const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
   const toggle = () => setCollapsed(!collapsed);
 
+  const setPatients = useSetRecoilState(patientsAtom);
   useEffect(() => localStorage.setItem(collapsedKey, collapsed ? 'collapsed' : 'expanded'), [collapsed]);
 
   return AuthService.isAuthorized() ? (
@@ -35,7 +39,13 @@ const Sidebar: React.FC<any> = props => {
           mode='inline'
           style={{ borderLeft: 'none' }}
         >
-          <Menu.Item key={routes.patients} onClick={() => history.push(routes.patients)}>
+          <Menu.Item
+            key={routes.patients}
+            onClick={() => {
+              PatientService.getPatients().then(setPatients);
+              history.push(routes.patients);
+            }}
+          >
             <TeamOutlined />
             <span>{Dictionary.sidebar.patients}</span>
           </Menu.Item>
