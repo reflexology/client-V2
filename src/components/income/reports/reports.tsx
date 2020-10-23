@@ -39,13 +39,13 @@ const Reports: React.FC<ReportsProps> = () => {
             />
             <Descriptions /*title={Dictionary.report.title}*/ layout='vertical'>
               <Descriptions.Item label={Dictionary.report.income}>
-                <div className='income'>{report?.income}</div>
+                <div className='income'>{report?.income || 0}</div>
               </Descriptions.Item>
               <Descriptions.Item label={Dictionary.report.expenditure}>
-                <div className={`${report?.expenditure === 0 ? '' : ' expenditure'}`}>{report?.expenditure}</div>
+                <div className={`${report?.expenditure === 0 ? '' : ' expenditure'}`}>{report?.expenditure || 0}</div>
               </Descriptions.Item>
               <Descriptions.Item label={Dictionary.report.netAmount}>
-                <div>{report?.netAmount}</div>
+                <div>{report?.netAmount || 0}</div>
               </Descriptions.Item>
               <Descriptions.Item label={Dictionary.report.startDate}>
                 {month.clone().startOf('month').format(DATE_FORMAT)}
