@@ -14,7 +14,7 @@ export interface TransactionFormProps {
   initialValues?: Partial<Transaction>;
 }
 
-const TransactionForm: React.SFC<TransactionFormProps> = props => {
+const TransactionForm: React.FC<TransactionFormProps> = props => {
   const [form] = Form.useForm();
 
   useEffect(() => form.resetFields(), [props.initialValues]);

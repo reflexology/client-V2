@@ -13,6 +13,8 @@ import './addTransaction.scss';
 
 interface Props extends RouteComponentProps {}
 
+const initialValues: Partial<Transaction> = { transactionType: 'Income' };
+
 const AddTransaction: React.FC<Props> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -30,6 +32,7 @@ const AddTransaction: React.FC<Props> = props => {
         setIsSubmitting(false);
       });
   };
+
   return (
     <Row justify='center' className='add-transaction-container'>
       <Col span={10}>
@@ -38,7 +41,7 @@ const AddTransaction: React.FC<Props> = props => {
             <h2>{Dictionary.addTransaction.header}</h2>
           </div>
           <TransactionForm
-            initialValues={{ transactionType: 'Income' }}
+            initialValues={initialValues}
             isLoading={isSubmitting}
             onSubmit={handleSubmit}
             error={error}
