@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { UserAddOutlined, ClearOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Space } from 'antd';
@@ -29,6 +29,8 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
   const [filters, setFilters] = useRecoilState(patientsFiltersAtom);
 
   const searchInputRef = useRef<DebouncedSearchInputRef>(null);
+
+  useEffect(() => () => setFilters(defaultFilters), []);
 
   const resetFilters = () => {
     setFilters(defaultFilters);
