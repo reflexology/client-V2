@@ -40,7 +40,12 @@ const TransactionForm: React.SFC<TransactionFormProps> = props => {
             { required: true, message: Dictionary.transactionForm.amountRequired }
           ]}
         >
-          <InputNumber style={{ width: '100%' }} autoComplete='off' placeholder={Dictionary.transactionForm.amount} />
+          <InputNumber
+            type='number'
+            style={{ width: '100%' }}
+            autoComplete='off'
+            placeholder={Dictionary.transactionForm.amount}
+          />
         </Form.Item>
 
         <Form.Item

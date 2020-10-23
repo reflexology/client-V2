@@ -136,7 +136,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
                     hasFeedback
                     rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
                   >
-                    <InputNumber placeholder='גיל הילד' style={{ width: '100%' }} autoComplete='off' />
+                    <InputNumber type='number' placeholder='גיל הילד' style={{ width: '100%' }} autoComplete='off' />
                   </Form.Item>
                 </Form.Item>
               ))}

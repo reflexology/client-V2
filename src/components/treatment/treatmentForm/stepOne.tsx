@@ -55,7 +55,7 @@ const StepOne: React.FC<StepOneProps> = props => {
                   }
                   rules={[{ type: 'number', min: 1, required: true }]}
                 >
-                  <InputNumber min={1} style={{ width: '100%' }} autoComplete='off' />
+                  <InputNumber type='number' min={1} style={{ width: '100%' }} autoComplete='off' />
                 </Form.Item>
               );
             }}
@@ -77,7 +77,7 @@ const StepOne: React.FC<StepOneProps> = props => {
             hasFeedback
             label={Dictionary.treatmentForm.treatmentPrice}
           >
-            <InputNumber style={{ width: '100%' }} autoComplete='off' />
+            <InputNumber type='number' style={{ width: '100%' }} autoComplete='off' />
           </Form.Item>
         );
     }

@@ -39,7 +39,9 @@ const FormCard: React.FC<FormCardProps> = props => {
       case InputType.Input:
         return <Input autoComplete='off' placeholder={field.placeholder} />;
       case InputType.InputNumber:
-        return <InputNumber autoComplete='off' style={{ width: '100%' }} placeholder={field.placeholder} />;
+        return (
+          <InputNumber type='number' autoComplete='off' style={{ width: '100%' }} placeholder={field.placeholder} />
+        );
       case InputType.TextArea:
         return <TextArea autoComplete='off' placeholder={field.placeholder} autoSize />;
       case InputType.DatePicker:
