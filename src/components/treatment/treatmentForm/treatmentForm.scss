@@ -3,7 +3,6 @@
 
 $next-prev-container-height: 70px;
 
-
 .right-col {
   max-height: calc(100vh - #{$content-padding} - #{$header-height});
   padding-left: $content-padding;
@@ -11,7 +10,6 @@ $next-prev-container-height: 70px;
   .steps {
     margin-bottom: 20px;
   }
-  
 }
 
 .treatment-form {
@@ -28,7 +26,7 @@ $next-prev-container-height: 70px;
   }
 }
 
-.save-container { 
+.save-container {
   align-items: center;
   display: flex;
   height: $next-prev-container-height;
