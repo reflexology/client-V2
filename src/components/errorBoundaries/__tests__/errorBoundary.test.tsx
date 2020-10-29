@@ -1,21 +1,31 @@
 import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import renderer from 'react-test-renderer';
-import { mount } from 'enzyme';
-
-import ErrorBoundary, { ErrorBoundaryState } from '../errorBoundary';
+import ErrorBoundary from '../errorBoundary';
 
 describe('<ErrorBoundary />', () => {
-  const tree = (children?: React.ReactNode) =>
-    renderer
-      .create(
-        <MemoryRouter>
-          <ErrorBoundary>{children}</ErrorBoundary>
-        </MemoryRouter>
-      )
-      .toJSON();
+  it('renders error', () => {
+    render(
+      <ErrorBoundary>
+        <div>
+          <h1>I am inside the error boundary</h1>
+        </div>
+      </ErrorBoundary>
+    );
+    const linkElement = screen.getByText(/I am inside the error boundary/i);
+    expect(linkElement).toBeInTheDocument();
+  });
 
   it('renders children if no error', () => {
+    const tree = (children?: React.ReactNode) =>
+      renderer
+        .create(
+          <MemoryRouter>
+            <ErrorBoundary>{children}</ErrorBoundary>
+          </MemoryRouter>
+        )
+        .toJSON();
     expect(
       tree(
         <div>
@@ -23,21 +33,5 @@ describe('<ErrorBoundary />', () => {
         </div>
       )
     ).toMatchSnapshot();
-  });
-
-  it('renders error view if an error occurs', () => {
-    const wrapper = mount<{}, ErrorBoundaryState>(
-      <ErrorBoundary>
-        <div>
-          <h1>I am inside the error boundary</h1>
-        </div>
-      </ErrorBoundary>
-    );
-
-    wrapper.setState({
-      hasError: true
-    });
-
-    expect(wrapper.text().includes('רענן את הדף')).toBeTruthy();
   });
 });

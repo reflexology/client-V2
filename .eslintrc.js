@@ -6,7 +6,7 @@
 //   .map(dirent => dirent.name);
 
 module.exports = {
-  extends: ['react-app', 'plugin:prettier/recommended'],
+  extends: ['react-app', 'react-app/jest', 'plugin:prettier/recommended'],
   // plugins: ['simple-import-sort'],
   rules: {
     semi: ['error', 'always'],
