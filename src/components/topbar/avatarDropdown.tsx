@@ -28,11 +28,7 @@ const AvatarDropdown: React.FC<AvatarDropdownProps> = () => {
   };
 
   const menuHeaderDropdown = (
-    <Menu
-      // className={styles.menu}
-      selectedKeys={[]}
-      onClick={onMenuClick}
-    >
+    <Menu selectedKeys={[]} onClick={onMenuClick}>
       <Menu.Item key='center'>
         <UserOutlined />
         פרטי משתמש

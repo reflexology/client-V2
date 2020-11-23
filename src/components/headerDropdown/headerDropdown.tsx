@@ -6,7 +6,7 @@ import './headerDropdown.scss';
 export interface HeaderDropdownProps extends DropDownProps {}
 
 const HeaderDropdown: React.FC<HeaderDropdownProps> = ({ overlayClassName: cls, ...restProps }) => (
-  <Dropdown overlayClassName={'dropdown-container ' + cls} {...restProps} />
+  <Dropdown trigger={['click']} overlayClassName={'dropdown-container ' + cls} {...restProps} />
 );
 
 export default HeaderDropdown;

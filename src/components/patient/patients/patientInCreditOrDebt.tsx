@@ -23,7 +23,7 @@ const PatientInCreditOrDebt: React.FC<PatientInCreditOrDebtProps> = props => {
   );
 
   return (
-    <Dropdown overlay={patientsInDebtOrCreditMenu}>
+    <Dropdown trigger={['click']} overlay={patientsInDebtOrCreditMenu}>
       <Button>
         {props.isLoading && <LoadingOutlined />}
         {Dictionary.patientContainer[props.patientsInDebtOrCredit as keyof typeof Dictionary.patientContainer]}
