@@ -19,16 +19,20 @@ const refreshToken = 'refreshToken';
 const accessToken = 'accessToken';
 
 const parseJwt = (token: string) => {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(
-    atob(base64)
-      .split('')
-      .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-      .join('')
-  );
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(char => '%' + ('00' + char.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
 
-  return JSON.parse(jsonPayload);
+    return JSON.parse(jsonPayload);
+  } catch {
+    return null;
+  }
 };
 
 const AuthService = {
@@ -37,7 +41,7 @@ const AuthService = {
   },
 
   refreshToken(refreshToken: string) {
-    return HttpService.post<Tokens>('/auth/refreshToken', { refreshToken });
+    return HttpService.post<Tokens>('/auth/refreshToken', { refreshToken }, { skipAuthRefresh: true });
   },
 
   storeTokens(tokens: Tokens) {

@@ -7,6 +7,12 @@ import AuthService from './authService';
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_API + '/api';
 
+declare module 'axios' {
+  interface AxiosRequestConfig {
+    skipAuthRefresh?: boolean;
+  }
+}
+
 const HttpService = {
   async get<T>(url: string, config?: AxiosRequestConfig) {
     const res = await axios.get<T>(url, { ...config });
@@ -49,6 +55,7 @@ axios.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
   const accessToken = AuthService.getAccessToken();
+
   if (accessToken) config.headers.Authorization = 'Bearer ' + accessToken;
 
   return config;
@@ -59,14 +66,14 @@ const refreshAuthLogic = (failedRequest: any) =>
   AuthService.refreshToken(AuthService.getRefreshToken()!)
     .then(data => {
       AuthService.storeTokens(data);
-      failedRequest.response.config.headers['authorization'] = 'Bearer ' + data.accessToken;
       return Promise.resolve();
     })
     .catch(() => {
       AuthService.removeTokens();
       history.push(routes.login);
+      return Promise.reject();
     });
 
-createAuthRefreshInterceptor(axios, refreshAuthLogic);
+createAuthRefreshInterceptor(axios as any, refreshAuthLogic, { skipWhileRefreshing: false });
 
 export default HttpService;
