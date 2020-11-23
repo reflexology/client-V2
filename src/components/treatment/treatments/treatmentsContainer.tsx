@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { UserAddOutlined } from '@ant-design/icons';
+import { UserAddOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { Button, message, Space } from 'antd';
 
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
@@ -68,6 +68,9 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
           }}
           delay={250}
         />
+        <Button icon={<ArrowRightOutlined />} onClick={() => props.history.push(routes.patients)}>
+          {Dictionary.back}
+        </Button>
       </Space>
       <TreatmentsTable
         searchText={searchQuery}

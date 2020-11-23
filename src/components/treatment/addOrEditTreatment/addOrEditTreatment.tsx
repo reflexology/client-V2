@@ -53,7 +53,7 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
     return () => {
       setCurrentTreatment(undefined);
     };
-  }, [patientId, setCurrentTreatment, treatmentId]);
+  }, []);
 
   const handleSubmit = useCallback(
     async (values: Treatment, newDiagnoses: string[], files: RcFile[]) => {

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Button, Descriptions, Image } from 'antd';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { Button, Descriptions, Image, Space } from 'antd';
 import moment from 'moment';
-import { useRecoilState } from 'recoil';
 
 import Dictionary from 'dictionary/dictionary';
 import TreatmentService, { Treatment } from 'services/treatmentService';
@@ -11,26 +11,14 @@ import CommonService from 'services/commonService';
 import history from 'utils/history';
 import { routes } from 'components/router/routes';
 import CurrentPatient from 'components/common/currentPatient';
-import { currentTreatmentAtom } from 'atoms/treatmentAtoms';
-import useSetCurrentPatient from 'hooks/useSetCurrentPatient';
 
 interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 
 const TreatmentData: React.FC<TreatmentProps> = props => {
-  const [currentTreatment, setCurrentTreatment] = useRecoilState<Treatment | undefined>(currentTreatmentAtom as any);
-  const treatmentId = props.match.params.treatmentId;
-
-  useSetCurrentPatient(treatmentId);
+  const [treatment, setTreatment] = useState<Treatment>(props.location.state);
 
   useEffect(() => {
-    const treatment = props.location.state;
-
-    if (!treatment) TreatmentService.getTreatmentById(treatmentId).then(setCurrentTreatment);
-    else setCurrentTreatment(treatment);
-
-    return () => {
-      setCurrentTreatment(undefined);
-    };
+    if (!treatment) TreatmentService.getTreatmentById(props.match?.params.treatmentId!).then(setTreatment);
   }, []);
 
   const renderValue = (value: any) => {
@@ -40,31 +28,36 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
     else return value;
   };
 
-  return currentTreatment ? (
+  return treatment ? (
     <>
       <Descriptions
         title={
           <>
-            <span className='ml-6'>טיפול מספר: {currentTreatment.treatmentNumber}</span>
+            <span className='ml-6'>טיפול מספר: {treatment.treatmentNumber}</span>
             <CurrentPatient />
           </>
         }
         extra={
-          <Button
-            onClick={() => history.push(routes.editTreatment.format(props.match?.params.treatmentId), currentTreatment)}
-            type='primary'
-          >
-            ערוך
-          </Button>
+          <Space>
+            <Button
+              onClick={() => history.push(routes.editTreatment.format(props.match?.params.treatmentId), treatment)}
+              type='primary'
+            >
+              ערוך
+            </Button>
+            <Button icon={<ArrowRightOutlined />} onClick={() => history.goBack()} type='default'>
+              {Dictionary.back}
+            </Button>
+          </Space>
         }
       >
-        {Object.entries(currentTreatment)
+        {Object.entries(treatment)
           .filter(
             ([key, value]) =>
               CommonService.isNotEmpty(value) &&
               !!Dictionary.treatmentForm[key as keyof typeof Dictionary.treatmentForm]
           )
-          .map(([key, value]) => (
+          ?.map(([key, value]) => (
             <Descriptions.Item
               key={key}
               label={[Dictionary.treatmentForm[key as keyof typeof Dictionary.treatmentForm]]}
@@ -72,17 +65,15 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
               {renderValue(value)}
             </Descriptions.Item>
           ))}
-        {currentTreatment.bloodTests?.length > 1 && (
-          <Descriptions.Item label={'בדיקות דם'}>
-            {currentTreatment.bloodTests.map(bloodTest => (
-              <div key={bloodTest.name} style={{ color: bloodTest.isImportant ? 'red' : 'black' }}>
-                {bloodTest.name}: {bloodTest.value}
-              </div>
-            ))}
-          </Descriptions.Item>
-        )}
+        <Descriptions.Item label={'בדיקות דם'}>
+          {treatment.bloodTests?.map(bloodTest => (
+            <div key={bloodTest.name} style={{ color: bloodTest.isImportant ? 'red' : 'black' }}>
+              {bloodTest.name}: {bloodTest.value}
+            </div>
+          ))}
+        </Descriptions.Item>
       </Descriptions>
-      {currentTreatment.files?.map(file => (
+      {treatment.files?.map(file => (
         <Image key={file.key} src={`http://localhost:3030/api/file/${file.key}`} alt='something'></Image>
       ))}
     </>
