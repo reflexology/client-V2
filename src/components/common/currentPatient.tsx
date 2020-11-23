@@ -16,7 +16,7 @@ const CurrentPatient: React.FC = () => {
       {phone && <span className='ml-6'>טלפון: {phone}</span>}
       {balance && (
         <span className='ml-6'>
-          {balance > 0 ? 'זכות' : 'חוב'}: {balance.toFixed()}
+          {balance > 0 ? 'זכות' : 'חוב'}: <span className='negative-number'>{balance.toFixed()}</span>
         </span>
       )}
     </>

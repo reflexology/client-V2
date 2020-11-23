@@ -42,7 +42,9 @@ const Reports: React.FC<ReportsProps> = () => {
                 <div className='income'>{report?.income || 0}</div>
               </Descriptions.Item>
               <Descriptions.Item label={Dictionary.report.expenditure}>
-                <div className={`${report?.expenditure === 0 ? '' : ' expenditure'}`}>{report?.expenditure || 0}</div>
+                <div className={`negative-number${report?.expenditure === 0 ? '' : ' expenditure'}`}>
+                  {report?.expenditure || 0}
+                </div>
               </Descriptions.Item>
               <Descriptions.Item label={Dictionary.report.netAmount}>
                 <div>{report?.netAmount || 0}</div>

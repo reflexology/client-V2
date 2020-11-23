@@ -44,7 +44,7 @@ const Reminders: React.FC<IRemindersProps> = () => {
         setReminders(reminders);
         if (remindersType === ReminderType.New) setNewRemindersCount(reminders.length);
       })
-      .catch(err => message.error(err))
+      .catch(() => message.error(Dictionary.generalError))
       .finally(() => setIsFetching(false));
   };
 
