@@ -10,11 +10,11 @@ const CurrentPatient: React.FC = () => {
   return (
     <>
       <span className='ml-6'>
-        <span>{firstName}</span> <span>{lastName}</span> {momName && <span>({momName})</span>}
+        <span>{firstName}</span> <span>{lastName}</span> {!!momName && <span>({momName})</span>}
       </span>
-      {age && <span className='ml-6'>גיל: {age}</span>}
-      {phone && <span className='ml-6'>טלפון: {phone}</span>}
-      {balance && (
+      {!!age && <span className='ml-6'>גיל: {age}</span>}
+      {!!phone && <span className='ml-6'>טלפון: {phone}</span>}
+      {!!balance && (
         <span className='ml-6'>
           {balance > 0 ? 'זכות' : 'חוב'}: <span className='negative-number'>{balance.toFixed()}</span>
         </span>

@@ -99,11 +99,18 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
     [patientId, currentTreatment, treatmentId, props.history]
   );
 
+  const treatmentDate = currentTreatment?.treatmentDate;
+  const reminderDate = currentTreatment?.reminderDate;
+
   return (
     <Spin spinning={isFetching}>
       <TreatmentForm
         isUploading={isUploading}
-        initialValues={currentTreatment}
+        initialValues={{
+          ...currentTreatment,
+          treatmentDate: !treatmentDate || moment.isMoment(treatmentDate) ? treatmentDate : moment(treatmentDate),
+          reminderDate: !reminderDate || moment.isMoment(reminderDate) ? reminderDate : moment(reminderDate)
+        }}
         isLoading={isSubmitting}
         onSubmit={handleSubmit}
         isSavingPartialData={isSavingPartialData}

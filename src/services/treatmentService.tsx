@@ -6,7 +6,7 @@ import HttpService from './httpService';
 
 export interface Treatment {
   _id: string;
-  treatmentDate?: Date | moment.Moment;
+  treatmentDate?: moment.Moment;
   referredBy?: string;
   visitReason?: string;
   treatmentNumber: number;
@@ -16,7 +16,7 @@ export interface Treatment {
   treatmentPrice?: number;
   paidPrice?: number;
   reminders?: string;
-  reminderDate?: Date;
+  reminderDate?: moment.Moment;
   isReminderCompleted?: boolean;
   createdBy?: string;
   diagnoses: string[];

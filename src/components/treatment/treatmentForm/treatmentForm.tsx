@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Alert, BackTop, Button, Col, Form, message, Row, Space, Steps } from 'antd';
 import { RcFile } from 'antd/lib/upload/interface';
-import moment from 'moment';
+import isEqual from 'lodash.isequal';
 
 import DragAndDrop from 'components/common/dragAndDrop';
 import Dictionary from 'dictionary/dictionary';
@@ -13,8 +13,6 @@ import ReminderStep from './reminderStep';
 import StepOne from './stepOne';
 
 import './treatmentForm.scss';
-import { useCallback } from 'react';
-
 interface TreatmentFormProps {
   onSubmit: (values: Treatment, newDiagnoses: string[], files: RcFile[]) => void;
   submitPartialData: (values: any) => void;
@@ -55,40 +53,23 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
       const values = { ...(form.getFieldsValue(true) as Treatment) };
       values.bloodTests = values.bloodTests.filter(bloodTest => !!bloodTest.value);
 
-      props.submitPartialData?.(values);
+      if (!isEqual(values, props.initialValues)) props.submitPartialData?.(values);
       if (nextStep !== undefined) setCurrentStep(nextStep);
     } catch (error) {}
   };
 
-  useEffect(() => {
-    document.addEventListener('keydown', onKeydown);
-    return () => document.removeEventListener('keydown', onKeydown);
-  }, [currentStep]);
-
   const nextStep = () => savePartialData(currentStep + 1);
   const prevStep = () => savePartialData(currentStep - 1);
 
-  const onKeydown = (e: KeyboardEvent) => {
-    if (e.key === 'ArrowUp' && currentStep > 0) prevStep();
-    if (e.key === 'ArrowDown' && currentStep < 2) nextStep();
-    e.stopPropagation();
-  };
-
   useEffect(() => {
     if (props.initialValues) {
-      const treatmentDate = props.initialValues.treatmentDate;
       form.setFieldsValue({
         ...props.initialValues,
         bloodTests: CommonService.mergeArraysByKey(
           TreatmentService.getBloodTests(),
           props.initialValues?.bloodTests || [],
           'name'
-        ),
-        treatmentDate: treatmentDate
-          ? moment.isMoment(treatmentDate)
-            ? treatmentDate
-            : moment(treatmentDate)
-          : undefined
+        )
       });
     }
   }, [props.initialValues]);
