@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button, Card, Descriptions, Image, Space } from 'antd';
 import moment from 'moment';
+import { useRecoilValue } from 'recoil';
 
 import Dictionary from 'dictionary/dictionary';
 import TreatmentService, { Treatment } from 'services/treatmentService';
@@ -11,16 +12,21 @@ import CommonService from 'services/commonService';
 import history from 'utils/history';
 import { routes } from 'components/router/routes';
 import CurrentPatient from 'components/common/currentPatient';
+import { currentPatientAtom } from 'atoms/patientAtoms';
 
 import './treatment.scss';
+import useSetCurrentPatient from 'hooks/useSetCurrentPatient';
 
 interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 
 const TreatmentData: React.FC<TreatmentProps> = props => {
   const [treatment, setTreatment] = useState<Treatment>(props.location.state);
 
+  const currentPatient = useRecoilValue(currentPatientAtom);
+
+  useSetCurrentPatient(props.match.params.treatmentId);
   useEffect(() => {
-    if (!treatment) TreatmentService.getTreatmentById(props.match?.params.treatmentId!).then(setTreatment);
+    if (!treatment) TreatmentService.getTreatmentById(props.match.params.treatmentId).then(setTreatment);
   }, []);
 
   const renderValue = (value: any) => {
@@ -46,7 +52,10 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
         extra={
           <Space>
             <Button
-              onClick={() => history.push(routes.editTreatment.format(props.match?.params.treatmentId), treatment)}
+              disabled={!currentPatient}
+              onClick={() =>
+                history.push(routes.editTreatment.format(currentPatient?._id!, props.match?.params.treatmentId))
+              }
               type='primary'
             >
               ערוך
