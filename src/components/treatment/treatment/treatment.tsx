@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { Button, Descriptions, Image, Space } from 'antd';
+import { Button, Card, Descriptions, Image, Space } from 'antd';
 import moment from 'moment';
 
 import Dictionary from 'dictionary/dictionary';
@@ -11,6 +11,8 @@ import CommonService from 'services/commonService';
 import history from 'utils/history';
 import { routes } from 'components/router/routes';
 import CurrentPatient from 'components/common/currentPatient';
+
+import './treatment.scss';
 
 interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 
@@ -31,6 +33,10 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
   return treatment ? (
     <>
       <Descriptions
+        className='treatment-description'
+        layout='vertical'
+        bordered
+        column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 1, xs: 1 }}
         title={
           <>
             <span className='ml-6'>טיפול מספר: {treatment.treatmentNumber}</span>
@@ -59,20 +65,21 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
           )
           ?.map(([key, value]) => (
             <Descriptions.Item
+              span={typeof value === 'string' && value.length > 50 ? 3 : undefined}
               key={key}
               label={[Dictionary.treatmentForm[key as keyof typeof Dictionary.treatmentForm]]}
             >
               {renderValue(value)}
             </Descriptions.Item>
           ))}
-        <Descriptions.Item label={'בדיקות דם'}>
-          {treatment.bloodTests?.map(bloodTest => (
-            <div key={bloodTest.name} style={{ color: bloodTest.isImportant ? 'red' : 'black' }}>
-              {bloodTest.name}: {bloodTest.value}
-            </div>
-          ))}
-        </Descriptions.Item>
       </Descriptions>
+      <Card className='blood-test-container' title='בדיקות דם'>
+        {treatment.bloodTests?.map(bloodTest => (
+          <Card.Grid key={bloodTest.name} className={`blood-test-item${bloodTest.isImportant ? ' important' : ''}`}>
+            {bloodTest.name}: {bloodTest.value}
+          </Card.Grid>
+        ))}
+      </Card>
       {treatment.files?.map(file => (
         <Image key={file.key} src={`http://localhost:3030/api/file/${file.key}`} alt='something'></Image>
       ))}
