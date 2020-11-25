@@ -46,21 +46,6 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     ? Dictionary.treatmentForm.addingTreatment
     : Dictionary.treatmentForm.saveAndExit;
 
-  const savePartialData = async (nextStep?: number) => {
-    try {
-      await form.validateFields();
-
-      const values = { ...(form.getFieldsValue(true) as Treatment) };
-      values.bloodTests = values.bloodTests.filter(bloodTest => !!bloodTest.value);
-
-      if (!isEqual(values, props.initialValues)) props.submitPartialData?.(values);
-      if (nextStep !== undefined) setCurrentStep(nextStep);
-    } catch (error) {}
-  };
-
-  const nextStep = () => savePartialData(currentStep + 1);
-  const prevStep = () => savePartialData(currentStep - 1);
-
   useEffect(() => {
     if (props.initialValues) {
       form.setFieldsValue({
@@ -79,6 +64,21 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
       .then(setDiagnoses)
       .catch(() => message.error(Dictionary.treatmentForm.errorFetchingDiagnoses));
   }, []);
+
+  const savePartialData = async (nextStep?: number) => {
+    try {
+      await form.validateFields();
+
+      const values = { ...(form.getFieldsValue(true) as Treatment) };
+      values.bloodTests = values.bloodTests.filter(bloodTest => !!bloodTest.value);
+
+      if (!isEqual(values, props.initialValues)) props.submitPartialData?.(values);
+      if (nextStep !== undefined) setCurrentStep(nextStep);
+    } catch (error) {}
+  };
+
+  const nextStep = () => savePartialData(currentStep + 1);
+  const prevStep = () => savePartialData(currentStep - 1);
 
   const onSubmit = () => {
     const values = { ...(form.getFieldsValue(true) as Treatment) };
@@ -168,3 +168,4 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
 };
 
 export default React.memo(TreatmentForm);
+// export default React.memo(TreatmentForm, (prevProps, nextProps) => isEqual(prevProps, nextProps));

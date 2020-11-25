@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { message, Spin } from 'antd';
 import { RcFile } from 'antd/es/upload/interface';
@@ -102,15 +102,20 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
   const treatmentDate = currentTreatment?.treatmentDate;
   const reminderDate = currentTreatment?.reminderDate;
 
+  const initialValues = useMemo(
+    () => ({
+      ...currentTreatment,
+      treatmentDate: !treatmentDate || moment.isMoment(treatmentDate) ? treatmentDate : moment(treatmentDate),
+      reminderDate: !reminderDate || moment.isMoment(reminderDate) ? reminderDate : moment(reminderDate)
+    }),
+    [currentTreatment]
+  );
+
   return (
     <Spin spinning={isFetching}>
       <TreatmentForm
         isUploading={isUploading}
-        initialValues={{
-          ...currentTreatment,
-          treatmentDate: !treatmentDate || moment.isMoment(treatmentDate) ? treatmentDate : moment(treatmentDate),
-          reminderDate: !reminderDate || moment.isMoment(reminderDate) ? reminderDate : moment(reminderDate)
-        }}
+        initialValues={initialValues}
         isLoading={isSubmitting}
         onSubmit={handleSubmit}
         isSavingPartialData={isSavingPartialData}
