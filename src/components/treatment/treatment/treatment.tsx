@@ -29,10 +29,12 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
     if (!treatment) TreatmentService.getTreatmentById(props.match.params.treatmentId).then(setTreatment);
   }, []);
 
-  const renderValue = (value: any) => {
+  const renderValue = (key: string, value: string[] | string) => {
     const date = moment(value, VALID_DATE_FORMATS, true);
     if (date.isValid()) return date.format(DATE_FORMAT);
     if (Array.isArray(value)) return value.join(', ');
+    if (key === 'treatmentType')
+      return Dictionary.treatmentTypes[value.toLowerCase() as keyof typeof Dictionary.treatmentTypes];
     else return value;
   };
 
@@ -78,7 +80,7 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
               key={key}
               label={[Dictionary.treatmentForm[key as keyof typeof Dictionary.treatmentForm]]}
             >
-              {renderValue(value)}
+              {renderValue(key, value)}
             </Descriptions.Item>
           ))}
       </Descriptions>

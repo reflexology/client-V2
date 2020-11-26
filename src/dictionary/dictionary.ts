@@ -115,7 +115,7 @@ const Dictionary = {
     mainComplaintPlaceholder: 'כולל אבחנה מערבית',
     mainComplaintExtra:
       'מתי התחיל? באיזה גיל? מה קרה בחיים ובתקופה לפני שהתחילה הבעיה? מה מחמיר? מה מקל? \nאיך משפיע על החיים? איך מתמודד עם הבעיה?',
-    medicalPast: 'עבר רפואי:',
+    medicalPast: 'עבר רפואי',
     medicalPastExtra: 'אנטיביוטיקה בעבר והיום, ניתוחים, אישפוזים, מחלות משמעותיות, חומרי הרדמה, תאונות - מתי?',
     drugsAndSupplements: 'תרופות ותוספי מזון',
     drugsAndSupplementsExtra: '(בהווה ובעבר), כמה תרופות? איזה תרופות? וכמה זמן נוטל?',
