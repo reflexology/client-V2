@@ -11,11 +11,12 @@ import TableUtils from 'utils/tableUtils';
 import TreatmentsTable from './treatmentsTable';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { patientsAtom, currentPatientAtom } from 'atoms/patientAtoms';
+import { treatmentsAtom } from 'atoms/treatmentAtoms';
 
 interface TreatmentsContainerProps extends RouteComponentProps<{ patientId: string }> {}
 
 const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
-  const [Treatments, setTreatments] = useState<Treatment[]>([]);
+  const [treatments, setTreatments] = useRecoilState(treatmentsAtom);
   const [filteredTreatments, setFilteredTreatments] = useState<Treatment[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,11 +37,11 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
       .finally(() => setIsFetching(false));
   }, []);
 
-  useEffect(() => setFilteredTreatments(Treatments), [Treatments]);
+  useEffect(() => setFilteredTreatments(treatments), [treatments]);
 
   const filterTreatments = (search: string) =>
     setFilteredTreatments(
-      Treatments.filter(Treatment =>
+      treatments.filter(Treatment =>
         TableUtils.filter(Treatment, search, [
           'treatmentDate',
           'treatmentNumber',
@@ -53,7 +54,7 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
     );
 
   return (
-    <div className='Treatments-container'>
+    <div className='treatments-container'>
       <Space>
         <Button
           icon={<UserAddOutlined />}

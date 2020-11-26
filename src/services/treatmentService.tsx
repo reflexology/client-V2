@@ -73,6 +73,9 @@ const TreatmentService = {
   addOrEditTreatment(patientId: string, treatment: Treatment) {
     return treatment._id ? this.editTreatment(treatment._id, treatment) : this.addTreatment(patientId, treatment);
   },
+  deleteTreatment(treatmentId: string) {
+    return HttpService.delete<Treatment>('/treatment/' + treatmentId);
+  },
 
   getGeneralFields(isReflexology: boolean): TreatmentFields[] {
     const fields: TreatmentFields[] = [
