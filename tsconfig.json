@@ -15,7 +15,7 @@
     "downlevelIteration": false,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "rootDirs": ["src", "stories"],
     "baseUrl": "src"
   },
