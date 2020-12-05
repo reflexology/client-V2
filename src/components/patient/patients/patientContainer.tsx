@@ -44,7 +44,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
 
   return (
     <div className='patients-container'>
-      <Space>
+      <Space className='actions-container'>
         <Button icon={<UserAddOutlined />} onClick={() => props.history.push(routes.addPatient)}>
           {Dictionary.addPatient.header}
         </Button>

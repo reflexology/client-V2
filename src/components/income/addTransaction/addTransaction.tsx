@@ -35,7 +35,7 @@ const AddTransaction: React.FC<Props> = props => {
 
   return (
     <Row justify='center' className='add-transaction-container'>
-      <Col span={10}>
+      <Col xl={10} lg={12} md={16} sm={20}>
         <div className='add-transaction-card'>
           <div className='add-transaction-h2-wrapper'>
             <h2>{Dictionary.addTransaction.header}</h2>

@@ -1,3 +1,5 @@
+@import 'mixins';
+
 .flex {
   display: flex;
 }
@@ -44,6 +46,13 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 20px 50px 30px;
+  @include sm {
+    padding: 20px 20px 30px;
+  }
+
+  @include xs {
+    padding: 16px 10px;
+  }
 }
 
 .header-wrapper {

@@ -1,3 +1,4 @@
+import { Space } from 'antd';
 import { currentPatientAtom } from 'atoms/patientAtoms';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
@@ -8,18 +9,18 @@ const CurrentPatient: React.FC = () => {
 
   const { firstName, lastName, momName, age, phone, balance } = currentPatient;
   return (
-    <>
-      <span className='ml-6'>
+    <Space size='large' wrap>
+      <span>
         <span>{firstName}</span> <span>{lastName}</span> {!!momName && <span>({momName})</span>}
       </span>
-      {!!age && <span className='ml-6'>גיל: {age}</span>}
-      {!!phone && <span className='ml-6'>טלפון: {phone}</span>}
+      {!!age && <span>גיל: {age}</span>}
+      {!!phone && <span>טלפון: {phone}</span>}
       {!!balance && (
-        <span className='ml-6'>
+        <span>
           {balance > 0 ? 'זכות' : 'חוב'}: <span className='negative-number'>{balance.toFixed()}</span>
         </span>
       )}
-    </>
+    </Space>
   );
 };
 

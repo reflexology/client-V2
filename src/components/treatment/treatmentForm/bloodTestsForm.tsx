@@ -17,9 +17,9 @@ const BloodTestsForm: React.FC<BloodTestsFormProps> = () => {
           <>
             <Row gutter={16}>
               {fields.map((field, index) => (
-                <Col key={field.name} lg={12} md={12} sm={24}>
+                <Col key={field.name} lg={12} md={24} sm={24}>
                   <Row gutter={16} key={field.key}>
-                    <Col style={{ padding: '0' }} xl={6} lg={8}>
+                    <Col style={{ padding: '0' }} lg={6} sm={8}>
                       {index < originalBloodTestsCount ? (
                         <Form.Item shouldUpdate noStyle>
                           {({ getFieldValue }) => <div>{getFieldValue('bloodTests')[field.key].name}</div>}
@@ -30,7 +30,7 @@ const BloodTestsForm: React.FC<BloodTestsFormProps> = () => {
                         </Form.Item>
                       )}
                     </Col>
-                    <Col xl={12} lg={10}>
+                    <Col lg={12} sm={10}>
                       <Form.Item name={[field.name, 'value']} fieldKey={[field.fieldKey, 'value']}>
                         <InputNumber type='number' style={{ width: '100%' }} autoComplete='off' />
                       </Form.Item>

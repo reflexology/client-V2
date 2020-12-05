@@ -3,6 +3,17 @@
 .patients-container {
   height: 100%;
 
+  .actions-container {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+  }
+
   .diagnoses-container {
     max-height: 50px;
     -ms-overflow-style: none;
