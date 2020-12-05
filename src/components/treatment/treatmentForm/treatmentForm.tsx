@@ -122,9 +122,9 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
       onFinish={onSubmit}
     >
       <Row>
-        <Col className='right-col flex-vertical ' span={4}>
+        <Col className='right-col flex-vertical' span={4}>
           <h2 style={{ marginBottom: '20px' }}>{Dictionary.addTreatment.header}</h2>
-          <Steps className='steps' current={currentStep} onChange={savePartialData} direction='vertical'>
+          <Steps size='small' className='steps' current={currentStep} onChange={savePartialData} direction='vertical'>
             <Steps.Step title='כללי' />
             <Steps.Step title='בדיקות דם' />
             <Steps.Step title='תזכורת' />

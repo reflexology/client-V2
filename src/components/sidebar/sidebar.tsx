@@ -30,7 +30,7 @@ const Sidebar: React.FC<any> = props => {
   useEffect(() => localStorage.setItem(collapsedKey, collapsed ? 'collapsed' : 'expanded'), [collapsed]);
 
   const colSize = useBreakpoint();
-  const isMobile = !colSize.xl && !colSize.md && !colSize.md && !colSize.xxl;
+  const isMobile = !colSize.xl && !colSize.md && !colSize.xxl;
 
   useEffect(() => {
     if (isMobile && !collapsed) setCollapsed(true);

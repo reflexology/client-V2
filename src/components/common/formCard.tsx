@@ -57,7 +57,7 @@ const FormCard: React.FC<FormCardProps> = props => {
     <Card title={props.title} bordered={false} className='form-card'>
       <Row gutter={16}>
         {props.fields.map(field => (
-          <Col key={field.name} lg={(field.width || 1) * 8} md={field.width || 0 > 1 ? 24 : 12} sm={24}>
+          <Col key={field.name} lg={(field.width || 1) * 8} md={field.width || 0 > 1 ? 24 : 12} sm={24} xs={24}>
             {field.inputType === InputType.FormItem ? (
               field.formItem
             ) : (

@@ -26,7 +26,7 @@ const BloodTestsForm: React.FC<BloodTestsFormProps> = () => {
                         </Form.Item>
                       ) : (
                         <Form.Item name={[field.name, 'name']} fieldKey={[field.fieldKey, 'name']}>
-                          <Input />
+                          <Input placeholder='שם' />
                         </Form.Item>
                       )}
                     </Col>

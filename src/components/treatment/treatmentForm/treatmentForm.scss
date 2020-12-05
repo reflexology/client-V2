@@ -29,9 +29,14 @@ $next-prev-container-height: 70px;
 .save-container {
   align-items: center;
   display: flex;
-  height: $next-prev-container-height;
+  flex-wrap: wrap;
   justify-content: space-around;
+  margin-bottom: 20px;
   margin-top: auto;
+
+  button {
+    margin-top: 8px;
+  }
 }
 
 .next-prev-container {
