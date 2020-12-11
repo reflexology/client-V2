@@ -6,7 +6,7 @@ import CurrentPatient from 'components/common/currentPatient';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { Patient } from 'services/patientService';
-import TreatmentService, { Treatment } from 'services/treatmentService';
+import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
 import history from 'utils/history';
 import TableUtils, { WithKey } from 'utils/tableUtils';
 import { treatmentsAtom } from 'atoms/treatmentAtoms';
@@ -24,19 +24,28 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
 
   const tableUtils = new TableUtils<Treatment>(props.searchText);
   const columns: ColumnsType<Treatment> = [
-    tableUtils.getDateColumn(Dictionary.treatmentForm.treatmentDate, 'treatmentDate'),
-    tableUtils.getNumberColumn(Dictionary.treatmentForm.treatmentNumber, 'treatmentNumber'),
+    tableUtils.getStringColumn(Dictionary.treatmentForm.treatmentType, 'treatmentType', {
+      render: (value: TreatmentType) => (
+        <div className={`treatment-type ${value === TreatmentType.Diet ? 'diet' : 'reflexology'}`}>
+          {Dictionary.treatmentTypes[value.toLowerCase() as keyof typeof Dictionary.treatmentTypes]}
+        </div>
+      ),
+      width: '100px'
+    }),
+    tableUtils.getDateColumn(Dictionary.treatmentForm.treatmentDate, 'treatmentDate', { width: '130px' }),
+    tableUtils.getNumberColumn(Dictionary.treatmentForm.treatmentNumber, 'treatmentNumber', { width: '130px' }),
     tableUtils.getStringColumn(Dictionary.treatmentForm.visitReason, 'visitReason'),
     tableUtils.getStringColumn(Dictionary.treatmentForm.findings, 'findings'),
     tableUtils.getStringColumn(Dictionary.treatmentForm.recommendations, 'recommendations'),
-    tableUtils.getNumberColumn(Dictionary.treatmentForm.treatmentPrice, 'treatmentPrice'),
-    tableUtils.getNumberColumn(Dictionary.treatmentForm.paidPrice, 'paidPrice'),
+    tableUtils.getNumberColumn(Dictionary.treatmentForm.treatmentPrice, 'treatmentPrice', { width: '130px' }),
+    tableUtils.getNumberColumn(Dictionary.treatmentForm.paidPrice, 'paidPrice', { width: '132px' }),
     {
       title: 'פעולות',
       key: 'action',
       render: (text: string, record: Treatment) => (
         <>
           <Button
+            style={{ paddingRight: '4px' }}
             disabled={!props.currentPatient?._id}
             onClick={e => {
               e.stopPropagation();
@@ -61,7 +70,8 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
             </Button>
           </Popconfirm>
         </>
-      )
+      ),
+      width: '160px'
     }
   ];
 

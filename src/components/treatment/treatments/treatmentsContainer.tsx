@@ -13,6 +13,8 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { patientsAtom, currentPatientAtom } from 'atoms/patientAtoms';
 import { treatmentsAtom } from 'atoms/treatmentAtoms';
 
+import './treatments.scss';
+
 interface TreatmentsContainerProps extends RouteComponentProps<{ patientId: string }> {}
 
 const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
