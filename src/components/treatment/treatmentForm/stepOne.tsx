@@ -5,17 +5,26 @@ import { FormInstance } from 'antd/lib/form';
 import FormCard from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
 import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 interface StepOneProps {
   diagnoses: string[] | null;
   initialValues?: Partial<Treatment>;
-  isReflexology: boolean;
   form: FormInstance;
   balance?: number;
-  setTreatmentType: (treatmentType: TreatmentType) => void;
 }
 
 const StepOne: React.FC<StepOneProps> = props => {
+  const getIsReflexology = (treatmentType?: TreatmentType) =>
+    !treatmentType || treatmentType === TreatmentType.Reflexology;
+
+  const [isReflexology, setIsReflexology] = useState(getIsReflexology(props.initialValues?.treatmentType));
+
+  useEffect(() => {
+    setIsReflexology(getIsReflexology(props.initialValues?.treatmentType));
+  }, [props.initialValues?.treatmentType]);
+
   const getCustomFields = (fieldName: keyof typeof Dictionary.treatmentForm) => {
     switch (fieldName) {
       case 'diagnoses':
@@ -86,7 +95,7 @@ const StepOne: React.FC<StepOneProps> = props => {
   return (
     <>
       <Form.Item name='treatmentType' label={Dictionary.treatmentForm.treatmentType}>
-        <Radio.Group onChange={e => props.setTreatmentType(e.target.value)}>
+        <Radio.Group onChange={e => setIsReflexology(getIsReflexology(e.target.value))}>
           {Object.values(TreatmentType).map(treatmentType => (
             <Radio key={treatmentType} value={treatmentType}>
               {Dictionary.treatmentTypes[treatmentType.toLowerCase() as keyof typeof Dictionary.treatmentTypes]}
@@ -96,10 +105,10 @@ const StepOne: React.FC<StepOneProps> = props => {
       </Form.Item>
       <FormCard
         title='כללי'
-        fields={TreatmentService.getFields(TreatmentService.getGeneralFields(props.isReflexology), getCustomFields)}
+        fields={TreatmentService.getFields(TreatmentService.getGeneralFields(isReflexology), getCustomFields)}
       />
 
-      {!props.isReflexology && (
+      {!isReflexology && (
         <>
           <FormCard
             title='תשאול'
@@ -119,6 +128,5 @@ export default React.memo(
   StepOne,
   (prevProps, nextProps) =>
     JSON.stringify(prevProps.initialValues) === JSON.stringify(nextProps.initialValues) &&
-    JSON.stringify(prevProps.diagnoses) === JSON.stringify(nextProps.diagnoses) &&
-    prevProps.isReflexology === nextProps.isReflexology
+    JSON.stringify(prevProps.diagnoses) === JSON.stringify(nextProps.diagnoses)
 );

@@ -23,22 +23,16 @@ interface TreatmentFormProps {
   initialValues?: Partial<Treatment>;
 }
 
-const treatmentTypesStepCount: Record<TreatmentType, number> = {
-  [TreatmentType.Reflexology]: 3,
-  [TreatmentType.Diet]: 3
-};
+const stepsCount = 3;
 
 const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const [form] = Form.useForm<Treatment>();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
-  const [treatmentType, setTreatmentType] = useState(props.initialValues?.treatmentType || TreatmentType.Reflexology);
   const [currentStep, setCurrentStep] = useState(0);
 
   const [files, setFiles] = useState<RcFile[]>(
     props.initialValues?.files?.map((file: any) => ({ ...file, uid: file.key })) || []
   );
-
-  const isReflexology = treatmentType === TreatmentType.Reflexology;
 
   const saveButtonText = props.isUploading
     ? Dictionary.treatmentForm.uploadingFiles
@@ -92,15 +86,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return (
-          <StepOne
-            initialValues={props.initialValues}
-            diagnoses={diagnoses}
-            form={form}
-            isReflexology={isReflexology}
-            setTreatmentType={setTreatmentType}
-          />
-        );
+        return <StepOne initialValues={props.initialValues} diagnoses={diagnoses} form={form} />;
       case 1:
         return <BloodTestsForm />;
       case 2:
@@ -152,11 +138,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
                 {Dictionary.treatmentForm.previous}
               </Button>
 
-              <Button
-                disabled={treatmentTypesStepCount[treatmentType] === currentStep + 1}
-                onClick={nextStep}
-                type='primary'
-              >
+              <Button disabled={stepsCount === currentStep + 1} onClick={nextStep} type='primary'>
                 {Dictionary.treatmentForm.next}
               </Button>
             </Space>
@@ -168,4 +150,3 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
 };
 
 export default React.memo(TreatmentForm);
-// export default React.memo(TreatmentForm, (prevProps, nextProps) => isEqual(prevProps, nextProps));
