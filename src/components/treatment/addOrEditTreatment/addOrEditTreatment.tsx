@@ -16,6 +16,7 @@ import { patientsAtom } from 'atoms/patientAtoms';
 import PatientService from 'services/patientService';
 import { currentTreatmentAtom } from 'atoms/treatmentAtoms';
 import { useCallback } from 'react';
+import useCurrentPatient from 'hooks/useCurrentPatient';
 
 interface AddOrEditTreatmentProps extends RouteComponentProps<{ patientId: string; treatmentId?: string }> {}
 
@@ -32,6 +33,7 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
   const patientId = props.match.params.patientId;
   const treatmentId = props.match.params.treatmentId;
 
+  useCurrentPatient({ patientId });
   useEffect(() => {
     if (treatmentId)
       TreatmentService.getTreatmentById(treatmentId)

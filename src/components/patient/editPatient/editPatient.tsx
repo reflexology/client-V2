@@ -10,8 +10,9 @@ import CommonService from 'services/commonService';
 import PatientService, { Patient } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import PatientForm from '../patientForm/patientForm';
-import { currentPatientAtom, patientsAtom } from 'atoms/patientAtoms';
-import { useRecoilState } from 'recoil';
+import { patientsAtom } from 'atoms/patientAtoms';
+import { useSetRecoilState } from 'recoil';
+import useCurrentPatient from 'hooks/useCurrentPatient';
 
 interface EditPatientProps extends RouteComponentProps<{ patientId: string }, never, Patient> {}
 
@@ -27,12 +28,9 @@ const EditPatient: React.FC<EditPatientProps> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [patient, setPatient] = useState<Patient | null>(getPatient(props.location.state));
-  const [currentPatient, setCurrentPatient] = useRecoilState(currentPatientAtom);
-  const [patients, setPatients] = useRecoilState(patientsAtom);
+  const setPatients = useSetRecoilState(patientsAtom);
 
-  useEffect(() => {
-    if (patients) setCurrentPatient(patients.find(patient => patient._id === props.match.params.patientId));
-  }, [patients, props.match.params.patientId]);
+  const currentPatient = useCurrentPatient({ patientId: props.match.params.patientId });
 
   useEffect(() => {
     if (currentPatient && !patient) setPatient(currentPatient);

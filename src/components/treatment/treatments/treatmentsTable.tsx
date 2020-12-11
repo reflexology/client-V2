@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Popconfirm, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 
-import CurrentPatient from 'components/common/currentPatient';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { Patient } from 'services/patientService';
@@ -77,7 +76,6 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
 
   return (
     <Table<Treatment>
-      title={() => <CurrentPatient />}
       pagination={{ pageSize: 7, showSizeChanger: false }}
       loading={props.isFetching}
       columns={columns}

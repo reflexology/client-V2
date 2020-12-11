@@ -9,9 +9,9 @@ import Dictionary from 'dictionary/dictionary';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TableUtils from 'utils/tableUtils';
 import TreatmentsTable from './treatmentsTable';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { patientsAtom, currentPatientAtom } from 'atoms/patientAtoms';
+import { useRecoilState } from 'recoil';
 import { treatmentsAtom } from 'atoms/treatmentAtoms';
+import useCurrentPatient from 'hooks/useCurrentPatient';
 
 import './treatments.scss';
 
@@ -23,12 +23,7 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
   const [isFetching, setIsFetching] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const [currentPatient, setCurrentPatient] = useRecoilState(currentPatientAtom);
-  const patients = useRecoilValue(patientsAtom);
-
-  useEffect(() => setCurrentPatient(patients?.find(patient => patient._id === props.match.params.patientId)), [
-    patients
-  ]);
+  const currentPatient = useCurrentPatient({ patientId: props.match.params.patientId });
 
   useEffect(() => {
     TreatmentService.getTreatmentsByPatientId(props.match.params.patientId)

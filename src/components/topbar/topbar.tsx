@@ -4,6 +4,8 @@ import { Layout } from 'antd';
 import AvatarDropdown from './avatarDropdown';
 import './topbar.scss';
 import Reminders from './reminders';
+import { useLocation } from 'react-router-dom';
+import CurrentPatient from 'components/common/currentPatient';
 
 interface TopbarProps {
   collapsed: boolean;
@@ -11,6 +13,8 @@ interface TopbarProps {
 }
 
 const Topbar: React.FC<TopbarProps> = props => {
+  const location = useLocation();
+
   return (
     <Layout.Header className='topbar-container header'>
       <div className='right'>
@@ -19,6 +23,7 @@ const Topbar: React.FC<TopbarProps> = props => {
           onClick: props.toggle
         })}
       </div>
+      <div className='center'>{location.pathname.includes('treatment') && <CurrentPatient />} </div>
       <div className='left'>
         <Reminders />
         <AvatarDropdown />
