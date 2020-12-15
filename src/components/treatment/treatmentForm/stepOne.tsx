@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, InputNumber, Radio, Select } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 
 import FormCard from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
 import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 interface StepOneProps {
   diagnoses: string[] | null;

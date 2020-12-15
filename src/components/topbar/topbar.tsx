@@ -1,11 +1,13 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
-import AvatarDropdown from './avatarDropdown';
-import './topbar.scss';
-import Reminders from './reminders';
-import { useLocation } from 'react-router-dom';
+
 import CurrentPatient from 'components/common/currentPatient';
+import AvatarDropdown from './avatarDropdown';
+import Reminders from './reminders';
+
+import './topbar.scss';
 
 interface TopbarProps {
   collapsed: boolean;

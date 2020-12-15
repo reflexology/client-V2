@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import moment from 'moment';
+import { useSetRecoilState } from 'recoil';
 
+import { patientsAtom } from 'atoms/patientAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
+import useCurrentPatient from 'hooks/useCurrentPatient';
 import CommonService from 'services/commonService';
 import PatientService, { Patient } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import PatientForm from '../patientForm/patientForm';
-import { patientsAtom } from 'atoms/patientAtoms';
-import { useSetRecoilState } from 'recoil';
-import useCurrentPatient from 'hooks/useCurrentPatient';
 
 interface EditPatientProps extends RouteComponentProps<{ patientId: string }, never, Patient> {}
 

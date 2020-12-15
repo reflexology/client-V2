@@ -1,15 +1,15 @@
 import React from 'react';
 import { Button, Popconfirm, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { useSetRecoilState } from 'recoil';
 
+import { treatmentsAtom } from 'atoms/treatmentAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { Patient } from 'services/patientService';
 import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
 import history from 'utils/history';
 import TableUtils, { WithKey } from 'utils/tableUtils';
-import { treatmentsAtom } from 'atoms/treatmentAtoms';
-import { useSetRecoilState } from 'recoil';
 
 interface TreatmentsTableProps {
   isFetching: boolean;

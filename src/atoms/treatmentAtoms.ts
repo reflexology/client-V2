@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+
 import { Treatment, TreatmentAndBalance } from 'services/treatmentService';
 
 export const treatmentsAtom = atom<Treatment[]>({

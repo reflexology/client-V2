@@ -1,6 +1,7 @@
-import { currentPatientAtom, patientsAtom } from 'atoms/patientAtoms';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+
+import { currentPatientAtom, patientsAtom } from 'atoms/patientAtoms';
 import PatientService from 'services/patientService';
 
 export default function useCurrentPatient({ treatmentId, patientId }: { treatmentId?: string; patientId?: string }) {

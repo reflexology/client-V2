@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { DollarCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import { Drawer, Layout, Menu } from 'antd';
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import { useSetRecoilState } from 'recoil';
 
+import { patientsAtom } from 'atoms/patientAtoms';
 import { routes } from 'components/router/routes';
+import Topbar from 'components/topbar/topbar';
 import Dictionary from 'dictionary/dictionary';
 import AuthService from 'services/authService';
-import Topbar from 'components/topbar/topbar';
+import PatientService from 'services/patientService';
 
 import './sidebar.scss';
-import { patientsAtom } from 'atoms/patientAtoms';
-import { useSetRecoilState } from 'recoil';
-import PatientService from 'services/patientService';
-import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 
 const collapsedKey = 'sidePanel';
 

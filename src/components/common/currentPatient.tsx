@@ -1,7 +1,8 @@
-import { Space } from 'antd';
-import { currentPatientAtom } from 'atoms/patientAtoms';
 import React from 'react';
+import { Space } from 'antd';
 import { useRecoilValue } from 'recoil';
+
+import { currentPatientAtom } from 'atoms/patientAtoms';
 
 const CurrentPatient: React.FC = () => {
   const currentPatient = useRecoilValue(currentPatientAtom);

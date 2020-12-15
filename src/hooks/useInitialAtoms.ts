@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import { message } from 'antd';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+
 import { patientsAtom } from 'atoms/patientAtoms';
 import { transactionsAtom } from 'atoms/transactionAtoms';
-import { useEffect } from 'react';
-import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import PatientService from 'services/patientService';
 import TransactionService from 'services/transactionService';
 

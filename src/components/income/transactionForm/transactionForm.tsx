@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { Alert, AutoComplete, Button, DatePicker, Form, InputNumber, Radio, Row } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import moment from 'moment';
+import { useRecoilValue } from 'recoil';
 
+import { transactionsDescriptionsSelector } from 'atoms/transactionAtoms';
 import Dictionary from 'dictionary/dictionary';
 import TransactionService, { Transaction } from 'services/transactionService';
 import { DATE_TIME_FORMAT } from 'utils/constants';
-import { useRecoilValue } from 'recoil';
-import { transactionsDescriptionsSelector } from 'atoms/transactionAtoms';
 
 export interface TransactionFormProps {
   onSubmit: (values: Transaction) => void;

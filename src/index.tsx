@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
+import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 import '../src/styles/main.scss';
-import reportWebVitals from './reportWebVitals';
 
 // import './wdyr';
 

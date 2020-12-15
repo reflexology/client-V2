@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { filteredTransactionsSelector, transactionsAtom, transactionsFiltersAtom } from 'atoms/transactionAtoms';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import TransactionsTable from './transactionsTable';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { filteredTransactionsSelector, transactionsAtom, transactionsFiltersAtom } from 'atoms/transactionAtoms';
-import { useEffect } from 'react';
 import TransactionService from 'services/transactionService';
+import TransactionsTable from './transactionsTable';
 
 interface TransactionContainerProps extends RouteComponentProps {}
 

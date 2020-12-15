@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'antd';
+import { useSetRecoilState } from 'recoil';
 
+import { patientsAtom } from 'atoms/patientAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
@@ -10,8 +12,6 @@ import PatientService, { Patient } from 'services/patientService';
 import PatientForm from '../patientForm/patientForm';
 
 import './addPatient.scss';
-import { useSetRecoilState } from 'recoil';
-import { patientsAtom } from 'atoms/patientAtoms';
 
 interface Props extends RouteComponentProps {}
 

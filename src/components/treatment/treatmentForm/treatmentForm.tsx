@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, BackTop, Button, Col, Form, message, Row, Space, Steps } from 'antd';
 import { RcFile } from 'antd/lib/upload/interface';
 import isEqual from 'lodash.isequal';
@@ -13,6 +13,7 @@ import ReminderStep from './reminderStep';
 import StepOne from './stepOne';
 
 import './treatmentForm.scss';
+
 interface TreatmentFormProps {
   onSubmit: (values: Treatment, newDiagnoses: string[], files: RcFile[]) => void;
   submitPartialData: (values: any) => void;

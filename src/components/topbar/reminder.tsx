@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Checkbox, List } from 'antd';
+import moment from 'moment';
+
 import ReminderService, { Reminder as ReminderInterface } from 'services/reminderService';
 import { DATE_FORMAT } from 'utils/constants';
-import moment from 'moment';
 
 interface ReminderProps {
   reminder: ReminderInterface;

@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+
 import { Reminder, ReminderType } from 'services/reminderService';
 
 export const remindersAtom = atom<Reminder[]>({

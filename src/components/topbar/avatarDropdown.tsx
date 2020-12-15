@@ -1,10 +1,11 @@
 import React from 'react';
-import { Menu, Avatar } from 'antd';
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
-import AuthService from 'services/authService';
 import { useHistory } from 'react-router-dom';
-import { routes } from 'components/router/routes';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Menu } from 'antd';
+
 import HeaderDropdown from 'components/headerDropdown/headerDropdown';
+import { routes } from 'components/router/routes';
+import AuthService from 'services/authService';
 
 interface MenuInfo {
   key: React.Key;

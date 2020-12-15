@@ -1,22 +1,21 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { message, Spin } from 'antd';
 import { RcFile } from 'antd/es/upload/interface';
 import moment from 'moment';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
+import { patientsAtom } from 'atoms/patientAtoms';
+import { currentTreatmentAtom } from 'atoms/treatmentAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import useCurrentPatient from 'hooks/useCurrentPatient';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import FileService from 'services/fileService';
+import PatientService from 'services/patientService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TreatmentForm from '../treatmentForm/treatmentForm';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { patientsAtom } from 'atoms/patientAtoms';
-import PatientService from 'services/patientService';
-import { currentTreatmentAtom } from 'atoms/treatmentAtoms';
-import { useCallback } from 'react';
-import useCurrentPatient from 'hooks/useCurrentPatient';
 
 interface AddOrEditTreatmentProps extends RouteComponentProps<{ patientId: string; treatmentId?: string }> {}
 

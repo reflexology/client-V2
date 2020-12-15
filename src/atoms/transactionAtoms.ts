@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+
 import { Transaction } from 'services/transactionService';
 import TableUtils from 'utils/tableUtils';
 

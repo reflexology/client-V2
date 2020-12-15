@@ -4,15 +4,15 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button, Card, Descriptions, Image, Space } from 'antd';
 import moment from 'moment';
 
+import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import useCurrentPatient from 'hooks/useCurrentPatient';
+import CommonService from 'services/commonService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import { DATE_FORMAT, VALID_DATE_FORMATS } from 'utils/constants';
-import CommonService from 'services/commonService';
 import history from 'utils/history';
-import { routes } from 'components/router/routes';
 
 import './treatment.scss';
-import useCurrentPatient from 'hooks/useCurrentPatient';
 
 interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
 

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { BellOutlined } from '@ant-design/icons';
-import { Badge, List, Tabs, Spin, message } from 'antd';
-import HeaderDropdown from '../headerDropdown/headerDropdown';
-import ReminderService, { Reminder as ReminderInterface, ReminderType } from 'services/reminderService';
-import Dictionary from 'dictionary/dictionary';
 import { useHistory } from 'react-router-dom';
-import { routes } from 'components/router/routes';
 import { VariableSizeList as VList } from 'react-window';
-import Reminder from './reminder';
-import { isFetchingRemindersAtom, newRemindersCountAtom, remindersAtom, remindersTypeAtom } from 'atoms/reminderAtoms';
+import { BellOutlined } from '@ant-design/icons';
+import { Badge, List, message, Spin, Tabs } from 'antd';
 import { useRecoilState } from 'recoil';
+
+import { isFetchingRemindersAtom, newRemindersCountAtom, remindersAtom, remindersTypeAtom } from 'atoms/reminderAtoms';
+import { routes } from 'components/router/routes';
+import Dictionary from 'dictionary/dictionary';
+import ReminderService, { Reminder as ReminderInterface, ReminderType } from 'services/reminderService';
+import HeaderDropdown from '../headerDropdown/headerDropdown';
+import Reminder from './reminder';
 
 interface IRemindersProps {}
 

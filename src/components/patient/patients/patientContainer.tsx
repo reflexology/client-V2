@@ -1,19 +1,20 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { UserAddOutlined, ClearOutlined } from '@ant-design/icons';
+import { ClearOutlined, UserAddOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Space } from 'antd';
+import { Moment } from 'moment';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { defaultFilters, filteredPatientsSelector, patientsFiltersAtom } from 'atoms/patientAtoms';
 import DebouncedSearchInput, { DebouncedSearchInputRef } from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import { PatientType } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import PatientInCreditOrDebt from './patientInCreditOrDebt';
 import PatientsTable from './patientsTable';
-import { Moment } from 'moment';
+
 import './patient.scss';
-import { PatientType } from 'services/patientService';
 
 interface PatientContainerProps extends RouteComponentProps {}
 

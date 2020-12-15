@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { UserAddOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, UserAddOutlined } from '@ant-design/icons';
 import { Button, message, Space } from 'antd';
+import { useRecoilState } from 'recoil';
 
+import { treatmentsAtom } from 'atoms/treatmentAtoms';
 import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import useCurrentPatient from 'hooks/useCurrentPatient';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TableUtils from 'utils/tableUtils';
 import TreatmentsTable from './treatmentsTable';
-import { useRecoilState } from 'recoil';
-import { treatmentsAtom } from 'atoms/treatmentAtoms';
-import useCurrentPatient from 'hooks/useCurrentPatient';
 
 import './treatments.scss';
 

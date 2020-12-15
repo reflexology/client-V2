@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card, Col, DatePicker, Form, Input, InputNumber, Row, Checkbox } from 'antd';
+import { Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Row } from 'antd';
+import { FormItemProps } from 'antd/lib/form';
 import TextArea from 'antd/lib/input/TextArea';
 
 import { DATE_FORMAT, DATE_TIME_FORMAT } from 'utils/constants';
-import { FormItemProps } from 'antd/lib/form';
 
 export enum InputType {
   Input,

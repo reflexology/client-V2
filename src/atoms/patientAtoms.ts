@@ -1,8 +1,9 @@
+import moment from 'moment';
 import { atom, selector } from 'recoil';
+
 import { Patient, PatientType } from 'services/patientService';
 import TableUtils from 'utils/tableUtils';
 import { Filters } from '../components/patient/patients/patientContainer';
-import moment from 'moment';
 
 export const defaultFilters = {
   endDate: undefined,

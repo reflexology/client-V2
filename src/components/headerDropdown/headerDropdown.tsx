@@ -1,6 +1,7 @@
-import { DropDownProps } from 'antd/es/dropdown';
-import { Dropdown } from 'antd';
 import React from 'react';
+import { Dropdown } from 'antd';
+import { DropDownProps } from 'antd/es/dropdown';
+
 import './headerDropdown.scss';
 
 export interface HeaderDropdownProps extends DropDownProps {}
