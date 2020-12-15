@@ -1,12 +1,16 @@
 import { message } from 'antd';
 import { patientsAtom } from 'atoms/patientAtoms';
+import { transactionsAtom } from 'atoms/transactionAtoms';
 import { useEffect } from 'react';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import PatientService from 'services/patientService';
+import TransactionService from 'services/transactionService';
 
 export default function useInitialAtoms() {
   const setPatients = useSetRecoilState(patientsAtom);
+  const setTransactions = useSetRecoilState(transactionsAtom);
   const resetPatientsAtom = useResetRecoilState(patientsAtom);
+  const resetTransactionsAtom = useResetRecoilState(transactionsAtom);
 
   useEffect(() => {
     initializeAtoms();
@@ -20,9 +24,16 @@ export default function useInitialAtoms() {
       .catch(() => {
         message.error('could not load patients');
       });
+
+    TransactionService.getTransactions()
+      .then(setTransactions)
+      .catch(() => {
+        message.error('could not load transactions');
+      });
   };
 
   const resetAtoms = () => {
     resetPatientsAtom();
+    resetTransactionsAtom();
   };
 }

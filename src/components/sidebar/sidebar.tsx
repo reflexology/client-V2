@@ -43,9 +43,7 @@ const Sidebar: React.FC<any> = props => {
       collapsed={collapsed}
       breakpoint='lg'
       width={208}
-      style={{
-        overflow: 'hidden'
-      }}
+      style={{ overflow: 'hidden' }}
       collapsedWidth={isMobile ? 0 : 80}
     >
       <div className='logo' />

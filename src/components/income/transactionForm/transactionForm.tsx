@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Alert, Button, DatePicker, Form, Input, InputNumber, Radio, Row } from 'antd';
+import { Alert, AutoComplete, Button, DatePicker, Form, InputNumber, Radio, Row } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import moment from 'moment';
 
 import Dictionary from 'dictionary/dictionary';
 import TransactionService, { Transaction } from 'services/transactionService';
 import { DATE_TIME_FORMAT } from 'utils/constants';
+import { useRecoilValue } from 'recoil';
+import { transactionsDescriptionsSelector } from 'atoms/transactionAtoms';
 
 export interface TransactionFormProps {
   onSubmit: (values: Transaction) => void;
@@ -16,6 +18,7 @@ export interface TransactionFormProps {
 
 const TransactionForm: React.FC<TransactionFormProps> = props => {
   const [form] = Form.useForm();
+  const transactionsDescriptions = useRecoilValue(transactionsDescriptionsSelector);
 
   useEffect(() => form.resetFields(), [props.initialValues]);
   return (
@@ -25,7 +28,7 @@ const TransactionForm: React.FC<TransactionFormProps> = props => {
         hasFeedback
         rules={[{ required: true, message: Dictionary.transactionForm.descriptionRequired }]}
       >
-        <Input autoFocus autoComplete='off' placeholder={Dictionary.transactionForm.description} />
+        <AutoComplete options={transactionsDescriptions} placeholder={Dictionary.transactionForm.description} />
       </Form.Item>
       <Form.Item name='note' hasFeedback>
         <TextArea autoSize autoComplete='off' placeholder={Dictionary.transactionForm.note} />
