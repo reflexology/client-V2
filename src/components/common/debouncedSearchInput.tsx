@@ -30,6 +30,7 @@ const DebouncedSearchInput = React.forwardRef<DebouncedSearchInputRef, Debounced
   return (
     <Input.Search
       allowClear
+      data-testid='search'
       value={searchQuery}
       onChange={e => setSearchQuery(e.target.value)}
       placeholder={Dictionary.search}
