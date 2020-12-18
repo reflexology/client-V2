@@ -44,8 +44,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "precommit": "pretty-quick --staged",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "deploy": "netlify deploy --prod",
     "prettier:fix": "prettier --write src/**/*",
     "bundlesize": "bundlesize"
@@ -64,11 +62,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "@storybook/addon-actions": "^6.1.9",
-    "@storybook/addon-centered": "^5.3.21",
-    "@storybook/addon-links": "^6.1.9",
-    "@storybook/addons": "^6.1.9",
-    "@storybook/react": "^6.1.9",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.1",
     "@testing-library/user-event": "^12.4.0",
@@ -82,7 +75,6 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/react-test-renderer": "^17.0.0",
     "@types/react-window": "^1.8.2",
-    "@types/storybook__react": "^5.2.1",
     "@welldone-software/why-did-you-render": "^6.0.3",
     "babel-loader": "8.1.0",
     "bundlesize": "^0.18.0",
