@@ -75,13 +75,15 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
             </Descriptions.Item>
           ))}
       </Descriptions>
-      <Card className='blood-test-container' title='בדיקות דם'>
-        {treatment.bloodTests?.map(bloodTest => (
-          <Card.Grid key={bloodTest.name} className={`blood-test-item${bloodTest.isImportant ? ' important' : ''}`}>
-            {bloodTest.name}: {bloodTest.value}
-          </Card.Grid>
-        ))}
-      </Card>
+      {treatment.bloodTests.length > 0 && (
+        <Card className='blood-test-container' title='בדיקות דם'>
+          {treatment.bloodTests.map(bloodTest => (
+            <Card.Grid key={bloodTest.name} className={`blood-test-item${bloodTest.isImportant ? ' important' : ''}`}>
+              {bloodTest.name}: {bloodTest.value}
+            </Card.Grid>
+          ))}
+        </Card>
+      )}
       {treatment.files?.map(file => (
         <Image key={file.key} src={`http://localhost:3030/api/file/${file.key}`} alt='something'></Image>
       ))}
