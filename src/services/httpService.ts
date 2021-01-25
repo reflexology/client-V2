@@ -68,10 +68,10 @@ const refreshAuthLogic = (failedRequest: any) =>
       AuthService.storeTokens(data);
       return Promise.resolve();
     })
-    .catch(() => {
+    .catch(err => {
       AuthService.removeTokens();
       history.push(routes.login);
-      return Promise.reject();
+      return Promise.reject(err);
     });
 
 createAuthRefreshInterceptor(axios as any, refreshAuthLogic, { skipWhileRefreshing: false });

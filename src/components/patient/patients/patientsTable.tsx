@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
-import { Button, message, Table, Tag, Tooltip } from 'antd';
+import { Button, Table, Tag, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
 
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import { Patient } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
@@ -25,7 +26,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
   useEffect(() => {
     DiagnosisService.getDiagnoses()
       .then(setDiagnoses)
-      .catch(() => message.error(Dictionary.treatmentForm.errorFetchingDiagnoses));
+      .catch(err => CommonService.showErrorMessage(err, Dictionary.treatmentForm.errorFetchingDiagnoses));
   }, []);
 
   const tableUtils = new TableUtils<Patient>(props.searchText);

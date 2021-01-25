@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { AxiosError } from 'axios';
 import moment from 'moment';
 
@@ -7,6 +8,11 @@ import { DATE_FORMAT } from 'utils/constants';
 const CommonService = {
   getErrorMessage(err: AxiosError): string {
     return (Dictionary.serverErrors as { [key: string]: string })[err.response?.data?.msg] || Dictionary.generalError;
+  },
+
+  showErrorMessage(err: AxiosError, errorMessage?: string) {
+    if (err?.response?.status === 401) return;
+    message.error(errorMessage || Dictionary.generalError);
   },
 
   getDurationFromNow(start: moment.Moment) {

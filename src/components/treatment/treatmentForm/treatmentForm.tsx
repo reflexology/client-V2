@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, BackTop, Button, Col, Form, message, Row, Space, Steps } from 'antd';
+import { Alert, BackTop, Button, Col, Form, Row, Space, Steps } from 'antd';
 import { RcFile } from 'antd/lib/upload/interface';
 import isEqual from 'lodash.isequal';
 
@@ -57,7 +57,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   useEffect(() => {
     DiagnosisService.getDiagnoses()
       .then(setDiagnoses)
-      .catch(() => message.error(Dictionary.treatmentForm.errorFetchingDiagnoses));
+      .catch(err => CommonService.showErrorMessage(err, Dictionary.treatmentForm.errorFetchingDiagnoses));
   }, []);
 
   const savePartialData = async (nextStep?: number) => {

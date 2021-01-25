@@ -4,6 +4,7 @@ import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { patientsAtom } from 'atoms/patientAtoms';
 import { transactionsAtom } from 'atoms/transactionAtoms';
+import CommonService from 'services/commonService';
 import PatientService from 'services/patientService';
 import TransactionService from 'services/transactionService';
 
@@ -22,15 +23,11 @@ export default function useInitialAtoms() {
   const initializeAtoms = () => {
     PatientService.getPatients()
       .then(setPatients)
-      .catch(() => {
-        message.error('could not load patients');
-      });
+      .catch(err => CommonService.showErrorMessage(err, 'could not load patients'));
 
     TransactionService.getTransactions()
       .then(setTransactions)
-      .catch(() => {
-        message.error('could not load transactions');
-      });
+      .catch(err => CommonService.showErrorMessage(err, 'could not load transactions'));
   };
 
   const resetAtoms = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { ArrowRightOutlined, UserAddOutlined } from '@ant-design/icons';
-import { Button, message, Space } from 'antd';
+import { Button, Space } from 'antd';
 import { useRecoilState } from 'recoil';
 
 import { treatmentsAtom } from 'atoms/treatmentAtoms';
@@ -9,6 +9,7 @@ import DebouncedSearchInput from 'components/common/debouncedSearchInput';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import useCurrentPatient from 'hooks/useCurrentPatient';
+import CommonService from 'services/commonService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TableUtils from 'utils/tableUtils';
 import TreatmentsTable from './treatmentsTable';
@@ -28,9 +29,7 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
   useEffect(() => {
     TreatmentService.getTreatmentsByPatientId(props.match.params.patientId)
       .then(setTreatments)
-      .catch(() => {
-        message.error('could not load treatments');
-      })
+      .catch(err => CommonService.showErrorMessage(err, 'could not load treatments'))
       .finally(() => setIsFetching(false));
   }, []);
 

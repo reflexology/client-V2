@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Col, DatePicker, Descriptions, message, Row, Space } from 'antd';
+import { Col, DatePicker, Descriptions, Row, Space } from 'antd';
 import moment from 'moment';
 
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
+import CommonService from 'services/commonService';
 import TransactionService, { Report } from 'services/transactionService';
 import { DATE_FORMAT, MONTH_FORMAT } from 'utils/constants';
 
@@ -22,7 +23,7 @@ const Reports: React.FC<ReportsProps> = () => {
   const getReport = () =>
     TransactionService.getReport(month.clone().startOf('month'), month.clone().endOf('month'))
       .then(setReport)
-      .catch(() => message.error(Dictionary.generalErrorAndRefresh));
+      .catch(err => CommonService.showErrorMessage(err));
 
   return (
     <Row justify='center' className='report-container'>

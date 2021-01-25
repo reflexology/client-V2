@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { VariableSizeList as VList } from 'react-window';
 import { BellOutlined } from '@ant-design/icons';
-import { Badge, List, message, Spin, Tabs } from 'antd';
+import { Badge, List, Spin, Tabs } from 'antd';
 import { useRecoilState } from 'recoil';
 
 import { isFetchingRemindersAtom, newRemindersCountAtom, remindersAtom, remindersTypeAtom } from 'atoms/reminderAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import CommonService from 'services/commonService';
 import ReminderService, { Reminder as ReminderInterface, ReminderType } from 'services/reminderService';
 import HeaderDropdown from '../headerDropdown/headerDropdown';
 import Reminder from './reminder';
@@ -45,7 +46,7 @@ const Reminders: React.FC<IRemindersProps> = () => {
         setReminders(reminders);
         if (remindersType === ReminderType.New) setNewRemindersCount(reminders.length);
       })
-      .catch(() => message.error(Dictionary.generalError))
+      .catch(err => CommonService.showErrorMessage(err))
       .finally(() => setIsFetching(false));
   };
 
