@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined } from '@ant-design/icons';
 import { Avatar, Menu } from 'antd';
 
 import HeaderDropdown from 'components/headerDropdown/headerDropdown';
@@ -30,13 +30,6 @@ const AvatarDropdown: React.FC<AvatarDropdownProps> = () => {
 
   const menuHeaderDropdown = (
     <Menu selectedKeys={[]} onClick={onMenuClick}>
-      <Menu.Item key='center'>
-        <UserOutlined />
-        פרטי משתמש
-      </Menu.Item>
-
-      <Menu.Divider />
-
       <Menu.Item key='logout'>
         <LogoutOutlined />
         יציאה
