@@ -14,7 +14,8 @@ import PatientService, { Patient } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import PatientForm from '../patientForm/patientForm';
 
-interface EditPatientProps extends RouteComponentProps<{ patientId: string }, never, Patient> {}
+interface EditPatientProps
+  extends RouteComponentProps<{ patientId: string }, never, { patient: Patient; from?: Location }> {}
 
 const EditPatient: React.FC<EditPatientProps> = props => {
   const getPatient = (patient: Patient): Patient | null =>
@@ -27,7 +28,7 @@ const EditPatient: React.FC<EditPatientProps> = props => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [patient, setPatient] = useState<Patient | null>(getPatient(props.location.state));
+  const [patient, setPatient] = useState<Patient | null>(getPatient(props.location.state?.patient));
   const setPatients = useSetRecoilState(patientsAtom);
 
   const currentPatient = useCurrentPatient({ patientId: props.match.params.patientId });
@@ -50,15 +51,13 @@ const EditPatient: React.FC<EditPatientProps> = props => {
         });
         if (navigateToAddTreatment) {
           props.history.push(routes.addTreatment.format(patient!._id));
-        } else props.history.push(routes.patients);
+        } else props.history.push(props.location.state?.from?.pathname || routes.patients);
       })
       .catch(err => {
         setError(CommonService.getErrorMessage(err));
         setIsSubmitting(false);
       });
   };
-
-  console.log('render');
 
   return (
     <Row justify='center' className='add-patient-container'>

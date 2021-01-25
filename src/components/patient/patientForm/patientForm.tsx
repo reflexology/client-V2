@@ -108,7 +108,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
       >
         <InputNumber
           onChange={childrenCount => {
-            if (childrenCount !== undefined)
+            if (childrenCount !== undefined && childrenCount !== null)
               form.setFieldsValue({
                 ...form.getFieldsValue(),
                 childrenAges: childrenCount > 0 && childrenCount < 20 ? Array(childrenCount || 0).fill(undefined!) : []

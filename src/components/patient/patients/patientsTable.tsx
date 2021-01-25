@@ -19,7 +19,7 @@ interface PatientsTableProps {
 }
 
 const PatientsTable: React.FC<PatientsTableProps> = props => {
-  const history = useHistory<Patient>();
+  const history = useHistory();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
 
   useEffect(() => {
@@ -75,12 +75,12 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
     {
       title: 'פעולות',
       key: 'action',
-      render: (text: string, record: Patient) => (
+      render: (text: string, patient: Patient) => (
         <span>
           <Button
             onClick={e => {
               e.stopPropagation();
-              history.push(routes.addTreatment.format(record._id));
+              history.push(routes.addTreatment.format(patient._id));
             }}
             type='link'
           >
@@ -89,7 +89,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
           <Button
             onClick={e => {
               e.stopPropagation();
-              history.push(routes.editPatient.format(record._id), record);
+              history.push(routes.editPatient.format(patient._id), { patient });
             }}
             type='link'
           >

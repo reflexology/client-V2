@@ -9,7 +9,7 @@ import CommonService from 'services/commonService';
 
 import './login.scss';
 
-interface Props extends RouteComponentProps<never, never, { from: string }> {}
+interface Props extends RouteComponentProps<never, never, { from: Location }> {}
 
 interface LoginForm {
   username: string;
