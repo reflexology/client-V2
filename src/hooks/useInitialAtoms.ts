@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { message } from 'antd';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { patientsAtom } from 'atoms/patientAtoms';
