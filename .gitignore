@@ -26,3 +26,5 @@ storybook-static
 .netlify
 
 *.log
+
+.eslintcache
