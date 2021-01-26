@@ -52,6 +52,9 @@ const Dictionary = {
   addTransaction: {
     header: 'הוסף הכנסה/הוצאה'
   },
+  editTransaction: {
+    header: 'ערוך הכנסה/הוצאה'
+  },
   report: {
     header: 'סכומים',
     title: 'פרטים',

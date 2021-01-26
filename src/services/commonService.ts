@@ -43,7 +43,10 @@ const CommonService = {
     ...arr.slice(0, index),
     newValue,
     ...arr.slice(index + 1)
-  ]
+  ],
+
+  getMomentDateFromString: (date: any): undefined | moment.Moment =>
+    !date || moment.isMoment(date) ? date : moment(date)
 };
 
 String.prototype.format = function (...values) {

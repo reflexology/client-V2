@@ -106,8 +106,8 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
   const initialValues = useMemo(
     () => ({
       ...currentTreatment,
-      treatmentDate: !treatmentDate || moment.isMoment(treatmentDate) ? treatmentDate : moment(treatmentDate),
-      reminderDate: !reminderDate || moment.isMoment(reminderDate) ? reminderDate : moment(reminderDate)
+      treatmentDate: CommonService.getMomentDateFromString(treatmentDate),
+      reminderDate: CommonService.getMomentDateFromString(reminderDate)
     }),
     [currentTreatment]
   );

@@ -1,12 +1,14 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 import { useHistory } from 'react-router-dom';
-import { Table } from 'antd';
+import { Button, Popconfirm, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { useSetRecoilState } from 'recoil';
 
+import { transactionsAtom } from 'atoms/transactionAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import { Transaction } from 'services/transactionService';
+import TransactionService, { Transaction } from 'services/transactionService';
 import TableUtils, { WithKey } from 'utils/tableUtils';
 
 import './transaction.scss';
@@ -19,6 +21,8 @@ interface TransactionsTableProps {
 
 const TransactionsTable: React.FC<TransactionsTableProps> = props => {
   const history = useHistory<Transaction>();
+  const setTransactions = useSetRecoilState(transactionsAtom);
+
   const { isFetching, transactions } = props;
 
   const tableUtils = new TableUtils<Transaction>(props.searchText);
@@ -45,7 +49,40 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
         };
       }
     }),
-    tableUtils.getDateColumn(Dictionary.transactionForm.createdAt, 'createdAt')
+    tableUtils.getDateColumn(Dictionary.transactionForm.createdAt, 'createdAt'),
+    {
+      title: 'פעולות',
+      key: 'action',
+      render: (text: string, record: Transaction) => (
+        <>
+          <Button
+            style={{ paddingRight: '4px' }}
+            onClick={e => {
+              e.stopPropagation();
+              history.push(routes.editTransaction.format(record._id), record);
+            }}
+            type='link'
+          >
+            ערוך
+          </Button>
+          <Popconfirm
+            title='האם אתה בטוח?'
+            onCancel={e => e?.stopPropagation()}
+            onConfirm={e => {
+              e?.stopPropagation();
+              TransactionService.deleteTransaction(record._id).then(() =>
+                setTransactions(transactions => transactions!.filter(transaction => transaction._id !== record._id))
+              );
+            }}
+          >
+            <Button onClick={e => e.stopPropagation()} type='link'>
+              מחק
+            </Button>
+          </Popconfirm>
+        </>
+      ),
+      width: '160px'
+    }
   ];
 
   return (

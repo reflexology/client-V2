@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import AddTransaction from 'components/income/addTransaction/addTransaction';
+import EditTransaction from 'components/income/editTransaction/editTransaction';
 import Reports from 'components/income/reports/reports';
 import TransactionContainer from 'components/income/transactions/transactionContainer';
 import AddPatient from 'components/patient/addPatient/addPatient';
@@ -25,6 +26,7 @@ export enum routes {
   treatments = '/treatments/{0}',
   treatment = '/treatment/{0}',
   addTransaction = '/add-transaction',
+  editTransaction = '/edit-transaction/{0}',
   reports = '/reports'
 }
 
@@ -44,6 +46,7 @@ const Routes: React.FC = () => {
       <ProtectedRoute exact path={routes.treatments.format(':patientId')} component={TreatmentsContainer} />
       <ProtectedRoute exact path={routes.treatment.format(':treatmentId')} component={TreatmentData} />
       <ProtectedRoute exact path={routes.addTransaction} component={AddTransaction} />
+      <ProtectedRoute exact path={routes.editTransaction.format(':transactionId')} component={EditTransaction} />
       <ProtectedRoute exact path={routes.reports} component={Reports} />
       <Route path={routes.login} component={Login} />
       <ProtectedRoute exact path='/' component={PatientContainer} />

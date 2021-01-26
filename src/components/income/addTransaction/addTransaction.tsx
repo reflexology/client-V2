@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'antd';
+import moment from 'moment';
 
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { withBack } from 'hoc/withBack/withBack';
 import CommonService from 'services/commonService';
-import TransactionService, { Transaction } from 'services/transactionService';
+import TransactionService, { Transaction, TransactionType } from 'services/transactionService';
 import TransactionForm from '../transactionForm/transactionForm';
 
 import './addTransaction.scss';
 
 interface Props extends RouteComponentProps {}
 
-const initialValues: Partial<Transaction> = { transactionType: 'Income' };
+const initialValues: Partial<Transaction> = { transactionType: TransactionType.Income, createdAt: moment() };
 
 const AddTransaction: React.FC<Props> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);

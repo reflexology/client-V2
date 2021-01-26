@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Alert, AutoComplete, Button, DatePicker, Form, InputNumber, Radio, Row } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import moment from 'moment';
 import { useRecoilValue } from 'recoil';
 
 import { transactionsDescriptionsSelector } from 'atoms/transactionAtoms';
@@ -21,6 +20,7 @@ const TransactionForm: React.FC<TransactionFormProps> = props => {
   const transactionsDescriptions = useRecoilValue(transactionsDescriptionsSelector);
 
   useEffect(() => form.resetFields(), [props.initialValues]);
+
   return (
     <Form form={form} initialValues={props.initialValues} onFinish={values => props.onSubmit(values as Transaction)}>
       <Form.Item
@@ -67,8 +67,8 @@ const TransactionForm: React.FC<TransactionFormProps> = props => {
       </Row>
       <Form.Item name='createdAt'>
         <DatePicker
+          allowClear={false}
           showTime
-          defaultValue={moment()}
           format={DATE_TIME_FORMAT}
           placeholder={Dictionary.transactionForm.createdAt}
         />
