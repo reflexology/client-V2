@@ -56,6 +56,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
       render: (text: string, record: Transaction) => (
         <>
           <Button
+            disabled={record.isFromTreatment}
             style={{ paddingRight: '4px' }}
             onClick={e => {
               e.stopPropagation();
@@ -75,7 +76,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
               );
             }}
           >
-            <Button onClick={e => e.stopPropagation()} type='link'>
+            <Button disabled={record.isFromTreatment} onClick={e => e.stopPropagation()} type='link'>
               מחק
             </Button>
           </Popconfirm>
