@@ -75,7 +75,7 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
             </Descriptions.Item>
           ))}
       </Descriptions>
-      {treatment.bloodTests.length > 0 && (
+      {treatment.bloodTests?.length > 0 && (
         <Card className='blood-test-container' title='בדיקות דם'>
           {treatment.bloodTests.map(bloodTest => (
             <Card.Grid key={bloodTest.name} className={`blood-test-item${bloodTest.isImportant ? ' important' : ''}`}>

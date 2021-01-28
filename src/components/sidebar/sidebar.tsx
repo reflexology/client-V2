@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { DollarCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import { Drawer, Layout, Menu } from 'antd';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import { Location } from 'history';
 import { useSetRecoilState } from 'recoil';
 
 import { patientsAtom } from 'atoms/patientAtoms';
@@ -10,6 +11,7 @@ import { routes } from 'components/router/routes';
 import Topbar from 'components/topbar/topbar';
 import Dictionary from 'dictionary/dictionary';
 import AuthService from 'services/authService';
+import CommonService from 'services/commonService';
 import PatientService from 'services/patientService';
 
 import './sidebar.scss';
@@ -20,9 +22,11 @@ const Sidebar: React.FC<any> = props => {
   const history = useHistory();
   const location = useLocation();
 
-  const [selectedPage, setSelectedPage] = useState(
-    Object.values(routes).includes(location.pathname as any) ? location.pathname : routes.patients
-  );
+  const getSelectedPage = (location: Location) => location.pathname;
+
+  const [selectedPage, setSelectedPage] = useState(getSelectedPage(location));
+  history.listen(location => setSelectedPage(getSelectedPage(location)));
+
   const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
   const toggle = () => setCollapsed(!collapsed);
 
@@ -30,7 +34,7 @@ const Sidebar: React.FC<any> = props => {
   useEffect(() => localStorage.setItem(collapsedKey, collapsed ? 'collapsed' : 'expanded'), [collapsed]);
 
   const colSize = useBreakpoint();
-  const isMobile = !colSize.xl && !colSize.md && !colSize.xxl;
+  const isMobile = CommonService.isNotEmpty(colSize) && !colSize.xl && !colSize.md && !colSize.xxl;
 
   useEffect(() => {
     if (isMobile && !collapsed) setCollapsed(true);
