@@ -77,8 +77,20 @@ const TreatmentService = {
     return HttpService.delete<Treatment>('/treatment/' + treatmentId);
   },
 
-  getGeneralFields(isReflexology: boolean): TreatmentFields[] {
-    const fields: TreatmentFields[] = [
+  getGeneralFields(): TreatmentFields[] {
+    return [
+      {
+        name: 'treatmentType',
+        inputType: InputType.Radio,
+        radioOptions: Object.values(TreatmentType).map(treatmentType => ({
+          value: treatmentType,
+          label: Dictionary.treatmentTypes[treatmentType.toLowerCase() as keyof typeof Dictionary.treatmentTypes]
+        })),
+        width: 3,
+        formItemProps: {
+          rules: [{ required: true }]
+        }
+      },
       {
         name: 'treatmentDate',
         inputType: InputType.DateTimePicker,
@@ -86,84 +98,46 @@ const TreatmentService = {
           rules: [{ required: true }]
         }
       },
+
       { name: 'treatmentNumber', inputType: InputType.FormItem },
       { name: 'referredBy', inputType: InputType.Input },
       { name: 'visitReason', inputType: InputType.TextArea, width: 3 },
-      { name: 'findings', inputType: InputType.TextArea, width: 3 },
       { name: 'diagnoses', inputType: InputType.FormItem },
       { name: 'treatmentPrice', inputType: InputType.FormItem },
       { name: 'paidPrice', inputType: InputType.InputNumber },
-      { name: 'profession', inputType: InputType.Input }
-    ];
-    if (isReflexology) fields.push({ name: 'recommendations', inputType: InputType.TextArea, width: 3 });
-
-    return fields;
-  },
-
-  getDietFields(): TreatmentFields[] {
-    return [
-      { name: 'mainComplaint', inputType: InputType.TextArea, width: 3 },
-      { name: 'medicalPast', inputType: InputType.TextArea, width: 3 },
-      { name: 'drugsAndSupplements', inputType: InputType.TextArea, width: 3 },
-      { name: 'height', inputType: InputType.InputNumber },
-      { name: 'weight', inputType: InputType.InputNumber },
-      { name: 'additionalTreatments', inputType: InputType.TextArea, width: 3 },
-      { name: 'familyMedicalHistory', inputType: InputType.TextArea, width: 3 },
-      { name: 'sleep', inputType: InputType.TextArea, width: 3 },
-      { name: 'howWakeUp', inputType: InputType.TextArea },
-      { name: 'appetite', inputType: InputType.TextArea },
-      { name: 'thirst', inputType: InputType.TextArea },
-      { name: 'stimulants', inputType: InputType.TextArea, width: 3 },
-
-      // new
-      { name: 'defecation', inputType: InputType.TextArea },
-      { name: 'urine', inputType: InputType.TextArea },
-      { name: 'sweat', inputType: InputType.TextArea },
-      { name: 'women', inputType: InputType.TextArea, width: 3 },
-      { name: 'exercise', inputType: InputType.TextArea }
-    ];
-  },
-
-  getNewDietFields(): TreatmentFields[] {
-    return [
-      // new
-      { name: 'diet', inputType: InputType.TextArea, width: 3 },
-      { name: 'snacks', inputType: InputType.TextArea },
-      { name: 'crisisHour', inputType: InputType.TextArea },
-      { name: 'notLikeToEat', inputType: InputType.TextArea },
-      { name: 'blenderExists', inputType: InputType.CheckBox },
-      { name: 'juicerExists', inputType: InputType.CheckBox },
-      { name: 'recommendations', inputType: InputType.TextArea, width: 3 },
-      { name: 'menu', inputType: InputType.TextArea, width: 3 }
+      { name: 'findings', inputType: InputType.TextArea, width: 3 },
+      { name: 'recommendations', inputType: InputType.TextArea, width: 3 }
     ];
   },
 
   getReminderFields(): TreatmentFields[] {
     return [
-      { name: 'reminders', inputType: InputType.TextArea },
-      { name: 'reminderDate', inputType: InputType.DatePicker }
+      { name: 'reminderDate', inputType: InputType.FormItem, width: 1 },
+      { name: 'reminders', inputType: InputType.TextArea, width: 2 }
     ];
   },
 
   getBloodTests(): BloodTest[] {
     return [
       { name: 'glucose', value: null, isImportant: false },
-      { name: 'creatinine', value: null, isImportant: false },
-      { name: 'urea', value: null, isImportant: false },
-      { name: 'uric acid', value: null, isImportant: false },
+      { name: 'HBA1C', value: null, isImportant: false },
+      { name: 'HB', value: null, isImportant: false },
+      { name: 'ferritin', value: null, isImportant: false },
+      { name: 'B12', value: null, isImportant: false },
+      { name: 'VitaminD', value: null, isImportant: false },
       { name: 'HDL', value: null, isImportant: false },
       { name: 'LDL', value: null, isImportant: false },
       { name: 'cholesterol', value: null, isImportant: false },
       { name: 'triglycerides', value: null, isImportant: false },
-      { name: 'AST', value: null, isImportant: false },
       { name: 'ALT', value: null, isImportant: false },
-      { name: 'GGl', value: null, isImportant: false },
-      { name: 'B12', value: null, isImportant: false },
-      { name: 'VitaminD', value: null, isImportant: false },
+      { name: 'AST', value: null, isImportant: false },
+      { name: 'GGT', value: null, isImportant: false },
+      { name: 'urea', value: null, isImportant: false },
+      { name: 'creatinine', value: null, isImportant: false },
+      { name: 'uric acid', value: null, isImportant: false },
       { name: 'TSH', value: null, isImportant: false },
-      { name: 'HB', value: null, isImportant: false },
-      { name: 'HBA1C', value: null, isImportant: false },
-      { name: 'ferritin', value: null, isImportant: false }
+      { name: 'T3', value: null, isImportant: false },
+      { name: 'T4', value: null, isImportant: false }
     ];
   },
 

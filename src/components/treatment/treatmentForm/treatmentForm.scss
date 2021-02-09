@@ -16,6 +16,10 @@ $next-prev-container-height: 70px;
   max-height: calc(100vh - #{$content-padding} - #{$header-height} - #{$next-prev-container-height});
   overflow-y: auto;
 
+  h2 {
+    text-align: center;
+  }
+
   .form-card {
     @extend .card;
     margin-bottom: 24px;

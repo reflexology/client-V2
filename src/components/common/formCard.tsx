@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Row } from 'antd';
+import { Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Radio, Row } from 'antd';
 import { FormItemProps } from 'antd/lib/form';
 import TextArea from 'antd/lib/input/TextArea';
 
@@ -12,7 +12,8 @@ export enum InputType {
   DatePicker,
   DateTimePicker,
   FormItem,
-  CheckBox
+  CheckBox,
+  Radio
 }
 
 export type Width = 1 | 2 | 3;
@@ -26,6 +27,7 @@ export interface Field {
   extra?: string;
   formItem?: React.ReactElement;
   formItemProps?: FormItemProps;
+  radioOptions?: { label: string; value: string }[];
 }
 
 interface FormCardProps {
@@ -50,6 +52,16 @@ const FormCard: React.FC<FormCardProps> = props => {
         return <DatePicker showTime format={DATE_TIME_FORMAT} style={{ width: '100%' }} />;
       case InputType.CheckBox:
         return <Checkbox style={{ width: '100%' }} />;
+      case InputType.Radio:
+        return (
+          <Radio.Group>
+            {field.radioOptions?.map(({ label, value }) => (
+              <Radio key={value} value={value}>
+                {label}
+              </Radio>
+            ))}
+          </Radio.Group>
+        );
     }
   };
 

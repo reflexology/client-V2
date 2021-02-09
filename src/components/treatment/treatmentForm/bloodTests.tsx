@@ -5,9 +5,9 @@ import { Button, Card, Checkbox, Col, Form, Input, InputNumber, Row } from 'antd
 import Dictionary from 'dictionary/dictionary';
 import TreatmentService from 'services/treatmentService';
 
-interface BloodTestsFormProps {}
+interface BloodTestsProps {}
 
-const BloodTestsForm: React.FC<BloodTestsFormProps> = () => {
+const BloodTests: React.FC<BloodTestsProps> = () => {
   const originalBloodTestsCount = TreatmentService.getBloodTests().length;
 
   return (
@@ -30,6 +30,7 @@ const BloodTestsForm: React.FC<BloodTestsFormProps> = () => {
                         </Form.Item>
                       )}
                     </Col>
+
                     <Col lg={12} sm={10}>
                       <Form.Item name={[field.name, 'value']} fieldKey={[field.fieldKey, 'value']}>
                         <InputNumber type='number' style={{ width: '100%' }} autoComplete='off' />
@@ -61,4 +62,4 @@ const BloodTestsForm: React.FC<BloodTestsFormProps> = () => {
   );
 };
 
-export default React.memo(BloodTestsForm, () => true);
+export default React.memo(BloodTests, () => true);

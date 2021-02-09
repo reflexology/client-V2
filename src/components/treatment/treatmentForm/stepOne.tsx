@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Form, InputNumber, Radio, Select } from 'antd';
+import React from 'react';
+import { Button, DatePicker, Form, InputNumber, Row, Select } from 'antd';
 import { FormInstance } from 'antd/lib/form';
+import moment from 'moment';
 
 import FormCard from 'components/common/formCard';
 import Dictionary from 'dictionary/dictionary';
-import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
+import TreatmentService, { Treatment } from 'services/treatmentService';
+import { DATE_FORMAT } from 'utils/constants';
 
 interface StepOneProps {
   diagnoses: string[] | null;
@@ -14,15 +16,6 @@ interface StepOneProps {
 }
 
 const StepOne: React.FC<StepOneProps> = props => {
-  const getIsReflexology = (treatmentType?: TreatmentType) =>
-    !treatmentType || treatmentType === TreatmentType.Reflexology;
-
-  const [isReflexology, setIsReflexology] = useState(getIsReflexology(props.initialValues?.treatmentType));
-
-  useEffect(() => {
-    setIsReflexology(getIsReflexology(props.initialValues?.treatmentType));
-  }, [props.initialValues?.treatmentType]);
-
   const getCustomFields = (fieldName: keyof typeof Dictionary.treatmentForm) => {
     switch (fieldName) {
       case 'diagnoses':
@@ -87,37 +80,40 @@ const StepOne: React.FC<StepOneProps> = props => {
             <InputNumber type='number' style={{ width: '100%' }} autoComplete='off' />
           </Form.Item>
         );
+
+      case 'reminderDate':
+        return (
+          <Form.Item name='reminderDate' label={Dictionary.treatmentForm.reminderDate}>
+            <DatePicker
+              style={{ width: '100%' }}
+              format={DATE_FORMAT}
+              showToday={false}
+              renderExtraFooter={() => (
+                <Row justify='center'>
+                  <Button
+                    type='link'
+                    onClick={() => props.form.setFieldsValue({ reminderDate: moment().add(7, 'days') })}
+                  >
+                    {Dictionary.treatmentForm.inAWeek}
+                  </Button>
+                </Row>
+              )}
+            />
+          </Form.Item>
+        );
     }
   };
 
   return (
     <>
-      <Form.Item name='treatmentType' label={Dictionary.treatmentForm.treatmentType}>
-        <Radio.Group onChange={e => setIsReflexology(getIsReflexology(e.target.value))}>
-          {Object.values(TreatmentType).map(treatmentType => (
-            <Radio key={treatmentType} value={treatmentType}>
-              {Dictionary.treatmentTypes[treatmentType.toLowerCase() as keyof typeof Dictionary.treatmentTypes]}
-            </Radio>
-          ))}
-        </Radio.Group>
-      </Form.Item>
       <FormCard
         title='כללי'
-        fields={TreatmentService.getFields(TreatmentService.getGeneralFields(isReflexology), getCustomFields)}
+        fields={TreatmentService.getFields(TreatmentService.getGeneralFields(), getCustomFields)}
       />
-
-      {!isReflexology && (
-        <>
-          <FormCard
-            title='תשאול'
-            fields={TreatmentService.getFields(TreatmentService.getDietFields(), getCustomFields)}
-          />
-          <FormCard
-            title='תזונה'
-            fields={TreatmentService.getFields(TreatmentService.getNewDietFields(), getCustomFields)}
-          />
-        </>
-      )}
+      <FormCard
+        title='תזכורת'
+        fields={TreatmentService.getFields(TreatmentService.getReminderFields(), getCustomFields)}
+      />
     </>
   );
 };

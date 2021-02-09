@@ -9,6 +9,7 @@ import { patientsAtom } from 'atoms/patientAtoms';
 import { currentTreatmentAtom } from 'atoms/treatmentAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
+import { withBack } from 'hoc/withBack/withBack';
 import useCurrentPatient from 'hooks/useCurrentPatient';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
@@ -45,8 +46,8 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
             treatmentNumber: (lastTreatment?.treatmentNumber || 0) + 1,
             referredBy: lastTreatment?.referredBy,
             treatmentPrice: lastTreatment?.treatmentPrice,
-            treatmentDate: moment()
-            // balance: balance
+            treatmentDate: moment(),
+            treatmentType: lastTreatment?.treatmentType
           });
         })
         .finally(() => setIsFetching(false));
@@ -127,4 +128,4 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
   );
 };
 
-export default AddOrEditTreatment;
+export default withBack(AddOrEditTreatment);
