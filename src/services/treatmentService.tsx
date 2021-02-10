@@ -100,7 +100,7 @@ const TreatmentService = {
       },
 
       { name: 'treatmentNumber', inputType: InputType.FormItem },
-      { name: 'referredBy', inputType: InputType.Input },
+      { name: 'referredBy', inputType: InputType.Input, inputProps: { autoComplete: 'referredBy' } },
       { name: 'visitReason', inputType: InputType.TextArea, width: 3 },
       { name: 'diagnoses', inputType: InputType.FormItem },
       { name: 'treatmentPrice', inputType: InputType.FormItem },

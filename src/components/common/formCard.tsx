@@ -1,7 +1,22 @@
 import React from 'react';
-import { Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Radio, Row } from 'antd';
+import {
+  Card,
+  Checkbox,
+  CheckboxProps,
+  Col,
+  DatePicker,
+  DatePickerProps,
+  Form,
+  Input,
+  InputNumber,
+  InputNumberProps,
+  InputProps,
+  Radio,
+  RadioProps,
+  Row
+} from 'antd';
 import { FormItemProps } from 'antd/lib/form';
-import TextArea from 'antd/lib/input/TextArea';
+import { TextAreaProps } from 'antd/lib/input';
 
 import { DATE_FORMAT, DATE_TIME_FORMAT } from 'utils/constants';
 
@@ -27,6 +42,7 @@ export interface Field {
   extra?: string;
   formItem?: React.ReactElement;
   formItemProps?: FormItemProps;
+  inputProps?: InputProps | InputNumberProps | TextAreaProps | CheckboxProps | DatePickerProps | RadioProps;
   radioOptions?: { label: string; value: string }[];
 }
 
@@ -39,24 +55,39 @@ const FormCard: React.FC<FormCardProps> = props => {
   const renderField = (field: Field) => {
     switch (field.inputType) {
       case InputType.Input:
-        return <Input autoComplete='off' placeholder={field.placeholder} />;
+        return <Input autoComplete='off' placeholder={field.placeholder} {...(field.inputProps as InputProps)} />;
       case InputType.InputNumber:
         return (
-          <InputNumber type='number' autoComplete='off' style={{ width: '100%' }} placeholder={field.placeholder} />
+          <InputNumber
+            type='number'
+            autoComplete='off'
+            style={{ width: '100%' }}
+            placeholder={field.placeholder}
+            {...(field.inputProps as InputNumberProps)}
+          />
         );
       case InputType.TextArea:
-        return <TextArea autoComplete='off' placeholder={field.placeholder} autoSize />;
+        return (
+          <Input.TextArea
+            autoComplete='off'
+            placeholder={field.placeholder}
+            autoSize
+            {...(field.inputProps as TextAreaProps)}
+          />
+        );
       case InputType.DatePicker:
-        return <DatePicker format={DATE_FORMAT} style={{ width: '100%' }} />;
+        return <DatePicker format={DATE_FORMAT} style={{ width: '100%' }} {...(field.inputProps as DatePickerProps)} />;
       case InputType.DateTimePicker:
-        return <DatePicker showTime format={DATE_TIME_FORMAT} style={{ width: '100%' }} />;
+        return (
+          <DatePicker showTime format={DATE_TIME_FORMAT} style={{ width: '100%' }} {...(field.inputProps as any)} />
+        );
       case InputType.CheckBox:
-        return <Checkbox style={{ width: '100%' }} />;
+        return <Checkbox style={{ width: '100%' }} {...(field.inputProps as CheckboxProps)} />;
       case InputType.Radio:
         return (
           <Radio.Group>
             {field.radioOptions?.map(({ label, value }) => (
-              <Radio key={value} value={value}>
+              <Radio {...(field.inputProps as RadioProps)} key={value} value={value}>
                 {label}
               </Radio>
             ))}
