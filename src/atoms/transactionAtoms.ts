@@ -32,11 +32,13 @@ export const transactionsDescriptionsSelector = selector<{ value: string }[] | u
   key: 'transactionsDescriptionsSelector',
   get: ({ get }) => {
     const transactions = get(transactionsAtom);
-    return transactions
-      ?.filter(transaction => !transaction.isFromTreatment)
-      .map(transaction => ({
-        value: transaction.description
-      }));
+    return [
+      ...new Set(
+        transactions?.filter(transaction => !transaction.isFromTreatment).map(transaction => transaction.description)
+      )
+    ].map(description => ({
+      value: description
+    }));
   }
 });
 
