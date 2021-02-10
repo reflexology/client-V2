@@ -45,11 +45,11 @@ const Login: React.FC<Props> = props => {
 
           <Form onFinish={values => onFinish(values as LoginForm)} size='large'>
             <Form.Item name='username' rules={[{ required: true, message: Dictionary.login.usernameRequiredMessage }]}>
-              <Input autoFocus placeholder={Dictionary.login.username} />
+              <Input autoComplete='username' autoFocus placeholder={Dictionary.login.username} />
             </Form.Item>
 
             <Form.Item name='password' rules={[{ required: true, message: Dictionary.login.passwordRequiredMessage }]}>
-              <Input.Password placeholder={Dictionary.login.password} />
+              <Input.Password autoComplete='current-password' placeholder={Dictionary.login.password} />
             </Form.Item>
 
             {error && <Alert className='login-error' message={error} type='error' showIcon />}
