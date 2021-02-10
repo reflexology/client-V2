@@ -4,7 +4,9 @@ import { CheckOutlined } from '@ant-design/icons';
 import { Button, Table, Tag, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
+import { useRecoilState } from 'recoil';
 
+import { pageSizeAtom } from 'atoms/generalAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
@@ -22,6 +24,7 @@ interface PatientsTableProps {
 const PatientsTable: React.FC<PatientsTableProps> = props => {
   const history = useHistory();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
+  const [pageSize, setPageSize] = useRecoilState(pageSizeAtom);
 
   useEffect(() => {
     DiagnosisService.getDiagnoses()
@@ -103,7 +106,12 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
 
   return (
     <Table<Patient>
-      pagination={{ pageSize: 7, showSizeChanger: false }}
+      pagination={{
+        showSizeChanger: true,
+        pageSizeOptions: ['7', '10', '15', '20'],
+        pageSize: pageSize,
+        onShowSizeChange: (current, size) => setPageSize(size)
+      }}
       onRow={record => ({ onClick: () => history.push(routes.treatments.format(record._id)) })}
       loading={props.isFetching}
       showSorterTooltip={false}

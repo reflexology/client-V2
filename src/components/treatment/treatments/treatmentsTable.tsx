@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button, Popconfirm, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
+import { pageSizeAtom } from 'atoms/generalAtoms';
 import { treatmentsAtom } from 'atoms/treatmentAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
@@ -20,6 +21,7 @@ interface TreatmentsTableProps {
 
 const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
   const setTreatments = useSetRecoilState(treatmentsAtom);
+  const [pageSize, setPageSize] = useRecoilState(pageSizeAtom);
 
   const tableUtils = new TableUtils<Treatment>(props.searchText);
   const columns: ColumnsType<Treatment> = [
@@ -76,7 +78,12 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
 
   return (
     <Table<Treatment>
-      pagination={{ pageSize: 7, showSizeChanger: false }}
+      pagination={{
+        showSizeChanger: true,
+        pageSizeOptions: ['7', '10', '15', '20'],
+        pageSize: pageSize,
+        onShowSizeChange: (current, size) => setPageSize(size)
+      }}
       loading={props.isFetching}
       columns={columns}
       dataSource={props.treatments}
