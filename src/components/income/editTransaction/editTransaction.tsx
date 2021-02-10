@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'antd';
 
+import BackButton from 'components/common/backButton/backButton';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import { withBack } from 'hoc/withBack/withBack';
 import CommonService from 'services/commonService';
 import TransactionService, { Transaction, TransactionType } from 'services/transactionService';
 import TransactionForm from '../transactionForm/transactionForm';
@@ -51,22 +51,25 @@ const EditTransaction: React.FC<Props> = props => {
   );
 
   return (
-    <Row justify='center' className='edit-transaction-container'>
-      <Col xl={10} lg={12} md={16} sm={20}>
-        <div className='edit-transaction-card'>
-          <div className='edit-transaction-h2-wrapper'>
-            <h2>{Dictionary.editTransaction.header}</h2>
+    <>
+      <BackButton />
+      <Row justify='center' className='edit-transaction-container'>
+        <Col xl={10} lg={12} md={16} sm={20}>
+          <div className='edit-transaction-card'>
+            <div className='edit-transaction-h2-wrapper'>
+              <h2>{Dictionary.editTransaction.header}</h2>
+            </div>
+            <TransactionForm
+              initialValues={initialValues}
+              isLoading={isSubmitting}
+              onSubmit={handleSubmit}
+              error={error}
+            />
           </div>
-          <TransactionForm
-            initialValues={initialValues}
-            isLoading={isSubmitting}
-            onSubmit={handleSubmit}
-            error={error}
-          />
-        </div>
-      </Col>
-    </Row>
+        </Col>
+      </Row>
+    </>
   );
 };
 
-export default withBack(EditTransaction);
+export default EditTransaction;

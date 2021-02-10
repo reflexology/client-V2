@@ -7,9 +7,9 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { patientsAtom } from 'atoms/patientAtoms';
 import { currentTreatmentAtom } from 'atoms/treatmentAtoms';
+import BackButton from 'components/common/backButton/backButton';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import { withBack } from 'hoc/withBack/withBack';
 import useCurrentPatient from 'hooks/useCurrentPatient';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
@@ -114,18 +114,21 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
   );
 
   return (
-    <Spin spinning={isFetching}>
-      <TreatmentForm
-        isUploading={isUploading}
-        initialValues={initialValues}
-        isLoading={isSubmitting}
-        onSubmit={handleSubmit}
-        isSavingPartialData={isSavingPartialData}
-        submitPartialData={submitPartialData}
-        error={error}
-      />
-    </Spin>
+    <>
+      <BackButton />
+      <Spin spinning={isFetching}>
+        <TreatmentForm
+          isUploading={isUploading}
+          initialValues={initialValues}
+          isLoading={isSubmitting}
+          onSubmit={handleSubmit}
+          isSavingPartialData={isSavingPartialData}
+          submitPartialData={submitPartialData}
+          error={error}
+        />
+      </Spin>
+    </>
   );
 };
 
-export default withBack(AddOrEditTreatment);
+export default AddOrEditTreatment;

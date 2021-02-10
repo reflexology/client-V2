@@ -3,9 +3,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import moment from 'moment';
 
+import BackButton from 'components/common/backButton/backButton';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
-import { withBack } from 'hoc/withBack/withBack';
 import CommonService from 'services/commonService';
 import TransactionService, { Transaction, TransactionType } from 'services/transactionService';
 import TransactionForm from '../transactionForm/transactionForm';
@@ -35,22 +35,25 @@ const AddTransaction: React.FC<Props> = props => {
   };
 
   return (
-    <Row justify='center' className='add-transaction-container'>
-      <Col xl={10} lg={12} md={16} sm={20}>
-        <div className='add-transaction-card'>
-          <div className='add-transaction-h2-wrapper'>
-            <h2>{Dictionary.addTransaction.header}</h2>
+    <>
+      <BackButton />
+      <Row justify='center' className='add-transaction-container'>
+        <Col xl={10} lg={12} md={16} sm={20}>
+          <div className='add-transaction-card'>
+            <div className='add-transaction-h2-wrapper'>
+              <h2>{Dictionary.addTransaction.header}</h2>
+            </div>
+            <TransactionForm
+              initialValues={initialValues}
+              isLoading={isSubmitting}
+              onSubmit={handleSubmit}
+              error={error}
+            />
           </div>
-          <TransactionForm
-            initialValues={initialValues}
-            isLoading={isSubmitting}
-            onSubmit={handleSubmit}
-            error={error}
-          />
-        </div>
-      </Col>
-    </Row>
+        </Col>
+      </Row>
+    </>
   );
 };
 
-export default withBack(AddTransaction);
+export default AddTransaction;
