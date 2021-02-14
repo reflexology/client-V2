@@ -68,7 +68,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     } catch (error) {}
   };
 
-  useInterval(savePartialData, 30000);
+  // useInterval(savePartialData, 30000);
 
   const onSubmit = () => {
     const values = { ...(form.getFieldsValue(true) as Treatment) };
