@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { Button, Card, Descriptions, Image, Space } from 'antd';
+import { Button, Descriptions, Image, Space } from 'antd';
 import moment from 'moment';
 
 import { routes } from 'components/router/routes';
@@ -75,15 +75,7 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
             </Descriptions.Item>
           ))}
       </Descriptions>
-      {treatment.bloodTests?.length > 0 && (
-        <Card className='blood-test-container' title='בדיקות דם'>
-          {treatment.bloodTests.map(bloodTest => (
-            <Card.Grid key={bloodTest.name} className={`blood-test-item${bloodTest.isImportant ? ' important' : ''}`}>
-              {bloodTest.name}: {bloodTest.value}
-            </Card.Grid>
-          ))}
-        </Card>
-      )}
+
       {treatment.files?.map(file => (
         <Image key={file.key} src={`http://localhost:3030/api/file/${file.key}`} alt='something'></Image>
       ))}

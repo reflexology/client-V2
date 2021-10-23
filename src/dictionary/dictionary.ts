@@ -167,11 +167,7 @@ const Dictionary = {
     screenTime: 'זמן מסך',
     pollutedAir: 'אוויר מזוהם',
     smoking: 'עישון: כמה? מה? וכמה זמן?',
-    cosmetics: 'תכשירי קוסמטיקה (רחצה, משחות, צבע...)',
-
-    bloodTestHeader: 'בדיקות דם',
-    addBloodTest: 'הוסף בדיקת דם',
-    isImportant: 'חריג'
+    cosmetics: 'תכשירי קוסמטיקה (רחצה, משחות, צבע...)'
   },
   treatmentTypes: {
     diet: 'ייעוץ',
