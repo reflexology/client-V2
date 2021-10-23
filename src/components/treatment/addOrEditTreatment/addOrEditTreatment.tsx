@@ -82,7 +82,7 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
         props.history.push(routes.treatments.format(patientId));
         PatientService.getPatients().then(setPatients);
       } catch (error) {
-        setError(CommonService.getErrorMessage(error));
+        setError(CommonService.getErrorMessage(error as any));
         setIsSubmitting(false);
       }
     },

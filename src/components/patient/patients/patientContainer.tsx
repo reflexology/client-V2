@@ -38,10 +38,10 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
     searchInputRef.current?.reset();
   };
 
-  const isResetDisabled = useCallback(() => JSON.stringify(filters) === JSON.stringify(defaultFilters), [
-    filters,
-    defaultFilters
-  ]);
+  const isResetDisabled = useCallback(
+    () => JSON.stringify(filters) === JSON.stringify(defaultFilters),
+    [filters, defaultFilters]
+  );
 
   return (
     <div className='patients-container'>

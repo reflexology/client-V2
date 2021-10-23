@@ -5,7 +5,7 @@ import isEqual from 'lodash.isequal';
 
 // import DragAndDrop from 'components/common/dragAndDrop';
 import Dictionary from 'dictionary/dictionary';
-import useInterval from 'hooks/useInterval';
+// import useInterval from 'hooks/useInterval';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
