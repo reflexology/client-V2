@@ -37,6 +37,7 @@ const Dictionary = {
     phone: 'טלפון',
     email: 'אימיל',
     gender: 'מין',
+    notes: 'הערות',
     diagnoses: 'אבחנות',
     lastTreatment: 'טיפול אחרון',
     wrongEmail: 'כתובת האימיל שגוייה',

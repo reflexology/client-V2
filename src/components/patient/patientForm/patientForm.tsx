@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactInputMask from 'react-input-mask';
 import { Alert, Button, Form, Input, Radio, Row, Space, Typography } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
 
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
@@ -99,6 +100,10 @@ const PatientForm: React.FC<PatientFormProps> = props => {
             </Radio>
           ))}
         </Radio.Group>
+      </Form.Item>
+
+      <Form.Item label={Dictionary.patientForm.notes} name='notes' hasFeedback>
+        <TextArea autoSize autoComplete='off' />
       </Form.Item>
 
       {props.error && <Alert message={props.error} type='error' showIcon />}

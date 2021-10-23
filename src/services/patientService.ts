@@ -14,6 +14,7 @@ export interface Patient {
   createdBy: string;
   lastTreatment?: Date;
   gender: 'Male' | 'Female';
+  notes?: string;
   calculatedAge: Readonly<string>;
   diagnoses?: string[];
   balance?: number;
