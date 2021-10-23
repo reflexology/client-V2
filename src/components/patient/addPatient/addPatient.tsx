@@ -27,7 +27,6 @@ const AddPatient: React.FC<Props> = props => {
     setIsSubmitting(true);
     setError('');
 
-    values.childrenAges = values.childrenAges?.filter(childAge => !!childAge);
     PatientService.addPatient(values)
       .then(patient => {
         setPatientsAtom(patients => [patient, ...(patients || [])]);

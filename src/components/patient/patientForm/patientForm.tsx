@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactInputMask from 'react-input-mask';
-import { Alert, Button, Form, Input, InputNumber, Radio, Row, Select, Space, Typography } from 'antd';
+import { Alert, Button, Form, Input, Radio, Row, Space, Typography } from 'antd';
 
 import Dictionary from 'dictionary/dictionary';
 import CommonService from 'services/commonService';
@@ -99,64 +99,6 @@ const PatientForm: React.FC<PatientFormProps> = props => {
             </Radio>
           ))}
         </Radio.Group>
-      </Form.Item>
-      <Form.Item
-        name='childrenCount'
-        label={Dictionary.patientForm.childrenCount}
-        hasFeedback
-        rules={[{ type: 'number', min: 0, max: 20, message: Dictionary.patientForm.minChildrenCount }]}
-      >
-        <InputNumber
-          onChange={childrenCount => {
-            if (childrenCount !== undefined && childrenCount !== null)
-              form.setFieldsValue({
-                ...form.getFieldsValue(),
-                childrenAges: childrenCount > 0 && childrenCount < 20 ? Array(childrenCount || 0).fill(undefined!) : []
-              });
-          }}
-          style={{ width: '100%' }}
-          autoComplete='off'
-        />
-      </Form.Item>
-
-      <Form.List name='childrenAges'>
-        {fields => {
-          return (
-            <Row>
-              {fields.map(field => (
-                <Form.Item
-                  noStyle
-                  shouldUpdate={(prevValues, currentValues) => prevValues.childrenCount !== currentValues.childrenCount}
-                  key={field.key}
-                >
-                  <Form.Item
-                    {...field}
-                    className='ages'
-                    style={{ width: '18%', marginLeft: '1%', marginRight: '1%' }}
-                    hasFeedback
-                    rules={[{ type: 'number', min: 0, message: Dictionary.patientForm.minChildrenCount }]}
-                  >
-                    <InputNumber type='number' placeholder='גיל הילד' style={{ width: '100%' }} autoComplete='off' />
-                  </Form.Item>
-                </Form.Item>
-              ))}
-            </Row>
-          );
-        }}
-      </Form.List>
-
-      <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}>
-        {() => (
-          <Form.Item label={Dictionary.patientForm.maritalStatus} name='maritalStatus' hasFeedback>
-            <Select>
-              {PatientService.getMaritalStatusOptions(form.getFieldValue('gender') === 'Male').map(maritalStatus => (
-                <Select.Option key={maritalStatus.value} value={maritalStatus.value}>
-                  {maritalStatus.label}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        )}
       </Form.Item>
 
       {props.error && <Alert message={props.error} type='error' showIcon />}

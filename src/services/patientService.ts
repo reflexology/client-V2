@@ -13,11 +13,8 @@ export interface Patient {
   createdAt?: Date;
   createdBy: string;
   lastTreatment?: Date;
-  childrenCount: number;
   gender: 'Male' | 'Female';
-  maritalStatus: 'Married' | 'Single' | 'Divorced' | 'Widowed';
   calculatedAge: Readonly<string>;
-  childrenAges: string[];
   diagnoses?: string[];
   balance?: number;
 }
@@ -43,15 +40,6 @@ const PatientService = {
   },
   editPatient(patientId: string, patient: Patient) {
     return HttpService.patch<Patient>('/patient/' + patientId, patient);
-  },
-  getMaritalStatusOptions(isMale: boolean) {
-    const maritalStatuses = isMale ? Dictionary.MaritalStatusForMale : Dictionary.MaritalStatusForFemale;
-    return [
-      { label: maritalStatuses.Widowed, value: 'Widowed' },
-      { label: maritalStatuses.Married, value: 'Married' },
-      { label: maritalStatuses.Single, value: 'Single' },
-      { label: maritalStatuses.Divorced, value: 'Divorced' }
-    ];
   },
   getGenderOptions() {
     return [

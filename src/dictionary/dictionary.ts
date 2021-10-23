@@ -38,11 +38,8 @@ const Dictionary = {
     email: 'אימיל',
     gender: 'מין',
     diagnoses: 'אבחנות',
-    childrenCount: 'מספר ילדים',
     lastTreatment: 'טיפול אחרון',
-    maritalStatus: 'מצב משפחתי',
     wrongEmail: 'כתובת האימיל שגוייה',
-    minChildrenCount: 'ערך שגוי',
     firstNameRequired: 'חובה למלא שם פרטי',
     lastNameRequired: 'חובה למלא שם משפחה',
     birthdayInvalid: 'ערך שגוי',
@@ -209,10 +206,7 @@ const Dictionary = {
   female: 'נקבה',
   search: 'חפש..',
   back: 'חזור',
-  edit: 'ערוך',
-
-  MaritalStatusForMale: { Married: 'נשוי', Single: 'רווק', Divorced: 'גרוש', Widowed: 'אלמן' },
-  MaritalStatusForFemale: { Married: 'נשואה', Single: 'רווקה', Divorced: 'גרושה', Widowed: 'אלמנה' }
+  edit: 'ערוך'
 };
 
 export default Dictionary;
