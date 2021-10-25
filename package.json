@@ -42,10 +42,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "pretty-quick --staged",
+    "format:all": "prettier --write src/**/*",
+    "format:staged": "pretty-quick --staged",
     "deploy": "netlify deploy --prod",
-    "prettier:fix": "prettier --write src/**/*",
-    "bundlesize": "bundlesize"
+    "bundlesize": "bundlesize",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
@@ -66,8 +67,8 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.0.2",
     "@types/lodash.isequal": "^4.5.5",
-    "@types/node": "16.11.4",
-    "@types/react": "17.0.31",
+    "@types/node": "16.11.5",
+    "@types/react": "17.0.32",
     "@types/react-dom": "17.0.10",
     "@types/react-highlight-words": "^0.16.3",
     "@types/react-input-mask": "^3.0.1",
@@ -79,8 +80,8 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "husky": "^4.3.8",
-    "netlify-cli": "^6.14.1",
+    "husky": "^7.0.0",
+    "netlify-cli": "^6.14.4",
     "node-sass": "5.0.0",
     "prettier": "^2.4.1",
     "pretty-quick": "^3.1.1",
