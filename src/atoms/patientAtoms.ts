@@ -57,7 +57,8 @@ const filterPatients = (patients: Patient[], filters: Filters) => {
         'calculatedAge',
         'phone',
         'email',
-        'lastTreatment'
+        'lastTreatment',
+        'notes'
       ])
     );
 
