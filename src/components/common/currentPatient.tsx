@@ -12,13 +12,13 @@ const CurrentPatient: React.FC = () => {
   const currentPatient = useRecoilValue(currentPatientAtom);
   if (!currentPatient) return null;
 
-  const { firstName, lastName, momName, age, phone, balance } = currentPatient;
+  const { firstName, lastName, momName, calculatedAge, phone, balance } = currentPatient;
   return (
     <Space size='large' wrap>
       <span>
         <span>{firstName}</span> <span>{lastName}</span> {!!momName && <span>({momName})</span>}
       </span>
-      {!!age && <span>גיל: {age}</span>}
+      {!!calculatedAge && <span>גיל: {calculatedAge}</span>}
       {!!phone && <span>טלפון: {phone}</span>}
       {!!balance && (
         <span>
