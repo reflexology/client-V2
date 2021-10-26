@@ -12,6 +12,11 @@ export const defaultFilters = {
   transactionType: TransactionTypeFilter.All
 };
 
+export const currentTransactionsPageAtom = atom<number>({
+  key: 'currentTransactionsPageAtom',
+  default: 1
+});
+
 export const transactionsAtom = atom<Transaction[] | null>({
   key: 'transactionsAtom',
   default: null

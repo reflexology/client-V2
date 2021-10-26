@@ -27,6 +27,11 @@ export const currentPatientAtom = atom<Patient | undefined>({
   default: undefined
 });
 
+export const currentPatientsPageAtom = atom<number>({
+  key: 'currentPatientsPageAtom',
+  default: 1
+});
+
 export const filteredPatientsSelector = selector<Patient[] | null>({
   key: 'filteredPatients',
   get: ({ get }) => {
