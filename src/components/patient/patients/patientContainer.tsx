@@ -7,11 +7,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { defaultFilters, filteredPatientsSelector, patientsFiltersAtom } from 'atoms/patientAtoms';
 import DebouncedSearchInput, { DebouncedSearchInputRef } from 'components/common/debouncedSearchInput';
+import DropdownFilter from 'components/common/dropdownFilter';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { PatientType } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
-import PatientInCreditOrDebt from './patientInCreditOrDebt';
 import PatientsTable from './patientsTable';
 
 import './patient.scss';
@@ -56,9 +56,13 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
           delay={250}
         />
 
-        <PatientInCreditOrDebt
-          onSelect={patientType => setFilters({ ...filters, patientType })}
-          patientsInDebtOrCredit={filters.patientType}
+        <DropdownFilter
+          options={Object.values(PatientType).map(value => ({ value, label: Dictionary.patientContainer[value] }))}
+          selectedOption={{
+            value: filters.patientType,
+            label: Dictionary.patientContainer[filters.patientType]
+          }}
+          onSelect={option => setFilters({ ...filters, patientType: option.value })}
           isLoading={false}
         />
 

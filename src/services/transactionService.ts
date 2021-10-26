@@ -25,6 +25,12 @@ export enum TransactionType {
   Expenditure = 'Expenditure'
 }
 
+export enum TransactionTypeFilter {
+  All = 'showAllTransactions',
+  Income = 'showAllIncome',
+  Expenditure = 'showAllExpenditure'
+}
+
 const TransactionService = {
   getTransactions() {
     return HttpService.get<Transaction[]>('/incomeAndExpenditure');

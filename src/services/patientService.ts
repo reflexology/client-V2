@@ -21,7 +21,7 @@ export interface Patient {
 }
 
 export enum PatientType {
-  AllPatients = 'showAllPatients',
+  All = 'showAllPatients',
   InCredit = 'showInCredit',
   InDebt = 'showInDebt'
 }

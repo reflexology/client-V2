@@ -65,7 +65,10 @@ const Dictionary = {
     thisMonth: 'החודש הזה'
   },
   transaction: {
-    addTransactionButton: 'הוסף הכנסה/הוצאה'
+    addTransactionButton: 'הוסף הכנסה/הוצאה',
+    showAllTransactions: 'הצג הכל',
+    showAllIncome: 'הכנסות',
+    showAllExpenditure: 'הוצאות'
   },
   transactionForm: {
     description: 'תיאור',
