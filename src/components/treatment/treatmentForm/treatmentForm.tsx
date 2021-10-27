@@ -38,6 +38,10 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     : Dictionary.treatmentForm.saveAndExit;
 
   useEffect(() => {
+    if (props.initialValues) form.setFieldsValue(props.initialValues);
+  }, [props.initialValues]);
+
+  useEffect(() => {
     DiagnosisService.getDiagnoses()
       .then(setDiagnoses)
       .catch(err => CommonService.showErrorMessage(err, Dictionary.treatmentForm.errorFetchingDiagnoses));

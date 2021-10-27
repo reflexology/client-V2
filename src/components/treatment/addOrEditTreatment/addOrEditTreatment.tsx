@@ -34,6 +34,7 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
   const treatmentId = props.match.params.treatmentId;
 
   useCurrentPatient({ patientId });
+
   useEffect(() => {
     if (treatmentId)
       TreatmentService.getTreatmentById(treatmentId)
