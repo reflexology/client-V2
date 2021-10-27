@@ -26,7 +26,7 @@ class TableUtils<T extends Record<string, any>> {
 
     if (!columnConfig?.render)
       column.render = (text: string | number) => {
-        return text ? (
+        return text || text === 0 ? (
           <Highlighter
             highlightClassName='highlighted-text'
             searchWords={[this.textToHighlight]}

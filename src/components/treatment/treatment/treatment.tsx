@@ -62,7 +62,7 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
         {Object.entries(treatment)
           .filter(
             ([key, value]) =>
-              CommonService.isNotEmpty(value) &&
+              (CommonService.isNotEmpty(value) || value === 0) &&
               !!Dictionary.treatmentForm[key as keyof typeof Dictionary.treatmentForm]
           )
           ?.map(([key, value]) => (
