@@ -31,8 +31,8 @@
     "workbox-streams": "^6.3.0"
   },
   "scripts": {
-    "lint": "yarn lint:script && yarn lint:style",
-    "lint-fix": "yarn lint-fix:script && yarn lint-fix:style",
+    "lint": "yarn lint:script",
+    "lint-fix": "yarn lint-fix:script",
     "lint:script": "eslint --ext js,ts,tsx src",
     "lint:style": "stylelint src/**/*.scss",
     "lint-fix:script": "yarn lint:script --fix",
