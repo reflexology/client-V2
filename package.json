@@ -34,7 +34,7 @@
     "lint": "yarn lint:script && yarn lint:style",
     "lint-fix": "yarn lint-fix:script && yarn lint-fix:style",
     "lint:script": "eslint --ext js,ts,tsx src",
-    "lint:style": "stylelint src/**/*.scss --syntax scss",
+    "lint:style": "stylelint src/**/*.scss",
     "lint-fix:script": "yarn lint:script --fix",
     "lint-fix:style": "yarn lint:style --fix",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
