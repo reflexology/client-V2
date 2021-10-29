@@ -112,65 +112,7 @@ const Dictionary = {
     reminderDate: 'תאריך תזכורת',
     inAWeek: 'עוד שבוע',
     treatmentNumberChangedWarning: 'מספר טיפול קודם היה {0} ',
-    errorFetchingDiagnoses: 'היתה בעיה לטעון את האבחונים מהשרת..',
-
-    // diet
-    mainComplaint: 'תלונה עיקרית',
-    mainComplaintPlaceholder: 'כולל אבחנה מערבית',
-    mainComplaintExtra:
-      'מתי התחיל? באיזה גיל? מה קרה בחיים ובתקופה לפני שהתחילה הבעיה? מה מחמיר? מה מקל? \nאיך משפיע על החיים? איך מתמודד עם הבעיה?',
-    medicalPast: 'עבר רפואי',
-    medicalPastExtra: 'אנטיביוטיקה בעבר והיום, ניתוחים, אישפוזים, מחלות משמעותיות, חומרי הרדמה, תאונות - מתי?',
-    drugsAndSupplements: 'תרופות ותוספי מזון',
-    drugsAndSupplementsExtra: '(בהווה ובעבר), כמה תרופות? איזה תרופות? וכמה זמן נוטל?',
-    height: 'גובה',
-    weight: 'משקל',
-    additionalTreatments: 'טיפולים נוספים',
-    additionalTreatmentsExtra: 'רפואיים ומשלימים איזה טיפול, כמה זמן? ומתי?',
-    familyMedicalHistory: 'היסטוריה רפואית משפחתית',
-    sleep: 'שינה: איכות השינה, אורך השינה',
-    sleepExtra:
-      'האם נרדם בקלות? האם ישן שינה טובה? עמוקה? האם מתעורר במהלך הלילה מסיבה כלשהי - אם כן פרט מהי?\nהאם מתעורר עקב דאגות / מתח - כל רעש קטן מעיר, צורך לשירותים...',
-    howWakeUp: 'איך קם בבוקר',
-    howWakeUpExtra: 'בקלות וחיוניות/בכבדות',
-    appetite: 'תיאבון',
-    thirst: 'צמא, שתיית מים, כמה?',
-    stimulants: 'צריכה של חומרי גרוי וכמויות ביום',
-    stimulantsExtra: `קפה / תה, חם / קר, סוכר, כמה כפיות?
-משקאות קלים / ממריצים: קולה, רד בול
-מלח, תבלינים, חריף, ממתקים, חטיפים, אלכוהול, סמים, חומרי ניקוי, זמן מסך, אוויר מזוהם,
-עישון: כמה? מה? וכמה זמן,
-תכשירי קוסמטיקה (רחצה, משחות, צבע)`,
-    defecation: 'יציאות',
-    urine: 'שתן',
-    urineExtra: 'כמות, צבע, ריח, תדירות',
-    sweat: 'הזעה',
-    women: 'נשים',
-    exercise: 'פעילות גופנית',
-
-    //diet
-    diet: 'תזונה',
-    snacks: 'נישנושים',
-    crisisHour: 'מתי שעת משבר',
-    notLikeToEat: 'האם יש משהו שלא אוכל',
-    blenderExists: 'האם יש בלנדר?',
-    juicerExists: 'האם יש מסחטת מיצים?',
-    dietRecommendations: 'המלצות',
-    menu: 'תפריט',
-    // stimulants
-    coffee: '',
-    softDrinks: '',
-    salt: 'מלח',
-    spices: 'תבלינים',
-    spicy: 'חריף',
-    sweets: 'ממתקים',
-    alcohol: 'אלכוהול',
-    drugs: 'סמים',
-    cleaners: 'חומרי ניקוי',
-    screenTime: 'זמן מסך',
-    pollutedAir: 'אוויר מזוהם',
-    smoking: 'עישון: כמה? מה? וכמה זמן?',
-    cosmetics: 'תכשירי קוסמטיקה (רחצה, משחות, צבע...)'
+    errorFetchingDiagnoses: 'היתה בעיה לטעון את האבחונים מהשרת..'
   },
   treatmentTypes: {
     diet: 'ייעוץ',

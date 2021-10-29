@@ -11,7 +11,6 @@ export interface Treatment {
   visitReason?: string;
   treatmentNumber: number;
   findings?: string;
-  recommendations?: string;
   remarks?: string;
   treatmentPrice?: number;
   paidPrice?: number;
@@ -98,8 +97,7 @@ const TreatmentService = {
       { name: 'diagnoses', inputType: InputType.FormItem },
       { name: 'treatmentPrice', inputType: InputType.FormItem },
       { name: 'paidPrice', inputType: InputType.InputNumber },
-      { name: 'findings', inputType: InputType.TextArea, width: 3 },
-      { name: 'recommendations', inputType: InputType.TextArea, width: 3 }
+      { name: 'findings', inputType: InputType.TextArea, width: 3 }
     ];
   },
 

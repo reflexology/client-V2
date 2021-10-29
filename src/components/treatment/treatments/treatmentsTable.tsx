@@ -37,7 +37,6 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
     tableUtils.getNumberColumn(Dictionary.treatmentForm.treatmentNumber, 'treatmentNumber', { width: '130px' }),
     tableUtils.getStringColumn(Dictionary.treatmentForm.visitReason, 'visitReason'),
     tableUtils.getStringColumn(Dictionary.treatmentForm.findings, 'findings'),
-    tableUtils.getStringColumn(Dictionary.treatmentForm.recommendations, 'recommendations'),
     tableUtils.getNumberColumn(Dictionary.treatmentForm.treatmentPrice, 'treatmentPrice', { width: '130px' }),
     tableUtils.getNumberColumn(Dictionary.treatmentForm.paidPrice, 'paidPrice', { width: '132px' }),
     {

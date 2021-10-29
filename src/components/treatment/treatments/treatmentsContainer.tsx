@@ -43,7 +43,6 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
           'treatmentNumber',
           'visitReason',
           'findings',
-          'recommendations',
           'reminders'
         ])
       )
