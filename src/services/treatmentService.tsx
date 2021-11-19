@@ -11,7 +11,6 @@ export interface Treatment {
   visitReason?: string;
   treatmentNumber: number;
   findings?: string;
-  recommendations?: string;
   remarks?: string;
   treatmentPrice?: number;
   paidPrice?: number;
@@ -20,7 +19,6 @@ export interface Treatment {
   isReminderCompleted?: boolean;
   createdBy?: string;
   diagnoses: string[];
-  bloodTests: BloodTest[];
   treatmentType: TreatmentType;
   files: TreatmentFile[];
 }
@@ -35,12 +33,6 @@ export interface TreatmentFile {
   key: string;
   name: string;
   location: string;
-}
-
-export interface BloodTest {
-  name: string;
-  value: string | number | null;
-  isImportant: boolean;
 }
 
 export enum TreatmentType {
@@ -105,8 +97,7 @@ const TreatmentService = {
       { name: 'diagnoses', inputType: InputType.FormItem },
       { name: 'treatmentPrice', inputType: InputType.FormItem },
       { name: 'paidPrice', inputType: InputType.InputNumber },
-      { name: 'findings', inputType: InputType.TextArea, width: 3 },
-      { name: 'recommendations', inputType: InputType.TextArea, width: 3 }
+      { name: 'findings', inputType: InputType.TextArea, width: 3 }
     ];
   },
 
@@ -114,30 +105,6 @@ const TreatmentService = {
     return [
       { name: 'reminderDate', inputType: InputType.FormItem, width: 1 },
       { name: 'reminders', inputType: InputType.TextArea, width: 2 }
-    ];
-  },
-
-  getBloodTests(): BloodTest[] {
-    return [
-      { name: 'glucose', value: null, isImportant: false },
-      { name: 'HBA1C', value: null, isImportant: false },
-      { name: 'HB', value: null, isImportant: false },
-      { name: 'ferritin', value: null, isImportant: false },
-      { name: 'B12', value: null, isImportant: false },
-      { name: 'VitaminD', value: null, isImportant: false },
-      { name: 'HDL', value: null, isImportant: false },
-      { name: 'LDL', value: null, isImportant: false },
-      { name: 'cholesterol', value: null, isImportant: false },
-      { name: 'triglycerides', value: null, isImportant: false },
-      { name: 'ALT', value: null, isImportant: false },
-      { name: 'AST', value: null, isImportant: false },
-      { name: 'GGT', value: null, isImportant: false },
-      { name: 'urea', value: null, isImportant: false },
-      { name: 'creatinine', value: null, isImportant: false },
-      { name: 'uric acid', value: null, isImportant: false },
-      { name: 'TSH', value: null, isImportant: false },
-      { name: 'T3', value: null, isImportant: false },
-      { name: 'T4', value: null, isImportant: false }
     ];
   },
 

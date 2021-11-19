@@ -7,13 +7,6 @@ import HeaderDropdown from 'components/headerDropdown/headerDropdown';
 import { routes } from 'components/router/routes';
 import AuthService from 'services/authService';
 
-interface MenuInfo {
-  key: React.Key;
-  keyPath: React.Key[];
-  item: React.ReactInstance;
-  domEvent: React.MouseEvent<HTMLElement>;
-}
-
 interface AvatarDropdownProps {}
 
 const AvatarDropdown: React.FC<AvatarDropdownProps> = () => {
@@ -24,7 +17,7 @@ const AvatarDropdown: React.FC<AvatarDropdownProps> = () => {
     history.push(routes.login);
   };
 
-  const onMenuClick = (event: MenuInfo) => {
+  const onMenuClick = (event: any): void => {
     if (event.key === 'logout') handleLogout();
   };
 

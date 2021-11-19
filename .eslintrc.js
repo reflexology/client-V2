@@ -22,7 +22,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.tsx', '*.ts'],
+      files: ['**/*.ts?(x)'],
       rules: {
         'simple-import-sort/imports': [
           'error',

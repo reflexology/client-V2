@@ -6,7 +6,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { pageSizeAtom } from 'atoms/generalAtoms';
-import { transactionsAtom } from 'atoms/transactionAtoms';
+import { currentTransactionsPageAtom, transactionsAtom } from 'atoms/transactionAtoms';
 import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import TransactionService, { Transaction } from 'services/transactionService';
@@ -24,6 +24,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
   const history = useHistory<Transaction>();
   const setTransactions = useSetRecoilState(transactionsAtom);
   const [pageSize, setPageSize] = useRecoilState(pageSizeAtom);
+  const [currentPage, setCurrentPage] = useRecoilState(currentTransactionsPageAtom);
 
   const { isFetching, transactions } = props;
 
@@ -94,7 +95,9 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
         showSizeChanger: true,
         pageSizeOptions: ['7', '10', '15', '20'],
         pageSize: pageSize,
-        onShowSizeChange: (current, size) => setPageSize(size)
+        onShowSizeChange: (current, size) => setPageSize(size),
+        current: currentPage,
+        onChange: setCurrentPage
       }}
       onRow={record => ({
         onClick: () => (record.isFromTreatment ? history.push(routes.treatment.format(record.treatmentId)) : null)

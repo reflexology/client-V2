@@ -5,11 +5,10 @@ import isEqual from 'lodash.isequal';
 
 // import DragAndDrop from 'components/common/dragAndDrop';
 import Dictionary from 'dictionary/dictionary';
-import useInterval from 'hooks/useInterval';
+// import useInterval from 'hooks/useInterval';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
-import TreatmentService, { Treatment } from 'services/treatmentService';
-import BloodTests from './bloodTests';
+import { Treatment } from 'services/treatmentService';
 import StepOne from './stepOne';
 
 import './treatmentForm.scss';
@@ -39,16 +38,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     : Dictionary.treatmentForm.saveAndExit;
 
   useEffect(() => {
-    if (props.initialValues) {
-      form.setFieldsValue({
-        ...props.initialValues,
-        bloodTests: CommonService.mergeArraysByKey(
-          TreatmentService.getBloodTests(),
-          props.initialValues?.bloodTests || [],
-          'name'
-        )
-      });
-    }
+    if (props.initialValues) form.setFieldsValue(props.initialValues);
   }, [props.initialValues]);
 
   useEffect(() => {
@@ -62,7 +52,6 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
       await form.validateFields();
 
       const values = { ...(form.getFieldsValue(true) as Treatment) };
-      values.bloodTests = values.bloodTests.filter(bloodTest => !!bloodTest.value);
 
       if (!isEqual(values, props.initialValues)) props.submitPartialData?.(values);
     } catch (error) {}
@@ -72,7 +61,6 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
 
   const onSubmit = () => {
     const values = { ...(form.getFieldsValue(true) as Treatment) };
-    values.bloodTests = values.bloodTests.filter(bloodTest => !!bloodTest.value);
     const newDiagnoses = values.diagnoses?.filter(diagnosis => !diagnoses?.includes(diagnosis));
     props.onSubmit(values, newDiagnoses, []);
   };
@@ -85,15 +73,12 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
       hideRequiredMark
       scrollToFirstError
       form={form}
-      initialValues={{
-        ...props.initialValues,
-        bloodTests: TreatmentService.getBloodTests()
-      }}
+      initialValues={props.initialValues}
       onFinish={onSubmit}
     >
       <div id='treatment-form' className='treatment-form'>
         <h2>{Dictionary.addTreatment.header}</h2>
-        <StepOne initialValues={props.initialValues} diagnoses={diagnoses} form={form} /> <BloodTests />
+        <StepOne initialValues={props.initialValues} diagnoses={diagnoses} form={form} />
         {props.error && <Alert message={props.error} type='error' showIcon />}
         <BackTop target={getBackTopTarget}></BackTop>
       </div>

@@ -9,7 +9,7 @@ export const defaultFilters = {
   endDate: undefined,
   startDate: undefined,
   search: '',
-  patientType: PatientType.AllPatients
+  patientType: PatientType.All
 };
 
 export const patientsAtom = atom<Patient[] | null>({
@@ -27,6 +27,11 @@ export const currentPatientAtom = atom<Patient | undefined>({
   default: undefined
 });
 
+export const currentPatientsPageAtom = atom<number>({
+  key: 'currentPatientsPageAtom',
+  default: 1
+});
+
 export const filteredPatientsSelector = selector<Patient[] | null>({
   key: 'filteredPatients',
   get: ({ get }) => {
@@ -38,7 +43,7 @@ export const filteredPatientsSelector = selector<Patient[] | null>({
 const filterPatients = (patients: Patient[], filters: Filters) => {
   let filteredPatients: Patient[] = [...patients];
 
-  if (filters.patientType !== PatientType.AllPatients)
+  if (filters.patientType !== PatientType.All)
     filteredPatients = filteredPatients.filter(patient =>
       filters.patientType === PatientType.InCredit ? patient.balance! > 0 : patient.balance! < 0
     );
@@ -52,7 +57,8 @@ const filterPatients = (patients: Patient[], filters: Filters) => {
         'calculatedAge',
         'phone',
         'email',
-        'lastTreatment'
+        'lastTreatment',
+        'notes'
       ])
     );
 

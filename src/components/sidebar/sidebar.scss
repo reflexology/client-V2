@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../../styles/variables';
 
 .layout-container {
@@ -12,7 +13,7 @@
   .logo {
     background: rgba(255, 255, 255, 0.2);
     height: $logo-height;
-    margin: ($header-height - $logo-height) / 2;
+    margin: math.div(($header-height - $logo-height), 2);
   }
 
   .ant-menu-item:first-child {

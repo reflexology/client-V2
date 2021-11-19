@@ -1,14 +1,21 @@
 import { atom, selector } from 'recoil';
 
-import { Transaction } from 'services/transactionService';
+import { Transaction, TransactionTypeFilter } from 'services/transactionService';
 import TableUtils from 'utils/tableUtils';
 
 export type TransactionFilters = {
   search: string;
+  transactionType: TransactionTypeFilter;
 };
 export const defaultFilters = {
-  search: ''
+  search: '',
+  transactionType: TransactionTypeFilter.All
 };
+
+export const currentTransactionsPageAtom = atom<number>({
+  key: 'currentTransactionsPageAtom',
+  default: 1
+});
 
 export const transactionsAtom = atom<Transaction[] | null>({
   key: 'transactionsAtom',
@@ -44,6 +51,12 @@ export const transactionsDescriptionsSelector = selector<{ value: string }[] | u
 
 const filterTransactions = (transactions: Transaction[], filters: TransactionFilters) => {
   let filteredTransactions = [...transactions];
+
+  if (filters.transactionType !== TransactionTypeFilter.All)
+    filteredTransactions = filteredTransactions.filter(transaction =>
+      filters.transactionType === TransactionTypeFilter.Income ? transaction.amount > 0 : transaction.amount < 0
+    );
+
   if (filters.search)
     filteredTransactions = transactions.filter(transaction =>
       TableUtils.filter(transaction, filters.search, ['description', 'note', 'amount', 'createdAt'])
