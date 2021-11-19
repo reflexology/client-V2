@@ -109,5 +109,8 @@
       "path": "build/**/*.chunk.css",
       "maxSize": "150 kB"
     }
-  ]
+  ],
+  "engines": {
+    "node": ">=14.17.5"
+  }
 }
