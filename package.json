@@ -93,20 +93,12 @@
   },
   "bundlesize": [
     {
-      "path": "build/**/main*.js",
-      "maxSize": "50 kB"
-    },
-    {
-      "path": "build/**/*.chunk.js",
+      "path": "build/**/*.js",
       "maxSize": "500 kB"
     },
     {
-      "path": "build/**/main*.css",
-      "maxSize": "5 kB"
-    },
-    {
-      "path": "build/**/*.chunk.css",
-      "maxSize": "150 kB"
+      "path": "build/**/*.css",
+      "maxSize": "100 kB"
     }
   ],
   "engines": {
