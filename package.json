@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "license": "MIT",
   "dependencies": {
-    "antd": "4.17.0",
+    "antd": "4.17.3",
     "axios": "0.24.0",
     "axios-auth-refresh": "2.0.2",
     "lodash.isequal": "^4.5.0",
@@ -14,21 +14,21 @@
     "react-highlight-words": "^0.17.0",
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^5.3.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "5.0.0",
     "react-window": "^1.8.6",
     "recoil": "^0.5.2",
-    "workbox-background-sync": "^6.4.1",
-    "workbox-broadcast-update": "^6.4.1",
-    "workbox-cacheable-response": "^6.4.1",
-    "workbox-core": "^6.4.1",
-    "workbox-expiration": "^6.4.1",
-    "workbox-google-analytics": "^6.4.1",
-    "workbox-navigation-preload": "^6.4.1",
-    "workbox-precaching": "^6.4.1",
-    "workbox-range-requests": "^6.4.1",
-    "workbox-routing": "^6.4.1",
-    "workbox-strategies": "^6.4.1",
-    "workbox-streams": "^6.4.1"
+    "workbox-background-sync": "^6.4.2",
+    "workbox-broadcast-update": "^6.4.2",
+    "workbox-cacheable-response": "^6.4.2",
+    "workbox-core": "^6.4.2",
+    "workbox-expiration": "^6.4.2",
+    "workbox-google-analytics": "^6.4.2",
+    "workbox-navigation-preload": "^6.4.2",
+    "workbox-precaching": "^6.4.2",
+    "workbox-range-requests": "^6.4.2",
+    "workbox-routing": "^6.4.2",
+    "workbox-strategies": "^6.4.2",
+    "workbox-streams": "^6.4.2"
   },
   "scripts": {
     "lint": "yarn lint:script && yarn lint:style",
@@ -61,14 +61,13 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.15.8",
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.0.3",
     "@types/lodash.isequal": "^4.5.5",
     "@types/node": "16.11.9",
-    "@types/react": "17.0.35",
+    "@types/react": "17.0.37",
     "@types/react-dom": "17.0.11",
     "@types/react-highlight-words": "^0.16.3",
     "@types/react-input-mask": "^3.0.1",
@@ -78,19 +77,19 @@
     "@welldone-software/why-did-you-render": "^6.2.3",
     "bundlesize": "^0.18.1",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "husky": "^7.0.0",
-    "netlify-cli": "^7.0.0",
-    "postcss": "^8.3.11",
-    "prettier": "^2.4.1",
+    "netlify-cli": "^8.1.7",
+    "postcss": "^8.4.5",
+    "prettier": "^2.5.1",
     "pretty-quick": "^3.1.2",
     "react-test-renderer": "^17.0.2",
     "sass": "^1.43.4",
     "source-map-explorer": "^2.5.2",
     "stylelint": "^14.1.0",
     "stylelint-config-sass-guidelines": "^9.0.1",
-    "typescript": "4.5.2"
+    "typescript": "4.5.4"
   },
   "bundlesize": [
     {
@@ -111,6 +110,6 @@
     }
   ],
   "engines": {
-    "node": ">=14.17.5"
+    "node": ">=16.0.0"
   }
 }
