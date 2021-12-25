@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button, Descriptions, Image, Space } from 'antd';
 import moment from 'moment';
@@ -14,15 +14,17 @@ import history from 'utils/history';
 
 import './treatment.scss';
 
-interface TreatmentProps extends RouteComponentProps<{ treatmentId: string }, never, Treatment> {}
+const TreatmentData: React.FC = () => {
+  const params = useParams<{ treatmentId: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-const TreatmentData: React.FC<TreatmentProps> = props => {
-  const [treatment, setTreatment] = useState<Treatment>(props.location.state);
+  const [treatment, setTreatment] = useState<Treatment>(location.state as Treatment);
 
-  const currentPatient = useCurrentPatient({ treatmentId: props.match.params.treatmentId });
+  const currentPatient = useCurrentPatient({ treatmentId: params.treatmentId });
 
   useEffect(() => {
-    if (!treatment) TreatmentService.getTreatmentById(props.match.params.treatmentId).then(setTreatment);
+    if (!treatment) TreatmentService.getTreatmentById(params.treatmentId!).then(setTreatment);
   }, []);
 
   const renderValue = (key: string, value: string[] | string) => {
@@ -46,14 +48,12 @@ const TreatmentData: React.FC<TreatmentProps> = props => {
           <Space>
             <Button
               disabled={!currentPatient}
-              onClick={() =>
-                history.push(routes.editTreatment.format(currentPatient?._id!, props.match?.params.treatmentId))
-              }
+              onClick={() => history.push(routes.editTreatment.format(currentPatient?._id!, params.treatmentId!))}
               type='primary'
             >
               ערוך
             </Button>
-            <Button icon={<ArrowRightOutlined />} onClick={() => history.goBack()} type='default'>
+            <Button icon={<ArrowRightOutlined />} onClick={() => navigate(-1)} type='default'>
               {Dictionary.back}
             </Button>
           </Space>

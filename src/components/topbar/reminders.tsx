@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { VariableSizeList as VList } from 'react-window';
 import { BellOutlined } from '@ant-design/icons';
 import { Badge, List, Spin, Tabs } from 'antd';
@@ -23,7 +23,7 @@ const Reminders: React.FC<IRemindersProps> = () => {
   const [reminders, setReminders] = useRecoilState(remindersAtom);
   const [remindersType, setRemindersType] = useRecoilState(remindersTypeAtom);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const basicRowHeight = 70;
   const descriptionLineHeight = 18;
@@ -51,7 +51,7 @@ const Reminders: React.FC<IRemindersProps> = () => {
   };
 
   const handleReminderClick = (reminder: ReminderInterface) => {
-    history.push(routes.treatment.format(reminder.treatmentId));
+    navigate(routes.treatment.format(reminder.treatmentId));
     setVisible(false);
   };
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ClearOutlined, UserAddOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Space } from 'antd';
 import { Moment } from 'moment';
@@ -16,7 +16,7 @@ import PatientsTable from './patientsTable';
 
 import './patient.scss';
 
-interface PatientContainerProps extends RouteComponentProps {}
+interface PatientContainerProps {}
 
 export type Filters = {
   startDate: Moment | undefined;
@@ -25,7 +25,8 @@ export type Filters = {
   patientType: PatientType;
 };
 
-const PatientContainer: React.FC<PatientContainerProps> = props => {
+const PatientContainer: React.FC<PatientContainerProps> = () => {
+  const navigate = useNavigate();
   const filteredPatients = useRecoilValue(filteredPatientsSelector);
   const [filters, setFilters] = useRecoilState(patientsFiltersAtom);
 
@@ -46,7 +47,7 @@ const PatientContainer: React.FC<PatientContainerProps> = props => {
   return (
     <div className='patients-container'>
       <Space className='actions-container'>
-        <Button icon={<UserAddOutlined />} onClick={() => props.history.push(routes.addPatient)}>
+        <Button icon={<UserAddOutlined />} onClick={() => navigate(routes.addPatient)}>
           {Dictionary.addPatient.header}
         </Button>
 

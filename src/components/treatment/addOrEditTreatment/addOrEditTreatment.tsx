@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { message, Spin } from 'antd';
 import { RcFile } from 'antd/es/upload/interface';
 import moment from 'moment';
@@ -18,9 +18,12 @@ import PatientService from 'services/patientService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TreatmentForm from '../treatmentForm/treatmentForm';
 
-interface AddOrEditTreatmentProps extends RouteComponentProps<{ patientId: string; treatmentId?: string }> {}
+interface AddOrEditTreatmentProps {}
 
 const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
+  const params = useParams<{ patientId: string; treatmentId?: string }>();
+  const navigate = useNavigate();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSavingPartialData, setIsSavingPartialData] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
@@ -30,8 +33,8 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
   const setPatients = useSetRecoilState(patientsAtom);
   const [currentTreatment, setCurrentTreatment] = useRecoilState(currentTreatmentAtom);
 
-  const patientId = props.match.params.patientId;
-  const treatmentId = props.match.params.treatmentId;
+  const patientId = params.patientId as string;
+  const treatmentId = params.treatmentId as string;
 
   useCurrentPatient({ patientId });
 
@@ -80,26 +83,26 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
         }
         await TreatmentService.addOrEditTreatment(patientId, values);
 
-        props.history.push(routes.treatments.format(patientId));
+        navigate(routes.treatments.format(patientId));
         PatientService.getPatients().then(setPatients);
       } catch (error) {
         setError(CommonService.getErrorMessage(error as any));
         setIsSubmitting(false);
       }
     },
-    [isSubmitting, patientId, props.history]
+    [isSubmitting, patientId, navigate]
   );
 
   const submitPartialData = useCallback(
     (values: Treatment) => {
       setIsSavingPartialData(true);
       TreatmentService.addOrEditTreatment(patientId, { ...values, _id: currentTreatment?._id! }).then(treatment => {
-        if (!treatmentId) props.history.push(routes.editTreatment.format(patientId, treatment._id));
+        if (!treatmentId) navigate(routes.editTreatment.format(patientId, treatment._id));
         setCurrentTreatment(treatment);
         setIsSavingPartialData(false);
       });
     },
-    [patientId, currentTreatment, treatmentId, props.history]
+    [patientId, currentTreatment, treatmentId, navigate]
   );
 
   const treatmentDate = currentTreatment?.treatmentDate;

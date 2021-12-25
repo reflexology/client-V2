@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import moment from 'moment';
 import { useSetRecoilState } from 'recoil';
@@ -14,10 +14,18 @@ import PatientService, { Patient } from 'services/patientService';
 import { DATE_FORMAT } from 'utils/constants';
 import PatientForm from '../patientForm/patientForm';
 
-interface EditPatientProps
-  extends RouteComponentProps<{ patientId: string }, never, { patient: Patient; from?: Location }> {}
+interface EditPatientProps {}
+
+interface LocationState {
+  patient: Patient;
+  from?: Location;
+}
 
 const EditPatient: React.FC<EditPatientProps> = props => {
+  const params = useParams<{ patientId: string }>();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const getPatient = (patient: Patient): Patient | null =>
     patient
       ? {
@@ -28,10 +36,10 @@ const EditPatient: React.FC<EditPatientProps> = props => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [patient, setPatient] = useState<Patient | null>(getPatient(props.location.state?.patient));
+  const [patient, setPatient] = useState<Patient | null>(getPatient((location.state as LocationState)?.patient));
   const setPatients = useSetRecoilState(patientsAtom);
 
-  const currentPatient = useCurrentPatient({ patientId: props.match.params.patientId });
+  const currentPatient = useCurrentPatient({ patientId: params.patientId });
 
   useEffect(() => {
     if (currentPatient && !patient) setPatient(currentPatient);
@@ -43,15 +51,15 @@ const EditPatient: React.FC<EditPatientProps> = props => {
     setIsSubmitting(true);
     setError('');
 
-    PatientService.editPatient(props.match.params.patientId, values)
+    PatientService.editPatient(params.patientId!, values)
       .then(patient => {
         setPatients(patients => {
           const index = patients!.findIndex(p => p._id === patient._id);
           return CommonService.replaceItemAtIndex(patients!, index, patient);
         });
         if (navigateToAddTreatment) {
-          props.history.push(routes.addTreatment.format(patient!._id));
-        } else props.history.push(props.location.state?.from?.pathname || routes.patients);
+          navigate(routes.addTreatment.format(patient!._id));
+        } else navigate((location.state as LocationState)?.from?.pathname || routes.patients);
       })
       .catch(err => {
         setError(CommonService.getErrorMessage(err));

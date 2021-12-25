@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Alert, Button, Col, Form, Input, Row } from 'antd';
 import { AxiosError } from 'axios';
 
@@ -9,14 +9,17 @@ import CommonService from 'services/commonService';
 
 import './login.scss';
 
-interface Props extends RouteComponentProps<never, never, { from: Location }> {}
+interface LoginProps {}
 
 interface LoginForm {
   username: string;
   password: string;
 }
 
-const Login: React.FC<Props> = props => {
+const Login: React.FC<LoginProps> = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState('');
 
@@ -26,7 +29,7 @@ const Login: React.FC<Props> = props => {
     AuthService.login(values)
       .then(tokens => {
         AuthService.storeTokens(tokens);
-        props.history.push(props.location.state?.from || '/');
+        navigate((location.state as { from: Location })?.from || '/');
       })
       .catch((err: AxiosError) => {
         setError(CommonService.getErrorMessage(err));

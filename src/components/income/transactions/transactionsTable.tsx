@@ -1,6 +1,6 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Popconfirm, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -21,7 +21,7 @@ interface TransactionsTableProps {
 }
 
 const TransactionsTable: React.FC<TransactionsTableProps> = props => {
-  const history = useHistory<Transaction>();
+  const navigate = useNavigate();
   const setTransactions = useSetRecoilState(transactionsAtom);
   const [pageSize, setPageSize] = useRecoilState(pageSizeAtom);
   const [currentPage, setCurrentPage] = useRecoilState(currentTransactionsPageAtom);
@@ -63,7 +63,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
             style={{ paddingRight: '4px' }}
             onClick={e => {
               e.stopPropagation();
-              history.push(routes.editTransaction.format(record._id), record);
+              navigate(routes.editTransaction.format(record._id), { state: record });
             }}
             type='link'
           >
@@ -100,7 +100,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
         onChange: setCurrentPage
       }}
       onRow={record => ({
-        onClick: () => (record.isFromTreatment ? history.push(routes.treatment.format(record.treatmentId)) : null)
+        onClick: () => (record.isFromTreatment ? navigate(routes.treatment.format(record.treatmentId)) : null)
       })}
       rowClassName={record => (record.isFromTreatment ? 'clickable' : '')}
       loading={isFetching}

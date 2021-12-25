@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Col, Row } from 'antd';
 
 import BackButton from 'components/common/backButton/backButton';
@@ -11,17 +11,21 @@ import TransactionForm from '../transactionForm/transactionForm';
 
 import './editTransaction.scss';
 
-interface Props extends RouteComponentProps<{ transactionId: string }, never, Transaction> {}
+interface EditTransactionProps {}
 
-const EditTransaction: React.FC<Props> = props => {
+const EditTransaction: React.FC<EditTransactionProps> = props => {
+  const navigate = useNavigate();
+  const params = useParams<{ transactionId: string }>();
+  const location = useLocation();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const [transaction, setTransaction] = useState<Transaction>(props.location.state);
+  const [transaction, setTransaction] = useState<Transaction>(location.state as Transaction);
 
   useEffect(() => {
-    if (!props.location.state)
-      TransactionService.getTransaction(props.match.params.transactionId)
+    if (!location.state)
+      TransactionService.getTransaction(params.transactionId!)
         .then(setTransaction)
         .catch(err => CommonService.showErrorMessage(err));
   }, []);
@@ -33,7 +37,7 @@ const EditTransaction: React.FC<Props> = props => {
     setError('');
 
     TransactionService.editTransaction(transaction._id, values)
-      .then(() => props.history.push(routes.transactions))
+      .then(() => navigate(routes.transactions))
       .catch(err => {
         setError(CommonService.getErrorMessage(err));
         setIsSubmitting(false);
