@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Location, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DollarCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import { Drawer, Layout, Menu } from 'antd';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
-import { Location } from 'history';
 import { useSetRecoilState } from 'recoil';
 
 import { patientsAtom } from 'atoms/patientAtoms';

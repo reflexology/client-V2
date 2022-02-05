@@ -25,7 +25,7 @@ module.exports = {
       files: ['**/*.ts?(x)'],
       rules: {
         'simple-import-sort/imports': [
-          'error',
+          'warn',
           {
             groups: [
               // Packages. `react` related packages come first.

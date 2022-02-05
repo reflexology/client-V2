@@ -10,7 +10,6 @@ import useCurrentPatient from 'hooks/useCurrentPatient';
 import CommonService from 'services/commonService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import { DATE_FORMAT, VALID_DATE_FORMATS } from 'utils/constants';
-import history from 'utils/history';
 
 import './treatment.scss';
 
@@ -48,7 +47,7 @@ const TreatmentData: React.FC = () => {
           <Space>
             <Button
               disabled={!currentPatient}
-              onClick={() => history.push(routes.editTreatment.format(currentPatient?._id!, params.treatmentId!))}
+              onClick={() => navigate(routes.editTreatment.format(currentPatient?._id!, params.treatmentId!))}
               type='primary'
             >
               ערוך

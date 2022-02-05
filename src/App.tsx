@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { ConfigProvider, message } from 'antd';
 import heIL from 'antd/es/locale/he_IL';
 import moment from 'moment';
 import { RecoilRoot } from 'recoil';
 
 import ErrorBoundary from 'components/errorBoundaries/errorBoundary';
+import history from 'utils/history';
 import Routes from './components/router/routes';
 
 import 'moment/locale/he';
@@ -21,9 +22,9 @@ const App: React.FC = () => {
     <RecoilRoot>
       <ErrorBoundary>
         <ConfigProvider direction='rtl' locale={locale}>
-          <BrowserRouter>
+          <HistoryRouter history={history}>
             <Routes />
-          </BrowserRouter>
+          </HistoryRouter>
         </ConfigProvider>
       </ErrorBoundary>
     </RecoilRoot>
