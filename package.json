@@ -31,6 +31,7 @@
     "workbox-streams": "^6.5.4"
   },
   "scripts": {
+    "setup": "npm ci && npm run build",
     "lint": "npm run lint:script && npm run lint:style",
     "lint-fix": "npm run lint-fix:script && npm run lint-fix:style",
     "lint:script": "eslint --ext js,ts,tsx src",
