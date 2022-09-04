@@ -9,10 +9,10 @@
 
 ### To start the client:
 
-Make sure you have yarn installed
+Make sure you have npm installed
 
 And then run:
 
-`yarn install` to install the dependencies
+`npm install` to install the dependencies
 
-`yarn start` to start
+`npm start` to start

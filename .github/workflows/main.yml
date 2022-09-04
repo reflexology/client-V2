@@ -9,18 +9,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '16'
-          cache: 'yarn'
+          node-version: 16
+          cache: 'npm'
       - name: 'Install dependencies'
-        run: yarn install --frozen-lockfile
+        run: npm ci
       - name: 'Lint'
-        run: yarn run lint
+        run: npm run lint
       - name: 'Test'
         run: yarn run test
       - name: 'Build'
-        run: yarn run build
-      - name: 'Bundle size'
-        run: yarn run bundlesize
+        run: npm run build

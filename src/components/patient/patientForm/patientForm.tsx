@@ -71,6 +71,7 @@ const PatientForm: React.FC<PatientFormProps> = props => {
           className='ltr text-right'
           mask='99/99/9999'
         >
+          {/* @ts-ignore */}
           {(inputProps: HTMLInputElement) => <Input {...(inputProps as any)} />}
         </ReactInputMask>
       </Form.Item>

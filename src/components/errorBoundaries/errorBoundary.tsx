@@ -7,7 +7,7 @@ export interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
+class ErrorBoundary extends React.Component<React.PropsWithChildren<unknown>, ErrorBoundaryState> {
   state = { hasError: false };
 
   static getDerivedStateFromError(error: any): Partial<ErrorBoundaryState> {

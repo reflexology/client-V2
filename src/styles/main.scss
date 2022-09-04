@@ -11,14 +11,30 @@ td {
   padding: 0;
 }
 
-.ant-form-item-label {
-  text-align: right !important;
-}
+.ant-form-rtl {
+  .ant-form-item-control-input {
+    .ant-input-number-suffix,
+    .ant-input-textarea-suffix {
+      left: 0;
+      right: auto;
+      margin-left: 10px;
+      margin-right: 4px;
+    }
+  }
+  .ant-form-item-feedback-icon {
+    margin-right: 8px;
+  }
 
-.ant-steps-item-container > .ant-steps-item-tail::after {
-  background-color: #b6b3b3 !important;
-}
-
-.ant-layout {
-  overflow-x: hidden;
+  .ant-form-item-has-feedback {
+    .ant-picker,
+    .ant-select-selector {
+      padding-left: 11px;
+    }
+    .ant-input-affix-wrapper {
+      .ant-input-suffix {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+  }
 }
