@@ -16,11 +16,12 @@ td {
     .ant-input-number-suffix,
     .ant-input-textarea-suffix {
       left: 0;
-      right: auto;
       margin-left: 10px;
       margin-right: 4px;
+      right: auto;
     }
   }
+
   .ant-form-item-feedback-icon {
     margin-right: 8px;
   }
@@ -30,10 +31,11 @@ td {
     .ant-select-selector {
       padding-left: 11px;
     }
+
     .ant-input-affix-wrapper {
       .ant-input-suffix {
-        padding-right: 0;
         padding-left: 0;
+        padding-right: 0;
       }
     }
   }
