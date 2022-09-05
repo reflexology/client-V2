@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
 import { Button, Table, Tag, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
@@ -23,7 +23,7 @@ interface PatientsTableProps {
 }
 
 const PatientsTable: React.FC<PatientsTableProps> = props => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
   const [pageSize, setPageSize] = useRecoilState(pageSizeAtom);
   const [currentPage, setCurrentPage] = useRecoilState(currentPatientsPageAtom);
@@ -86,7 +86,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
           <Button
             onClick={e => {
               e.stopPropagation();
-              history.push(routes.addTreatment.format(patient._id));
+              navigate(routes.addTreatment.format(patient._id));
             }}
             type='link'
           >
@@ -95,7 +95,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
           <Button
             onClick={e => {
               e.stopPropagation();
-              history.push(routes.editPatient.format(patient._id), { patient });
+              navigate(routes.editPatient.format(patient._id), { state: { patient } });
             }}
             type='link'
           >
@@ -116,7 +116,7 @@ const PatientsTable: React.FC<PatientsTableProps> = props => {
         current: currentPage,
         onChange: setCurrentPage
       }}
-      onRow={record => ({ onClick: () => history.push(routes.treatments.format(record._id)) })}
+      onRow={record => ({ onClick: () => navigate(routes.treatments.format(record._id)) })}
       loading={props.isFetching}
       showSorterTooltip={false}
       columns={columns}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PageHeader } from 'antd';
 
 import Dictionary from 'dictionary/dictionary';
@@ -9,9 +9,9 @@ import './backButton.scss';
 interface BackButtonProps {}
 
 const BackButton: React.FC<BackButtonProps> = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const handleBackClicked = () => history.goBack();
+  const handleBackClicked = () => navigate(-1);
 
   return (
     <PageHeader

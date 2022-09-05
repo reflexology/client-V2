@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Popconfirm, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -9,7 +10,6 @@ import { routes } from 'components/router/routes';
 import Dictionary from 'dictionary/dictionary';
 import { Patient } from 'services/patientService';
 import TreatmentService, { Treatment, TreatmentType } from 'services/treatmentService';
-import history from 'utils/history';
 import TableUtils, { WithKey } from 'utils/tableUtils';
 
 interface TreatmentsTableProps {
@@ -22,6 +22,7 @@ interface TreatmentsTableProps {
 const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
   const setTreatments = useSetRecoilState(treatmentsAtom);
   const [pageSize, setPageSize] = useRecoilState(pageSizeAtom);
+  const navigate = useNavigate();
 
   const tableUtils = new TableUtils<Treatment>(props.searchText);
   const columns: ColumnsType<Treatment> = [
@@ -49,7 +50,7 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
             disabled={!props.currentPatient?._id}
             onClick={e => {
               e.stopPropagation();
-              history.push(routes.editTreatment.format(props.currentPatient?._id!, record._id));
+              navigate(routes.editTreatment.format(props.currentPatient?._id!, record._id));
             }}
             type='link'
           >
@@ -86,7 +87,7 @@ const TreatmentsTable: React.FC<TreatmentsTableProps> = props => {
       loading={props.isFetching}
       columns={columns}
       dataSource={props.treatments}
-      onRow={treatment => ({ onClick: () => history.push(routes.treatment.format(treatment._id), treatment) })}
+      onRow={treatment => ({ onClick: () => navigate(routes.treatment.format(treatment._id), { state: treatment }) })}
       scroll={{ x: 'max-content' }}
       rowClassName='clickable'
       showSorterTooltip={false}

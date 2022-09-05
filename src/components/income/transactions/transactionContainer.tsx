@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -12,9 +12,11 @@ import Dictionary from 'dictionary/dictionary';
 import TransactionService, { TransactionTypeFilter } from 'services/transactionService';
 import TransactionsTable from './transactionsTable';
 
-interface TransactionContainerProps extends RouteComponentProps {}
+interface TransactionContainerProps {}
 
 const TransactionContainer: React.FC<TransactionContainerProps> = props => {
+  const navigate = useNavigate();
+
   const setTransactions = useSetRecoilState(transactionsAtom);
   const filteredTransactions = useRecoilValue(filteredTransactionsSelector);
   const [filters, setFilters] = useRecoilState(transactionsFiltersAtom);
@@ -25,7 +27,7 @@ const TransactionContainer: React.FC<TransactionContainerProps> = props => {
   return (
     <>
       <Space>
-        <Button icon={<PlusOutlined />} onClick={() => props.history.push(routes.addTransaction)}>
+        <Button icon={<PlusOutlined />} onClick={() => navigate(routes.addTransaction)}>
           {Dictionary.transaction.addTransactionButton}
         </Button>
 
@@ -43,7 +45,7 @@ const TransactionContainer: React.FC<TransactionContainerProps> = props => {
           isLoading={false}
         />
 
-        <Button onClick={() => props.history.push(routes.reports)}>{Dictionary.report.showReport}</Button>
+        <Button onClick={() => navigate(routes.reports)}>{Dictionary.report.showReport}</Button>
       </Space>
       <TransactionsTable
         searchText={filters.search}

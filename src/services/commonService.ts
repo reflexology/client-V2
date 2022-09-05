@@ -7,7 +7,10 @@ import { DATE_FORMAT } from 'utils/constants';
 
 const CommonService = {
   getErrorMessage(err: AxiosError): string {
-    return (Dictionary.serverErrors as { [key: string]: string })[err.response?.data?.msg] || Dictionary.generalError;
+    return (
+      (Dictionary.serverErrors as { [key: string]: string })[(err.response?.data as { msg: string })?.msg] ||
+      Dictionary.generalError
+    );
   },
 
   showErrorMessage(err: AxiosError, errorMessage?: string) {

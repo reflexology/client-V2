@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes as RoutesContainer } from 'react-router-dom';
 
 import AddTransaction from 'components/income/addTransaction/addTransaction';
 import EditTransaction from 'components/income/editTransaction/editTransaction';
@@ -8,12 +8,13 @@ import TransactionContainer from 'components/income/transactions/transactionCont
 import AddPatient from 'components/patient/addPatient/addPatient';
 import EditPatient from 'components/patient/editPatient/editPatient';
 import PatientContainer from 'components/patient/patients/patientContainer';
+import Sidebar from 'components/sidebar/sidebar';
 import AddOrEditTreatment from 'components/treatment/addOrEditTreatment/addOrEditTreatment';
 import TreatmentData from 'components/treatment/treatment/treatment';
 import TreatmentsContainer from 'components/treatment/treatments/treatmentsContainer';
 import Login from '../login/login';
 import NotFound from '../notFound/notFound';
-import ProtectedRoute from './protectedRoute';
+import RequireAuth from './requireAuth';
 
 export enum routes {
   login = '/login',
@@ -32,26 +33,28 @@ export enum routes {
 
 const Routes: React.FC = () => {
   return (
-    <Switch>
-      <ProtectedRoute exact path={routes.addPatient} component={AddPatient} />
-      <ProtectedRoute exact path={routes.editPatient.format(':patientId')} component={EditPatient} />
-      <ProtectedRoute exact path={routes.patients} component={PatientContainer} />
-      <ProtectedRoute exact path={routes.transactions} component={TransactionContainer} />
-      <ProtectedRoute exact path={routes.addTreatment.format(':patientId')} component={AddOrEditTreatment} />
-      <ProtectedRoute
-        exact
-        path={routes.editTreatment.format(':patientId', ':treatmentId')}
-        component={AddOrEditTreatment}
-      />
-      <ProtectedRoute exact path={routes.treatments.format(':patientId')} component={TreatmentsContainer} />
-      <ProtectedRoute exact path={routes.treatment.format(':treatmentId')} component={TreatmentData} />
-      <ProtectedRoute exact path={routes.addTransaction} component={AddTransaction} />
-      <ProtectedRoute exact path={routes.editTransaction.format(':transactionId')} component={EditTransaction} />
-      <ProtectedRoute exact path={routes.reports} component={Reports} />
-      <Route path={routes.login} component={Login} />
-      <ProtectedRoute exact path='/' component={PatientContainer} />
-      <Route component={NotFound} />
-    </Switch>
+    <RoutesContainer>
+      <Route path='/' element={<Sidebar />}>
+        <Route path={routes.login} element={<Login />} />
+
+        <Route element={<RequireAuth />}>
+          <Route path={routes.addPatient} element={<AddPatient />} />
+          <Route path={routes.editPatient.format(':patientId')} element={<EditPatient />} />
+          <Route path={routes.patients} element={<PatientContainer />} />
+          <Route path={routes.transactions} element={<TransactionContainer />} />
+          <Route path={routes.addTreatment.format(':patientId')} element={<AddOrEditTreatment />} />
+          <Route path={routes.editTreatment.format(':patientId', ':treatmentId')} element={<AddOrEditTreatment />} />
+          <Route path={routes.treatments.format(':patientId')} element={<TreatmentsContainer />} />
+          <Route path={routes.treatment.format(':treatmentId')} element={<TreatmentData />} />
+          <Route path={routes.addTransaction} element={<AddTransaction />} />
+          <Route path={routes.editTransaction.format(':transactionId')} element={<EditTransaction />} />
+          <Route path={routes.reports} element={<Reports />} />
+          <Route path='' element={<PatientContainer />} />
+        </Route>
+
+        <Route path='*' element={<NotFound />} />
+      </Route>
+    </RoutesContainer>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import moment from 'moment';
 
@@ -12,11 +12,13 @@ import TransactionForm from '../transactionForm/transactionForm';
 
 import './addTransaction.scss';
 
-interface Props extends RouteComponentProps {}
+interface AddTransactionProps {}
 
 const initialValues: Partial<Transaction> = { transactionType: TransactionType.Income, createdAt: moment() };
 
-const AddTransaction: React.FC<Props> = props => {
+const AddTransaction: React.FC<AddTransactionProps> = props => {
+  const navigate = useNavigate();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -27,7 +29,7 @@ const AddTransaction: React.FC<Props> = props => {
     setError('');
 
     TransactionService.addTransaction(values)
-      .then(() => props.history.push(routes.transactions))
+      .then(() => navigate(routes.transactions))
       .catch(err => {
         setError(CommonService.getErrorMessage(err));
         setIsSubmitting(false);

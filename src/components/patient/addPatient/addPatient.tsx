@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import { useSetRecoilState } from 'recoil';
 
@@ -13,9 +13,9 @@ import PatientForm from '../patientForm/patientForm';
 
 import './addPatient.scss';
 
-interface Props extends RouteComponentProps {}
+const AddPatient: React.FC = () => {
+  const navigate = useNavigate();
 
-const AddPatient: React.FC<Props> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -30,8 +30,8 @@ const AddPatient: React.FC<Props> = props => {
     PatientService.addPatient(values)
       .then(patient => {
         setPatientsAtom(patients => [patient, ...(patients || [])]);
-        if (navigateToAddTreatment) props.history.push(routes.addTreatment.format(patient._id));
-        else props.history.push(routes.patients);
+        if (navigateToAddTreatment) navigate(routes.addTreatment.format(patient._id));
+        else navigate(routes.patients);
       })
       .catch(err => {
         setError(CommonService.getErrorMessage(err));

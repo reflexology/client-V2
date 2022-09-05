@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LogoutOutlined } from '@ant-design/icons';
 import { Avatar, Menu } from 'antd';
 
@@ -10,11 +10,11 @@ import AuthService from 'services/authService';
 interface AvatarDropdownProps {}
 
 const AvatarDropdown: React.FC<AvatarDropdownProps> = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     AuthService.removeTokens();
-    history.push(routes.login);
+    navigate(routes.login);
   };
 
   const onMenuClick = (event: any): void => {

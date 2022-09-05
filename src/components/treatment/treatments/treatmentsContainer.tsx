@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowRightOutlined, UserAddOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { useRecoilState } from 'recoil';
@@ -16,18 +16,20 @@ import TreatmentsTable from './treatmentsTable';
 
 import './treatments.scss';
 
-interface TreatmentsContainerProps extends RouteComponentProps<{ patientId: string }> {}
+interface TreatmentsContainerProps {}
 
 const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
+  const navigate = useNavigate();
+  const params = useParams<{ patientId: string }>();
+
   const [treatments, setTreatments] = useRecoilState(treatmentsAtom);
   const [filteredTreatments, setFilteredTreatments] = useState<Treatment[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const currentPatient = useCurrentPatient({ patientId: props.match.params.patientId });
+  const currentPatient = useCurrentPatient({ patientId: params.patientId });
 
   useEffect(() => {
-    TreatmentService.getTreatmentsByPatientId(props.match.params.patientId)
+    TreatmentService.getTreatmentsByPatientId(params.patientId!)
       .then(setTreatments)
       .catch(err => CommonService.showErrorMessage(err, 'could not load treatments'))
       .finally(() => setIsFetching(false));
@@ -51,10 +53,7 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
   return (
     <div className='treatments-container'>
       <Space>
-        <Button
-          icon={<UserAddOutlined />}
-          onClick={() => props.history.push(routes.addTreatment.format(props.match.params.patientId))}
-        >
+        <Button icon={<UserAddOutlined />} onClick={() => navigate(routes.addTreatment.format(params.patientId!))}>
           {Dictionary.treatments.addTreatment}
         </Button>
         <DebouncedSearchInput
@@ -64,7 +63,7 @@ const TreatmentsContainer: React.FC<TreatmentsContainerProps> = props => {
           }}
           delay={250}
         />
-        <Button icon={<ArrowRightOutlined />} onClick={() => props.history.push(routes.patients)}>
+        <Button icon={<ArrowRightOutlined />} onClick={() => navigate(routes.patients)}>
           {Dictionary.back}
         </Button>
       </Space>

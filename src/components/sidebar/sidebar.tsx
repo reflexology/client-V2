@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Location, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DollarCircleOutlined, TeamOutlined } from '@ant-design/icons';
 import { Drawer, Layout, Menu } from 'antd';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
-import { Location } from 'history';
 import { useSetRecoilState } from 'recoil';
 
 import { patientsAtom } from 'atoms/patientAtoms';
@@ -19,13 +18,16 @@ import './sidebar.scss';
 const collapsedKey = 'sidePanel';
 
 const Sidebar: React.FC<any> = props => {
-  const history = useHistory();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getSelectedPage = (location: Location) => location.pathname;
 
   const [selectedPage, setSelectedPage] = useState(getSelectedPage(location));
-  history.listen(location => setSelectedPage(getSelectedPage(location)));
+
+  useEffect(() => {
+    setSelectedPage(getSelectedPage(location));
+  }, [location]);
 
   const [collapsed, setCollapsed] = useState(localStorage.getItem(collapsedKey) === 'collapsed');
   const toggle = () => setCollapsed(!collapsed);
@@ -62,13 +64,13 @@ const Sidebar: React.FC<any> = props => {
           key={routes.patients}
           onClick={() => {
             PatientService.getPatients().then(setPatients);
-            history.push(routes.patients);
+            navigate(routes.patients);
           }}
         >
           <TeamOutlined />
           <span>{Dictionary.sidebar.patients}</span>
         </Menu.Item>
-        <Menu.Item key={routes.transactions} onClick={() => history.push(routes.transactions)}>
+        <Menu.Item key={routes.transactions} onClick={() => navigate(routes.transactions)}>
           <DollarCircleOutlined />
           <span>{Dictionary.sidebar.incomeAndExpense}</span>
         </Menu.Item>
@@ -97,11 +99,13 @@ const Sidebar: React.FC<any> = props => {
 
       <Layout>
         <Topbar collapsed={collapsed} toggle={toggle} />
-        <Layout.Content className='content'>{props.children}</Layout.Content>
+        <Layout.Content className='content'>
+          <Outlet />
+        </Layout.Content>
       </Layout>
     </Layout>
   ) : (
-    props.children
+    <Outlet />
   );
 };
 
