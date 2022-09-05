@@ -109,20 +109,19 @@ const Reminders: React.FC<IRemindersProps> = () => {
           setRemindersType(key as ReminderType);
           setIsFetching(true);
         }}
-      >
-        <Tabs.TabPane
-          tab={Dictionary.reminders.showNew + renderRemindersCount(ReminderType.New)}
-          key={ReminderType.New}
-        >
-          <List>{remindersMenu}</List>
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={Dictionary.reminders.showAll + renderRemindersCount(ReminderType.All)}
-          key={ReminderType.All}
-        >
-          <List>{remindersMenu}</List>
-        </Tabs.TabPane>
-      </Tabs>
+        items={[
+          {
+            key: ReminderType.New,
+            label: Dictionary.reminders.showNew + renderRemindersCount(ReminderType.New),
+            children: <List>{remindersMenu}</List>
+          },
+          {
+            key: ReminderType.All,
+            label: Dictionary.reminders.showAll + renderRemindersCount(ReminderType.All),
+            children: <List>{remindersMenu}</List>
+          }
+        ]}
+      />
     </div>
   );
 
@@ -133,8 +132,8 @@ const Reminders: React.FC<IRemindersProps> = () => {
         overlay={renderTabs()}
         overlayClassName='reminder-popover'
         trigger={['click']}
-        visible={visible}
-        onVisibleChange={setVisible}
+        open={visible}
+        onOpenChange={setVisible}
       >
         <span className='action'>
           <Badge count={newRemindersCount} style={{ boxShadow: 'none' }} className='badge'>

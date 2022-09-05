@@ -22,12 +22,11 @@ const AvatarDropdown: React.FC<AvatarDropdownProps> = () => {
   };
 
   const menuHeaderDropdown = (
-    <Menu selectedKeys={[]} onClick={onMenuClick}>
-      <Menu.Item key='logout'>
-        <LogoutOutlined />
-        יציאה
-      </Menu.Item>
-    </Menu>
+    <Menu
+      selectedKeys={[]}
+      onClick={onMenuClick}
+      items={[{ key: 'logout', icon: <LogoutOutlined />, label: 'יציאה' }]}
+    />
   );
   return (
     <div className='avatar-dropdown'>

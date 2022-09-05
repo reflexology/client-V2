@@ -16,16 +16,13 @@ interface DropdownFilterProps<T = any> {
 
 const DropdownFilter = <T extends React.Key>(props: DropdownFilterProps<T>) => {
   const menu = (
-    <Menu>
-      {props.options.map(option => (
-        <Menu.Item
-          key={option.value}
-          onClick={() => (props.selectedOption.value !== option.value ? props.onSelect(option) : null)}
-        >
-          {option.label}
-        </Menu.Item>
-      ))}
-    </Menu>
+    <Menu
+      items={props.options.map(option => ({
+        key: option.value,
+        onClick: () => (props.selectedOption.value !== option.value ? props.onSelect(option) : null),
+        label: option.label
+      }))}
+    />
   );
 
   return (

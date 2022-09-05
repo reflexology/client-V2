@@ -36,21 +36,15 @@ const TransactionsTable: React.FC<TransactionsTableProps> = props => {
     }),
     tableUtils.getStringColumn(Dictionary.transactionForm.note, 'note'),
     tableUtils.getNumberColumn(Dictionary.transactionForm.amount, 'amount', {
-      render(text: number, record) {
-        return {
-          props: {
-            className: `amount-${record.amount > 0 ? 'income' : 'expenditure'}`
-          },
-          children: (
-            <Highlighter
-              highlightClassName='highlighted-text'
-              searchWords={[props.searchText]}
-              autoEscape
-              textToHighlight={Math.abs(text).toString() || ''}
-            />
-          )
-        };
-      }
+      render: (text: number) => (
+        <Highlighter
+          highlightClassName='highlighted-text'
+          searchWords={[props.searchText]}
+          autoEscape
+          textToHighlight={Math.abs(text).toString() || ''}
+        />
+      ),
+      onCell: record => ({ className: `amount-${record.amount > 0 ? 'income' : 'expenditure'}` })
     }),
     tableUtils.getDateColumn(Dictionary.transactionForm.createdAt, 'createdAt'),
     {

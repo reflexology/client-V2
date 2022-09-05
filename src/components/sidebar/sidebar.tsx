@@ -59,22 +59,24 @@ const Sidebar: React.FC<any> = props => {
         onSelect={e => setSelectedPage(e.key as routes)}
         mode='inline'
         style={{ borderLeft: 'none' }}
-      >
-        <Menu.Item
-          key={routes.patients}
-          onClick={() => {
-            PatientService.getPatients().then(setPatients);
-            navigate(routes.patients);
-          }}
-        >
-          <TeamOutlined />
-          <span>{Dictionary.sidebar.patients}</span>
-        </Menu.Item>
-        <Menu.Item key={routes.transactions} onClick={() => navigate(routes.transactions)}>
-          <DollarCircleOutlined />
-          <span>{Dictionary.sidebar.incomeAndExpense}</span>
-        </Menu.Item>
-      </Menu>
+        items={[
+          {
+            key: routes.patients,
+            icon: <TeamOutlined />,
+            label: Dictionary.sidebar.patients,
+            onClick: () => {
+              PatientService.getPatients().then(setPatients);
+              navigate(routes.patients);
+            }
+          },
+          {
+            key: routes.transactions,
+            icon: <DollarCircleOutlined />,
+            label: Dictionary.sidebar.incomeAndExpense,
+            onClick: () => navigate(routes.transactions)
+          }
+        ]}
+      />
     </Layout.Sider>
   );
 
