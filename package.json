@@ -44,7 +44,6 @@
     "eject": "react-scripts eject",
     "format:all": "prettier --write src/**/*",
     "format:staged": "pretty-quick --staged",
-    "deploy": "netlify deploy --prod",
     "bundlesize": "bundlesize",
     "prepare": "husky install"
   },
@@ -79,7 +78,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "husky": "^8.0.1",
-    "netlify-cli": "^11.5.1",
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",
     "pretty-quick": "^3.1.3",

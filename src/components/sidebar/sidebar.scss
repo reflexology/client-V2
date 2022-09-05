@@ -5,6 +5,7 @@
   height: 100vh;
 
   .content {
+    overflow-y: auto;
     max-height: calc(100% - #{$header-height});
     padding: $content-padding;
     position: relative;
