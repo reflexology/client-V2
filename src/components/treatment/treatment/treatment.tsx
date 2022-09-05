@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { Button, Descriptions, Image, Space } from 'antd';
+import { Button, Descriptions, Space } from 'antd';
 import moment from 'moment';
 
 import { routes } from 'components/router/routes';
@@ -74,10 +74,6 @@ const TreatmentData: React.FC = () => {
             </Descriptions.Item>
           ))}
       </Descriptions>
-
-      {treatment.files?.map(file => (
-        <Image key={file.key} src={`http://localhost:3030/api/file/${file.key}`} alt='something'></Image>
-      ))}
     </>
   ) : null;
 };

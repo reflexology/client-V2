@@ -1,11 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, BackTop, Button, Form, Space } from 'antd';
-import { RcFile } from 'antd/lib/upload/interface';
 import isEqual from 'lodash.isequal';
 
-// import DragAndDrop from 'components/common/dragAndDrop';
 import Dictionary from 'dictionary/dictionary';
-// import useInterval from 'hooks/useInterval';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
 import { Treatment } from 'services/treatmentService';
@@ -14,12 +11,11 @@ import StepOne from './stepOne';
 import './treatmentForm.scss';
 
 interface TreatmentFormProps {
-  onSubmit: (values: Treatment, newDiagnoses: string[], files: RcFile[]) => void;
+  onSubmit: (values: Treatment, newDiagnoses: string[]) => void;
   submitPartialData: (values: any) => void;
   error: string;
   isLoading: boolean;
   isSavingPartialData: boolean;
-  isUploading: boolean;
   initialValues?: Partial<Treatment>;
 }
 
@@ -27,13 +23,7 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
   const [form] = Form.useForm<Treatment>();
   const [diagnoses, setDiagnoses] = useState<string[] | null>(null);
 
-  // const [files, setFiles] = useState<RcFile[]>(
-  //   props.initialValues?.files?.map((file: any) => ({ ...file, uid: file.key })) || []
-  // );
-
-  const saveButtonText = props.isUploading
-    ? Dictionary.treatmentForm.uploadingFiles
-    : props.isLoading
+  const saveButtonText = props.isLoading
     ? Dictionary.treatmentForm.addingTreatment
     : Dictionary.treatmentForm.saveAndExit;
 
@@ -57,12 +47,10 @@ const TreatmentForm: React.FC<TreatmentFormProps> = props => {
     } catch (error) {}
   };
 
-  // useInterval(savePartialData, 30000);
-
   const onSubmit = () => {
     const values = { ...(form.getFieldsValue(true) as Treatment) };
     const newDiagnoses = values.diagnoses?.filter(diagnosis => !diagnoses?.includes(diagnosis));
-    props.onSubmit(values, newDiagnoses, []);
+    props.onSubmit(values, newDiagnoses);
   };
 
   const getBackTopTarget = useCallback(() => document.getElementById('treatment-form')!, []);

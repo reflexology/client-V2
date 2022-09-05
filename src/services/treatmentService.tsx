@@ -20,7 +20,6 @@ export interface Treatment {
   createdBy?: string;
   diagnoses: string[];
   treatmentType: TreatmentType;
-  files: TreatmentFile[];
 }
 
 export interface Balance {
@@ -28,12 +27,6 @@ export interface Balance {
 }
 
 export interface TreatmentAndBalance extends Treatment, Balance {}
-
-export interface TreatmentFile {
-  key: string;
-  name: string;
-  location: string;
-}
 
 export enum TreatmentType {
   Reflexology = 'Reflexology',

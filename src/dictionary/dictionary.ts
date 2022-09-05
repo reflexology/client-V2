@@ -89,7 +89,6 @@ const Dictionary = {
   treatmentForm: {
     save: 'שמור',
     saveAndExit: 'סיים ושמור',
-    uploadingFiles: 'מעלה קבצים',
     addingTreatment: 'שומר טיפול',
     next: 'הבא',
     previous: 'הקודם',

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { message, Spin } from 'antd';
-import { RcFile } from 'antd/es/upload/interface';
 import moment from 'moment';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
@@ -13,7 +12,6 @@ import Dictionary from 'dictionary/dictionary';
 import useCurrentPatient from 'hooks/useCurrentPatient';
 import CommonService from 'services/commonService';
 import DiagnosisService from 'services/diagnosesService';
-import FileService from 'services/fileService';
 import PatientService from 'services/patientService';
 import TreatmentService, { Treatment } from 'services/treatmentService';
 import TreatmentForm from '../treatmentForm/treatmentForm';
@@ -27,7 +25,6 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSavingPartialData, setIsSavingPartialData] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
-  const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
 
   const setPatients = useSetRecoilState(patientsAtom);
@@ -62,7 +59,7 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
   }, []);
 
   const handleSubmit = useCallback(
-    async (values: Treatment, newDiagnoses: string[], files: RcFile[]) => {
+    async (values: Treatment, newDiagnoses: string[]) => {
       if (isSubmitting) return;
       setIsSubmitting(true);
       setError('');
@@ -71,16 +68,6 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
         if (newDiagnoses?.length > 0)
           DiagnosisService.addDiagnoses(newDiagnoses).catch(() => message.error(Dictionary.cantSaveDiagnosesError));
 
-        if (files?.length > 0) {
-          setIsUploading(true);
-          const fileResponse = await FileService.uploadMultiple(files);
-          values.files = fileResponse.map(file => ({
-            key: file.key,
-            name: file.originalname,
-            location: file.location
-          }));
-          setIsUploading(false);
-        }
         await TreatmentService.addOrEditTreatment(patientId, values);
 
         navigate(routes.treatments.format(patientId));
@@ -122,7 +109,6 @@ const AddOrEditTreatment: React.FC<AddOrEditTreatmentProps> = props => {
       <BackButton />
       <Spin spinning={isFetching}>
         <TreatmentForm
-          isUploading={isUploading}
           initialValues={initialValues}
           isLoading={isSubmitting}
           onSubmit={handleSubmit}
