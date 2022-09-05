@@ -74,6 +74,6 @@ const refreshAuthLogic = (failedRequest: any) =>
       return Promise.reject(err);
     });
 
-createAuthRefreshInterceptor(axios as any, refreshAuthLogic, { skipWhileRefreshing: false });
+createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
 export default HttpService;
